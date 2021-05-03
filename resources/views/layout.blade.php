@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Dashboard</title>
+  <title>Loja MagicShirts</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -28,6 +28,9 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon">
+          <img src="/img/logo.png" alt="Logo" class="logo-img">
+        </div>
         <div class="sidebar-brand-text mx-3">Loja MagicShirts</div>
       </a>
 

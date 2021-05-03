@@ -18,7 +18,7 @@ use App\Http\Controllers\EstampasPropriasController;
 |
 */
 
-Route::get('/', [CatalogoController::class, 'index'])->name('catalogo.index');
+Route::get('catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 Route::get('encomendas', [EncomendasController::class, 'index'])->name('encomendas.index');
 Route::get('estampasProprias', [EstampasPropriasController::class, 'index'])->name('estampasProprias.index');
