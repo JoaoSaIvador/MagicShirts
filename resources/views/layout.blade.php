@@ -37,9 +37,6 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
       <!-- Nav Item -->
       <li class="nav-item {{Route::currentRouteName()=='catalogo.index'? 'active': ''}}">
         <a class="nav-link" href="{{route('catalogo.index')}}">
