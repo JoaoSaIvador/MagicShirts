@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\EncomendasController;
+use App\Http\Controllers\EstampasPropriasController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CatalogoController::class, 'index'])->name('catalogo.index');
+Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
+Route::get('encomendas', [EncomendasController::class, 'index'])->name('encomendas.index');
+Route::get('estampasProprias', [EstampasPropriasController::class, 'index'])->name('estampasProprias.index');
