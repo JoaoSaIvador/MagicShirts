@@ -241,3 +241,38 @@ aside {
     margin-right: 5px;
     cursor: pointer;
 }
+
+#btn-filter {
+    margin-left: 50px;
+}
+
+.search-item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+.estampas-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.estampa {
+    margin: 5px;
+    line-height: 1.5;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.estampa-img {
+    text-align: center;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.estampa-name {
+    font-weight: bold;
+}
+
+.estampa-description {
+    font-weight: lighter;
+}
