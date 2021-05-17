@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Estampa;
 use App\Models\Categoria;
 
-class EstampasController extends Controller
+class StampsController extends Controller
 {
     public function index(Request $request)
     {
