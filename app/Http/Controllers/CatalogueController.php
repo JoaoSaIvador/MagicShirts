@@ -8,6 +8,6 @@ class CatalogoController extends Controller
 {
     public function index()
     {
-        return view('catalogo.index')->withPageTitle('Catalogo');
+        return view('catalogue.Catalogue')->withPageTitle('Catalogo');
     }
 }

@@ -8,6 +8,6 @@ class EncomendasController extends Controller
 {
     public function index()
     {
-        return view('encomendas.index')->withPageTitle('Encomenda');
+        return view('orders.Orders')->withPageTitle('Encomenda');
     }
 }
