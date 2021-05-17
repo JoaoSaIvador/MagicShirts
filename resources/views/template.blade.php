@@ -21,13 +21,10 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
+            <a class="nav-link active" aria-current="page" href="{{route('Home')}}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{route('estampas.index')}}">Estampas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('t-shirts.index')}}">T-Shirts</a>
+            <a class="nav-link" href="{{route('Stamps')}}">Estampas</a>
         </li>
       </ul>
     </div>

@@ -24,11 +24,10 @@ use App\Http\Controllers\EncomendasController;
 */
 
 
-Route::get('/',[HomeController::class,'index'])->name('home');
-
-Route::get('estampas', [EstampasController::class, 'index'])->name('estampas.index');
-Route::get('t-shirts', [TshirtsController::class, 'index'])->name('t-shirts.index');
-Route::get('catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
-Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
-Route::get('encomendas', [EncomendasController::class, 'index'])->name('encomendas.index');
+Route::get('/',[HomeController::class,'index'])->name('Home');
+Route::get('estampas', [StampsController::class, 'index'])->name('Stamps');
+Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
+Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
+Route::get('entrar', [UserController::class, 'index'])->name('Login');
+Route::get('registar', [UserController::class, 'registerPage'])->name('Register');
 
