@@ -1,4 +1,7 @@
 @extends('Template.Template')
 @section('Content')
-<div>Some Content . . .</div>
+
+
+<h1>fuck it all</h1>
+
 @endsection

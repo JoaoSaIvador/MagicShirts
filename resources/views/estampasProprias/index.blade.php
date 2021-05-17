@@ -1,5 +1,4 @@
-@extends('layout')
-@section('title','Estampas Próprias' )
-@section('content')
+@extends('Template.Template')
+@section('Content')
 <div>Some Content . . .</div>
 @endsection

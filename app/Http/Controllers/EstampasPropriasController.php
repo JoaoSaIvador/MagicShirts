@@ -8,6 +8,6 @@ class EstampasPropriasController extends Controller
 {
     public function index()
     {
-        return view('estampasProprias.index');
+        return view('estampasProprias.index')->with('pageTitle', 'Estampas Costumizadas');
     }
 }
