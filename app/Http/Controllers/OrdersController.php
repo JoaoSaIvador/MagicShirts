@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class OrdersController extends Controller
 {
-
     public function index()
     {
-        return view('home.index')->withPageTitle('Inicio');
+        return view('orders.Orders')->withPageTitle('Encomenda');
     }
 }

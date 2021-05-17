@@ -8,6 +8,18 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('home.index')->with('pageTitle', 'Home');
+        return view('user.Login')->withPageTitle('Entrar');
     }
+
+    public function registerPage()
+    {
+        return view('user.Register')->withPageTitle('Registar');
+    }
+
+    public function Register()
+    {
+      
+    }
+
+
 }

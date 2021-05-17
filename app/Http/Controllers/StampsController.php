@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Estampa;
 use App\Models\Categoria;
 
-class EstampasController extends Controller
+class StampsController extends Controller
 {
     public function index(Request $request)
     {
@@ -17,8 +17,8 @@ class EstampasController extends Controller
         $listaEstampas = Estampa::where('categoria_id', $categoria)->get();
 
         //dd($listaEstampas);
-        return view('estampas.index')
-            ->withPageTitle('Estampas Costumizadas')
+        return view('catalogue.Catalogue')
+            ->withPageTitle('Estampas')
             ->withEstampas($listaEstampas)
             ->withCategoria($categoria)
             ->withCategorias($listaCategorias);
