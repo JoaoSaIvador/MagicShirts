@@ -1,5 +1,5 @@
-@extends('Template')
-@section('Content')
+@extends('template')
+@section('content')
 
 
 

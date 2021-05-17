@@ -8,6 +8,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('Home.index')->with('pageTitle', 'Home');
-    } 
+        return view('home.index')->with('pageTitle', 'Home');
+    }
 }

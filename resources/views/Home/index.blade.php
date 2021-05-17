@@ -1,7 +1,7 @@
-@extends('Template.Template')
-@section('Content')
+@extends('template')
+@section('content')
 
 
-<h1>fuck it all</h1>
+<h1>g</h1>
 
 @endsection
