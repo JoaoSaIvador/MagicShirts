@@ -42,7 +42,7 @@
                         <div style="width: 80px;">
                           <h5 class="mb-0">$900</h5>
                         </div>
-                        <a href="#"><i class="fa fa-trash"></i></a>
+                        <a href="#" class="btn"><i class="fa fa-trash-o"></i></a>
                       </div>
                     </div>
                   </div>
@@ -69,7 +69,7 @@
                         <div style="width: 80px;">
                           <h5 class="mb-0">$900</h5>
                         </div>
-                        <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" class="btn"><i class="fa fa-trash-o"></i></a>
                       </div>
                     </div>
                   </div>
@@ -96,7 +96,7 @@
                         <div style="width: 80px;">
                           <h5 class="mb-0">$1199</h5>
                         </div>
-                        <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" class="btn"><i class="fa fa-trash-o"></i></a>
                       </div>
                     </div>
                   </div>
@@ -123,7 +123,7 @@
                         <div style="width: 80px;">
                           <h5 class="mb-0">$1799</h5>
                         </div>
-                        <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" class="btn"><i class="fa fa-trash-o"></i></a>
                       </div>
                     </div>
                   </div>
@@ -140,12 +140,13 @@
 
                     <p class="small mb-2">Card type</p>
                     <a href="#!" type="submit" class="text-white"><i
-                        class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                        class="fa fa-cc-mastercard fa-2x"></i></a>
                     <a href="#!" type="submit" class="text-white"><i
-                        class="fab fa-cc-visa fa-2x me-2"></i></a>
+                        class="fa fa-cc-visa fa-2x"></i></a>
                     <a href="#!" type="submit" class="text-white"><i
-                        class="fab fa-cc-amex fa-2x me-2"></i></a>
-                    <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+                        class="fa fa-cc-amex fa-2x"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fa fa-cc-paypal fa-2x"></i></a>
 
                     <form class="mt-4">
                       <div class="form-outline form-white mb-4">
