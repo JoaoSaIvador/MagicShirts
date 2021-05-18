@@ -24,7 +24,7 @@
             <a class="nav-link active" aria-current="page" href="{{route('Home')}}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{route('Stamps')}}">Estampas</a>
+            <a class="nav-link" href="{{route('Catalogue')}}">Catálogo</a>
         </li>
       </ul>
     </div>
