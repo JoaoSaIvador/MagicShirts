@@ -5,3 +5,9 @@ body{
 .mainmenu{
     background-color: rgba(24, 24, 24, 1);
 }
+
+.card-img-top {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}

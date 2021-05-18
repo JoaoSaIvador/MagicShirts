@@ -18,17 +18,19 @@
     <div class="container">
         <div class="row">
             @forelse ($estampas as $estampa)
-                <div class="col-md-4">
-                    <div class="card box-shadow">
-                        <img class="card-img-top bg-dark estampa-img" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
-                    </div>
-                    <div class="card-body bg-light">
-                        <p class="fst-normal bg-light">{{$estampa->nome}}</p>
+                <div class="col-md-4 col-lg-4 mt-2">
+                    <div class="d-flex flex-column">
+                        <div class="card box-shadow">
+                            <img class="card-img-top bg-dark estampa-img" id="card-img-top" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
+                        </div>
+                        <div class="card-body bg-light">
+                            <p class="fst-normal bg-light">{{$estampa->nome}}</p>
+                        </div>
                     </div>
                 </div>
             @empty
             <p class="text-white bg-dark">Não existem estampas</p>
-        @endforelse
+            @endforelse
         </div>
     </div>
 </div>
