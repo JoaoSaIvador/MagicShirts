@@ -7,10 +7,11 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/stylesheet.css')}}">
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
     <title>{{$pageTitle}}</title>
 </head>
 <body>
-<nav class="mainmenu navbar navbar-expand-lg">
+<nav class="mainmenu navbar navbar-expand-lg mb-4 static-top shadow">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
     <img src="{{asset('img/MagicShirtsLogo.png')}}" alt="MagicShirts LOGO">
