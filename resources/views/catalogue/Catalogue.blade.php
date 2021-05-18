@@ -25,7 +25,7 @@
     <div class="container-xl">
         <div class="row" style="justify-content: center;">
             @forelse ($estampas as $estampa)
-                <div class="card col-5 col-lg-3 m-2">
+                <div class="card col-lg-3 m-2">
                     <div class="view overlay">
                     <img class="card-img-top estampa-img" id="card-img-top" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
                         <a href="#!">
