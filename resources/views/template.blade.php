@@ -7,6 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/stylesheet.css')}}">
+    
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
     <title>{{$pageTitle}}</title>
 </head>
@@ -32,7 +33,7 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Carrinho</a>
+                <a class="nav-link" href="{{route('Cart')}}">Carrinho</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Entrar/Registar</a>

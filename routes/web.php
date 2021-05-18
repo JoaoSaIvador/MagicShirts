@@ -7,6 +7,7 @@ use App\Http\Controllers\StampsController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 
 
 
@@ -25,7 +26,7 @@ use App\Http\Controllers\UserController;
 Route::get('/',[HomeController::class,'index'])->name('Home');
 Route::get('estampas', [StampsController::class, 'index'])->name('Stamps');
 Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
-Route::get('carrinho', [OrdersController::class, 'orders'])->name('Cart');
+Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::get('entrar', [UserController::class, 'index'])->name('Login');
 Route::get('registar', [UserController::class, 'registerPage'])->name('Register');
 

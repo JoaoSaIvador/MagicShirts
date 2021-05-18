@@ -18,7 +18,7 @@
         </form>
     </div>
     <div class="col-2">
-        <button class="btn btn-light" type="submit">Mostrar Estampas Pessoais</button>
+        <button class="btn btn-dark" type="submit">Mostrar Estampas Pessoais</button>
     </div>
 </div>
 <div class="album">
