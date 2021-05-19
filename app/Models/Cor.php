@@ -9,6 +9,7 @@ class Cor extends Model
 {
     use HasFactory;
 
+    protected $table = 'cores';
     protected $primaryKey = 'codigo';
     protected $keyType = 'string';
 

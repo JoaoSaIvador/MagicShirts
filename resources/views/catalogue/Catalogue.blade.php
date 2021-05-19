@@ -1,10 +1,10 @@
 @extends('template')
 @section('content')
-<div class="row mb-3 cat-top py-5">
-    <div class="col-5 sel-stamps">
+<div class="row mb-3 cat-top py-5 sel-stamps">
+    <div class="col-5 ">
         <form method="GET" action="#" class="form-group">
             <div class="input-group">
-                <select class="custom-select" name="categoria_id" id="idCategoria" aria-label="Curso">
+                <select class="custom-select" name="categoria_id" id="idCategoria">
                     @foreach ($categorias as $id => $nome)
                     <option value="{{$id}}"
                         {{$id == $categoria ? 'selected' : ''}}>{{$nome}}
@@ -17,7 +17,7 @@
             </div>
         </form>
     </div>
-    <div class="col-2">
+    <div class="" style="width: 250px;">
         <button class="btn btn-dark" type="submit">Mostrar Estampas Pessoais</button>
     </div>
 </div>
@@ -42,13 +42,26 @@
                         <span class="text-danger mr-1">$12.99</span>
                         </h6>
 
-                        <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
-                        <i class="fas fa-shopping-cart pr-2"></i>Add to cart
-                        </button>
-                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2">
-                        <i class="fas fa-info-circle pr-2"></i>Details
-                        </button>
+                        <form method="GET" action="#" class="form-group">
+                            <div class="catalogue-input">
+                                <select class="custom-select catalogue-select" name="color_id">
+                                    @foreach ($cores as $id => $nome)
+                                    <option value="{{$id}}">{{$nome}}</option>
+                                    @endforeach
+                                </select>
 
+                                <select class="custom-select catalogue-select" name="tamanho_abrev">
+                                    @foreach ($tamanhos as $abrev)
+                                    <option value="{{$abrev}}">{{$abrev}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-sm mr-1 mb-2 add-cart">
+                            <i class="fa fa-shopping-cart pr-2"></i>Add to cart
+                            </button>
+                        </form>
+                        
                     </div>
                 </div>
             @empty
