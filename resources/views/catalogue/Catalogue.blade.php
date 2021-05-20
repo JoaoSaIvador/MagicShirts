@@ -5,6 +5,8 @@
         <form method="GET" action="#" class="form-group">
             <div class="input-group">
                 <select class="custom-select" name="categoria_id" id="idCategoria">
+                    <option value="none" selected disabled hidden>Tipo de Categoria</option>
+                    <option value="" >Sem Categoria</option>
                     @foreach ($categorias as $id => $nome)
                     <option value="{{$id}}"
                         {{$id == $categoria ? 'selected' : ''}}>{{$nome}}
@@ -27,47 +29,17 @@
             @forelse ($estampas as $estampa)
                 <div class="card col-lg-3 m-2">
                     <div class="view overlay">
-                    <img class="card-img-top estampa-img" id="card-img-top" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
-                        <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
+                        <a href="{{route('Product.view', ['estampa' => $estampa])}}">
+                            <img class="card-img-top estampa-img" id="card-img-top" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
                         </a>
+                        <div class="mask rgba-white-slight"></div>
                     </div>
-
                     <div class="card-body text-center">
-
                         <h5>{{$estampa->nome}}</h5>
-                        <p class="small text-muted text-uppercase mb-2">Shirts</p>
-                        <hr>
-                        <h6 class="mb-3">
-                        <span class="text-danger mr-1">${{$preco->preco_un_catalogo}}</span>
-                        </h6>
-                        <p class="text-left">Cor da T-shirt</p>
-                        <form method="GET" action="#" class="form-group">
-                            <div class="catalogue-input">
-                                <select class="custom-select catalogue-select" name="color_id">
-                                    @foreach ($cores as $id => $nome)
-                                    <option value="{{$id}}">{{$nome}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <br>
-                            <p class="text-left">Tamanho da T-shirt</p>
-                            @foreach ($tamanhos as $abrev)
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="{{$abrev}}">
-                                    <label class="form-check-label" for="inlineRadio1">{{$abrev}}</label>
-                                </div>
-                            @endforeach
-
-                            <button type="button" class="btn btn-primary btn-sm mr-1 mb-2 add-cart">
-                            <i class="fa fa-shopping-cart pr-2"></i>Add to cart
-                            </button>
-                        </form>
-
                     </div>
                 </div>
             @empty
-            <p class="text-white bg-dark">Não existem estampas</p>
+            <p class="display-4 font-weight-bold">Não existem estampas</p>
             @endforelse
         </div>
     </div>
