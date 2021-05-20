@@ -35,7 +35,7 @@ class CartController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function update_disciplina(Request $request, Tshirt $tshirt)
+    public function update_tshirt(Request $request, Tshirt $tshirt)
     {
         $carrinho = $request->session()->get('carrinho', []);
         $qtd = $carrinho[$tshirt->id]['qtd'] ?? 0;
@@ -65,7 +65,7 @@ class CartController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function destroy_disciplina(Request $request, Tshirt $tshirt)
+    public function destroy_tshirt(Request $request, Tshirt $tshirt)
     {
         $carrinho = $request->session()->get('carrinho', []);
         if (array_key_exists($tshirt->id, $carrinho)) {
@@ -78,14 +78,6 @@ class CartController extends Controller
         return back()
             ->with('alert-msg', 'A T-shirt já não estava no carrinho!')
             ->with('alert-type', 'warning');
-    }
-
-    public function store(Request $request)
-    {
-        dd(
-            'Place code to store the shopping cart / transform the cart into a sale',
-            $request->session()->get('carrinho')
-        );
     }
 
     public function destroy(Request $request)
