@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Estampa;
 use App\Models\Categoria;
 use App\Models\Cor;
+use App\Models\Preco;
 
 class CatalogueController extends Controller
 {
@@ -16,19 +17,19 @@ class CatalogueController extends Controller
         $categoria = $request->query('categoria_id', 1);
         //$categoria = $request->categoria_id ?? 1;
 
-        $listaCores = Cor::pluck('nome', 'codigo');
-        
         $listaEstampas = Estampa::where('categoria_id', $categoria)->get();
-
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
+        $listaCores = Cor::pluck('nome', 'codigo');
+        $precoEstampa = Preco::find(1);
 
-        //dd($listaEstampas);
+        //dd($precoEstampa->preco_un_catalogo);
         return view('catalogue.Catalogue')
             ->withPageTitle('Catalogo')
             ->withEstampas($listaEstampas)
             ->withCategoria($categoria)
             ->withCategorias($listaCategorias)
             ->withCores($listaCores)
-            ->withTamanhos($listaTamanhos);
+            ->withTamanhos($listaTamanhos)
+            ->withPreco($precoEstampa);
     }
 }

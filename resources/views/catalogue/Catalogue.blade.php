@@ -39,9 +39,9 @@
                         <p class="small text-muted text-uppercase mb-2">Shirts</p>
                         <hr>
                         <h6 class="mb-3">
-                        <span class="text-danger mr-1">$12.99</span>
+                        <span class="text-danger mr-1">${{$preco->preco_un_catalogo}}</span>
                         </h6>
-
+                        <p class="text-left">Cor da T-shirt</p>
                         <form method="GET" action="#" class="form-group">
                             <div class="catalogue-input">
                                 <select class="custom-select catalogue-select" name="color_id">
@@ -49,19 +49,21 @@
                                     <option value="{{$id}}">{{$nome}}</option>
                                     @endforeach
                                 </select>
-
-                                <select class="custom-select catalogue-select" name="tamanho_abrev">
-                                    @foreach ($tamanhos as $abrev)
-                                    <option value="{{$abrev}}">{{$abrev}}</option>
-                                    @endforeach
-                                </select>
                             </div>
+                            <br>
+                            <p class="text-left">Tamanho da T-shirt</p>
+                            @foreach ($tamanhos as $abrev)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="{{$abrev}}">
+                                    <label class="form-check-label" for="inlineRadio1">{{$abrev}}</label>
+                                </div>
+                            @endforeach
 
                             <button type="button" class="btn btn-primary btn-sm mr-1 mb-2 add-cart">
                             <i class="fa fa-shopping-cart pr-2"></i>Add to cart
                             </button>
                         </form>
-                        
+
                     </div>
                 </div>
             @empty
