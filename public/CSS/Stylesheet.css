@@ -76,6 +76,7 @@ body {
 
 .product-img {
     width:50%;
+    object-fit: scale-down;
 }
 
 .product_meta {
