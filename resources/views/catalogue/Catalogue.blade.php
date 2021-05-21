@@ -34,6 +34,7 @@
                         </a>
                         <div class="mask rgba-white-slight"></div>
                     </div>
+                    <hr>
                     <div class="card-body text-center">
                         <h5>{{$estampa->nome}}</h5>
                     </div>

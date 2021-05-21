@@ -27,7 +27,7 @@ Route::get('/',[HomeController::class,'index'])->name('Home');
 
 Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
 Route::get('catalogo/produto/{estampa}', [ProductController::class, 'index'])->name('Product.view');
-Route::post('carrinho', [CartController::class, 'store'])->name('Cart.store');
+Route::post('carrinho', [ProductController::class, 'store'])->name('Cart.store');
 
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::get('entrar', [UserController::class, 'index'])->name('Login');
