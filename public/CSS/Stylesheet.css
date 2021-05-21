@@ -40,6 +40,18 @@ body {
     margin: 5px;
 }
 
+.cart-select {
+    width: 150px;
+    margin-top: 15px;
+}
+
 .add-cart {
     margin-top: 10px;
 }
+
+.cart-photo {
+    display: flex;
+    justify-content: left;
+}
+
+

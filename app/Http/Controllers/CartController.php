@@ -5,18 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Tshirt;
 use App\Models\Estampa;
 use Illuminate\Http\Request;
+use App\Models\Cor;
+use App\Models\Preco;
 
 class CartController extends Controller
 {
     public function index()
     {
+        $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
+        $listaCores = Cor::pluck('nome', 'codigo');
+        $precoEstampa = Preco::find(1);
+
         //dd(session('carrinho') ?? []);
         return view('orders.Cart')
             ->withPageTitle('Carrinho')
-            ->withCarrinho(session('carrinho') ?? []);
+            ->withCarrinho(session('carrinho') ?? [])
+            ->withTamanhos($listaTamanhos)
+            ->withCores($listaCores)
+            ->withPreco($precoEstampa);
     }
 
-    public function store(Request $request, Tshirt $tshirt)
+    public function store_tshirt(Request $request, Tshirt $tshirt)
     {
         $carrinho = $request->session()->get('carrinho', []);
         $qtd = ($carrinho[$tshirt->id]['qtd'] ?? 0) + 1;
@@ -78,6 +87,14 @@ class CartController extends Controller
         return back()
             ->with('alert-msg', 'A T-shirt já não estava no carrinho!')
             ->with('alert-type', 'warning');
+    }
+
+    public function store(Request $request)
+    {
+        dd(
+            'Place code to store the shopping cart / transform the cart into a sale',
+            $request->session()->get('carrinho')
+        );
     }
 
     public function destroy(Request $request)
