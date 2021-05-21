@@ -17,7 +17,7 @@ class ProductController extends Controller
         $precoEstampa = Preco::find(1);
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $categoria = Categoria::where('id', $estampa->categoria_id)->value('nome');
-        //dd($categoria);
+
         if (is_null($categoria)) {
             $categoria = "Sem Categoria";
         }
