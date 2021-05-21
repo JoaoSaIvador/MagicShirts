@@ -33,5 +33,10 @@ Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::get('entrar', [UserController::class, 'index'])->name('Login');
 Route::get('registar', [UserController::class, 'registerPage'])->name('Register');
 
+Route::post('carrinho/produto', [CarrinhoController::class, 'store_tshirt'])->name('carrinho.store_tshirt');
+Route::put('carrinho/produto', [CarrinhoController::class, 'update_tshirt'])->name('carrinho.update_tshirt');
+Route::delete('carrinho', [CarrinhoController::class, 'destroy_tshirt'])->name('carrinho.destroy_tshirt');
+
+
 Route::post('register', [UserController::class, 'register']);
 
