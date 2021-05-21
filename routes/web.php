@@ -27,14 +27,13 @@ Route::get('/',[HomeController::class,'index'])->name('Home');
 
 Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
 Route::get('catalogo/produto/{estampa}', [ProductController::class, 'index'])->name('Product.view');
-Route::post('carrinho', [ProductController::class, 'store'])->name('Cart.store');
+Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');
 
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::get('entrar', [UserController::class, 'index'])->name('Login');
 Route::get('registar', [UserController::class, 'registerPage'])->name('Register');
 
-Route::post('carrinho/produto', [CarrinhoController::class, 'store_tshirt'])->name('carrinho.store_tshirt');
-Route::put('carrinho/produto', [CarrinhoController::class, 'update_tshirt'])->name('carrinho.update_tshirt');
+Route::put('carrinho', [CarrinhoController::class, 'update_tshirt'])->name('carrinho.update_tshirt');
 Route::delete('carrinho', [CarrinhoController::class, 'destroy_tshirt'])->name('carrinho.destroy_tshirt');
 
 

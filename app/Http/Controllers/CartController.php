@@ -10,7 +10,7 @@ use App\Models\Preco;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $listaCores = Cor::pluck('nome', 'codigo');
@@ -18,8 +18,8 @@ class CartController extends Controller
 
         //dd(session('carrinho') ?? []);
         return view('orders.Cart')
-            ->withPageTitle('Carrinho')
-            ->withCarrinho(session('carrinho') ?? [])
+            ->with('pageTitle', 'Carrinho de compras')
+            ->with('carrinho', session('carrinho') ?? [])
             ->withTamanhos($listaTamanhos)
             ->withCores($listaCores)
             ->withPreco($precoEstampa);
