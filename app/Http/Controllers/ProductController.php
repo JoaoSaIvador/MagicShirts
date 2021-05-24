@@ -48,7 +48,6 @@ class ProductController extends Controller
         ]);
         // If something is not valid, execution is interrupted.
         // Remaining code is only executed if validation passes
-        //dd($validated);
-        return redirect()->action('CartController@store_tshirt');*/
+        Tshirt::create($validated);
     }
 }

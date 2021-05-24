@@ -19,13 +19,10 @@ class CartController extends Controller
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $listaCores = Cor::pluck('nome', 'codigo');
         $precoEstampa = Preco::find(1);
-<<<<<<< HEAD
         $carrinho = $request->session()->get('carrinho', []);
         foreach($carrinho as $row) {
             $listaEstampas[] = Estampa::where('id', $row['estampa_id'])->pluck('cliente_id', 'imagem_url');
         }
-=======
->>>>>>> main
 
         //dd(session('carrinho') ?? []);
         return view('orders.Cart')
@@ -33,18 +30,12 @@ class CartController extends Controller
             ->with('carrinho', session('carrinho') ?? [])
             ->withTamanhos($listaTamanhos)
             ->withCores($listaCores)
-<<<<<<< HEAD
             ->withPreco($precoEstampa)
             ->withEstampas($listaEstampas);
     }
 
-    public function store_tshirt(ProductPost $request)
-=======
-            ->withPreco($precoEstampa);
-    }
 
-    public function store_tshirt(Request $request, Tshirt $tshirt)
->>>>>>> main
+    public function store_tshirt(Request $request, Estampa $estampa)
     {
         $request->validated();
         //dd($validated_data);
@@ -52,10 +43,11 @@ class CartController extends Controller
         $carrinho[] = [
             'quantidade' => $request->quantidade,
             'estampa_id' => $request->estampa_id,
-            'cor_codigo' => $request->cor_codigo,
+            'cor_codigo' => $request->color_id,
             'tamanho' => $request->tamanho,
             'preco_un' => $request->preco_un,
         ];
+
         $request->session()->put('carrinho', $carrinho);
         return back()
             ->with('alert-msg', 'Foi adicionada uma tshirt carrinho!')

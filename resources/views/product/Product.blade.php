@@ -34,14 +34,11 @@
                         <label class="form-check-label">{{$abrev}}</label>
                     </div>
                 @endforeach
-                @error('tamanho')
-                    <div class="small text-danger">{{$message}}</div>
-                @enderror
                 <div class="d-flex mb-4 " style="width: 100px">
-                    <div class="form-outline">
-                        <label class="form-label" for="form1">Quantidade:</label>
-                        <input id="form1" min="0" name="quantidade" value="1" type="number" class="form-control" />
-                    </div>
+                  <div class="form-outline">
+                    <label class="form-label" for="form1">Quantidade:</label>
+                    <input id="form1" min="0" name="quantidade" value="1" type="number" class="form-control" />
+                  </div>
                 </div>
                 @error('quantidade')
                     <div class="small text-danger">{{$message}}</div>
