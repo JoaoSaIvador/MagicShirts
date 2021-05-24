@@ -8,6 +8,7 @@ use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\IndexController;
 
 
 
@@ -37,4 +38,10 @@ Route::put('carrinho', [CartController::class, 'update_tshirt'])->name('Cart.upd
 Route::delete('carrinho', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy');
 
 Route::post('register', [UserController::class, 'register']);
+
+
+Auth::routes();
+
+
+
 
