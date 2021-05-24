@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-<div class="row mb-3 cat-top py-5 sel-stamps">
+<div class="mb-3 cat-top py-5 sel-stamps">
     <div class="col-5 ">
         <form method="GET" action="#" class="form-group">
             <div class="input-group">

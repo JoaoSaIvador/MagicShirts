@@ -13,28 +13,39 @@
                     <input type="submit" hidden><a rel="tag" href="{{route('Catalogue', ['categoria_id' => $estampa->categoria_id])}}">{{$categoria}}</a>
                 </span>
             </div>
-            <form action="{{route('Cart.store')}}" method="post">
+            <form action="{{route('Cart.store', ['estampa' => $estampa])}}" method="post">
             @csrf
                 <input type="number" name="estampa_id" hidden value="{{$estampa->id}}">
                 <div class="m-bot15"> <input type="text" hidden value="{{$preco->preco_un_catalogo}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco->preco_un_catalogo}}</span></div>
                 <hr>
-                <select name="color_id" class="custom-select catalogue-select">
+                <select name="cor_codigo" class="custom-select catalogue-select">
                     <option value="none" selected disabled hidden>Cor da T-shirt</option>
                     @foreach ($cores as $id => $nome)
-                        <option value="{{$id}}">{{$nome}}</option>
+                        <option value="{{$id}}" {{old('cor_codigo') == $id ? 'selected' : '' }}>{{$nome}}</option>
                     @endforeach
                 </select>
+                @error('cor_codigo')
+                    <div class="small text-danger">{{$message}}</div>
+                @enderror
                 <p class="text-left">Tamanho da T-shirt</p>
                 @foreach ($tamanhos as $abrev)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tamanho" value="{{$abrev}}">
+                        <input class="form-check-input" type="radio" name="tamanho" value="{{$abrev}}" {{old('tamanho') == $abrev ? 'checked' : ''}}>
                         <label class="form-check-label">{{$abrev}}</label>
                     </div>
                 @endforeach
-                <div class="form-group">
-                <label>Quantity</label>
-                    <input type="quantiy" placeholder="1" name="quantidade" class="form-control quantity">
+                @error('tamanho')
+                    <div class="small text-danger">{{$message}}</div>
+                @enderror
+                <div class="d-flex mb-4 " style="width: 100px">
+                    <div class="form-outline">
+                        <label class="form-label" for="form1">Quantidade:</label>
+                        <input id="form1" min="0" name="quantidade" value="1" type="number" class="form-control" />
+                    </div>
                 </div>
+                @error('quantidade')
+                    <div class="small text-danger">{{$message}}</div>
+                @enderror
                 <button class="btn btn-round btn-danger" type="submit"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
             </form>
         </div>

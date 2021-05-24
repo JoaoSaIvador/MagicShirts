@@ -5,58 +5,73 @@ namespace App\Http\Controllers;
 use App\Models\Tshirt;
 use App\Models\Estampa;
 use Illuminate\Http\Request;
+use App\Models\Cor;
+use App\Models\Preco;
+use App\Http\Requests\ProductPost;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
+        $listaCores = Cor::pluck('nome', 'codigo');
+        $precoEstampa = Preco::find(1);
+        $carrinho = $request->session()->get('carrinho', []);
+        foreach($carrinho as $row) {
+            $listaEstampas[] = Estampa::where('id', $row['estampa_id'])->pluck('cliente_id', 'imagem_url');
+        }
+
         //dd(session('carrinho') ?? []);
         return view('orders.Cart')
-            ->withPageTitle('Carrinho')
-            ->withCarrinho(session('carrinho') ?? []);
+            ->with('pageTitle', 'Carrinho de compras')
+            ->with('carrinho', session('carrinho') ?? [])
+            ->withTamanhos($listaTamanhos)
+            ->withCores($listaCores)
+            ->withPreco($precoEstampa)
+            ->withEstampas($listaEstampas);
     }
 
-    public function store(Request $request, Tshirt $tshirt)
+    public function store_tshirt(ProductPost $request)
     {
+        $request->validated();
+        //dd($validated_data);
         $carrinho = $request->session()->get('carrinho', []);
-        $qtd = ($carrinho[$tshirt->id]['qtd'] ?? 0) + 1;
-        $carrinho[$tshirt->id] = [
-            'id' => $tshirt->id,
-            'quantidade' => $qtd,
-            'id_encomenda' => $tshirt->id_encomenda,
-            'estampa_id' => $tshirt->estampa_id,
-            'cor_codigo' => $tshirt->cor_codigo,
-            'tamanho' => $tshirt->tamanho,
-            'preco_un' => $tshirt->preco_un
+        $carrinho[] = [
+            'quantidade' => $request->quantidade,
+            'estampa_id' => $request->estampa_id,
+            'cor_codigo' => $request->cor_codigo,
+            'tamanho' => $request->tamanho,
+            'preco_un' => $request->preco_un,
         ];
         $request->session()->put('carrinho', $carrinho);
         return back()
-            ->with('alert-msg', 'Foi adicionada uma tshirt carrinho! Quantidade de inscrições = ' .  $qtd)
+            ->with('alert-msg', 'Foi adicionada uma tshirt carrinho!')
             ->with('alert-type', 'success');
     }
 
-    public function update_tshirt(Request $request, Tshirt $tshirt)
+    public function update_tshirt(ProductPost $request)
     {
+        $request->validate();
         $carrinho = $request->session()->get('carrinho', []);
-        $qtd = $carrinho[$tshirt->id]['qtd'] ?? 0;
-        $qtd += $request->quantidade;
+        $quantidade = $carrinho[$request->id]['quantidade'] ?? 0;
+        $quantidade += $request->quantidade;
         if ($request->quantidade < 0) {
-            $msg = 'Foram removidas ' . -$request->quantidade . ' tshirts! Quantidade de tshirts atuais = ' .  $qtd;
+            $msg = 'Foram removidas ' . -$request->quantidade . ' tshirts! Quantidade de tshirts atuais = ' .  $quantidade;
         } elseif ($request->quantidade > 0) {
-            $msg = 'Foram adicionadas ' . $request->quantidade . ' tshirts! Quantidade de tshirts atuais = ' .  $qtd;
+            $msg = 'Foram adicionadas ' . $request->quantidade . ' tshirts! Quantidade de tshirts atuais = ' .  $quantidade;
         }
-        if ($qtd <= 0) {
-            unset($carrinho[$tshirt->id]);
+        if ($quantidade <= 0) {
+            unset($carrinho[$request->id]);
             $msg = 'Foram removidas todas as tshirts';
         } else {
-            $carrinho[$tshirt->id] = [
-                'id' => $tshirt->id,
-                'quantidade' => $qtd,
-                'id_encomenda' => $tshirt->id_encomenda,
-                'estampa_id' => $tshirt->estampa_id,
-                'cor_codigo' => $tshirt->cor_codigo,
-                'tamanho' => $tshirt->tamanho,
-                'preco_un' => $tshirt->preco_un
+            $carrinho[$request->id] = [
+                'id' => $request->id,
+                'quantidade' => $quantidade,
+                'id_encomenda' => $request->id_encomenda,
+                'estampa_id' => $request->estampa_id,
+                'cor_codigo' => $request->cor_codigo,
+                'tamanho' => $request->tamanho,
+                'preco_un' => $request->preco_un
             ];
         }
         $request->session()->put('carrinho', $carrinho);
@@ -78,6 +93,14 @@ class CartController extends Controller
         return back()
             ->with('alert-msg', 'A T-shirt já não estava no carrinho!')
             ->with('alert-type', 'warning');
+    }
+
+    public function store(Request $request)
+    {
+        dd(
+            'Place code to store the shopping cart / transform the cart into a sale',
+            $request->session()->get('carrinho')
+        );
     }
 
     public function destroy(Request $request)
