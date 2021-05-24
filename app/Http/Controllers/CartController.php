@@ -17,6 +17,7 @@ class CartController extends Controller
         $listaCores = Cor::pluck('nome', 'codigo');
         $precoEstampa = Preco::find(1);
         $carrinho = $request->session()->get('carrinho', []);
+        $listaEstampas[] = null;
         foreach($carrinho as $row) {
             $listaEstampas[] = Estampa::where('id', $row['estampa_id'])->pluck('cliente_id', 'imagem_url');
         }
@@ -32,10 +33,6 @@ class CartController extends Controller
     }
 
     public function store_tshirt(ProductPost $request)
-            ->withPreco($precoEstampa);
-    }
-
-    public function store_tshirt(Request $request, Tshirt $tshirt)
     {
         $request->validated();
         //dd($validated_data);
