@@ -7,10 +7,7 @@ use App\Models\Estampa;
 use Illuminate\Http\Request;
 use App\Models\Cor;
 use App\Models\Preco;
-<<<<<<< HEAD
 use App\Http\Requests\ProductPost;
-=======
->>>>>>> main
 
 class CartController extends Controller
 {
@@ -20,6 +17,7 @@ class CartController extends Controller
         $listaCores = Cor::pluck('nome', 'codigo');
         $precoEstampa = Preco::find(1);
         $carrinho = $request->session()->get('carrinho', []);
+        $listaEstampas[] = null;
         foreach($carrinho as $row) {
             $listaEstampas[] = Estampa::where('id', $row['estampa_id'])->pluck('cliente_id', 'imagem_url');
         }
@@ -34,8 +32,7 @@ class CartController extends Controller
             ->withEstampas($listaEstampas);
     }
 
-
-    public function store_tshirt(Request $request, Estampa $estampa)
+    public function store_tshirt(ProductPost $request)
     {
         $request->validated();
         //dd($validated_data);
