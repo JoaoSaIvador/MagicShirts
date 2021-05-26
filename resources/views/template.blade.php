@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="{{asset('css/stylesheet.css')}}">
 
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <title>{{$pageTitle}}</title>
+    <title>MagicShirts</title>
+   
 </head>
 <body>
 <nav class="mainmenu navbar navbar-expand-lg mb-4 static-top shadow">
@@ -25,21 +26,34 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('Home')}}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('Catalogue')}}">Catálogo</a>
+            <a class="dropdown-item" href="{{route('Catalogue')}}">Catálogo</a>
         </li>
       </ul>
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{route('Cart')}}">Carrinho</a>
+                <a class="dropdown-item" href="{{route('Cart')}}">Carrinho</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Entrar/Registar</a>
-            </li>
+            @guest
+                @if (Route::has('login'))
+                <li class="nav-item">
+                    <a class="dropdown-item" href="{{route('login')}}">Entrar/Registar</a>
+                </li>
+                @endif
+            @else
+                <li class="nav-item">
+                    <a class="dropdown-item" href="{{route('login')}}">perfil</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                </li>
+            @endguest
+            
         </ul>
     </div>
   </div>
