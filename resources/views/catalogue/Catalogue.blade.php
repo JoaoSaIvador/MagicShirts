@@ -20,7 +20,10 @@
         </form>
     </div>
     <div class="" style="width: 250px;">
+    @auth
         <button class="btn btn-dark" type="submit">Mostrar Estampas Pessoais</button>
+    @endauth
+        
     </div>
 </div>
 <div class="album">
