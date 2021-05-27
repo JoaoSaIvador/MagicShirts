@@ -7,11 +7,12 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link href="{{asset('CSS/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('CSS/Stylesheet.css')}}" rel="stylesheet">
 
     <title>MagicShirts</title>
-   
+
 </head>
 <body>
 <nav class="mainmenu navbar navbar-expand-lg mb-4 static-top shadow">
@@ -49,7 +50,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                 </li>
             @endguest
-            
+
         </ul>
     </div>
   </div>
