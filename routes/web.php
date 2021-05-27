@@ -7,7 +7,7 @@ use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-
+use App\Http\Controllers\HomeController;
 
 
 
