@@ -13,7 +13,7 @@
                     <input type="submit" hidden><a rel="tag" href="{{route('Catalogue', ['categoria_id' => $estampa->categoria_id])}}">{{$categoria}}</a>
                 </span>
             </div>
-            <form action="{{route('Cart.store', ['estampa' => $estampa])}}" method="post">
+            <form action="{{route('Cart.store')}}" method="post">
             @csrf
                 <input type="number" name="estampa_id" hidden value="{{$estampa->id}}">
                 <div class="m-bot15"> <input type="text" hidden value="{{$preco->preco_un_catalogo}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco->preco_un_catalogo}}</span></div>

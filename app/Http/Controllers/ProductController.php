@@ -49,5 +49,6 @@ class ProductController extends Controller
         // If something is not valid, execution is interrupted.
         // Remaining code is only executed if validation passes
         Tshirt::create($validated);
+        */
     }
 }
