@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tshirt;
 use App\Models\Estampa;
 use Illuminate\Http\Request;
 use App\Models\Cor;
@@ -64,10 +63,11 @@ class CartController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function update_tshirt(ProductPost $request)
+    public function update_tshirt(ProductPost $request, int $index)
     {
         $request->validate();
         $carrinho = $request->session()->get('carrinho', []);
+        dd($index);
         $quantidade = $carrinho[$request->id]['quantidade'] ?? 0;
         $quantidade += $request->quantidade;
         if ($request->quantidade < 0) {
@@ -97,11 +97,15 @@ class CartController extends Controller
 
     public function destroy_tshirt(Request $request, int $index)
     {
-        dd($index);
         $carrinho = $request->session()->get('carrinho', []);
-        if (array_key_exists($index, $carrinho)) {
-            unset($carrinho[$index]);
+        if (array_key_exists($index, $carrinho['items'])) {
+            $carrinho['quantidadeItens']--;
+            $carrinho['precoTotal'] -= $carrinho['items'][$index]['subtotal'];
+            unset($carrinho['items'][$index]);
+
+            $carrinho['items'] = array_values($carrinho['items']);
             $request->session()->put('carrinho', $carrinho);
+            
             return back()
                 ->with('alert-msg', 'A T-shirt foi removida')
                 ->with('alert-type', 'success');
@@ -117,13 +121,5 @@ class CartController extends Controller
             'Place code to store the shopping cart / transform the cart into a sale',
             $request->session()->get('carrinho')
         );
-    }
-
-    public function destroy(Request $request)
-    {
-        $request->session()->forget('carrinho');
-        return back()
-            ->with('alert-msg', 'Carrinho foi limpo!')
-            ->with('alert-type', 'danger');
     }
 }

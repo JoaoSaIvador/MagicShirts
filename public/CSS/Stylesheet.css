@@ -9,7 +9,7 @@ body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
-    background-color: rgba(39, 39, 39, 1);
+    /*background-color: rgba(39, 39, 39, 1);*/
 }
 
 .mainmenu{
@@ -118,4 +118,21 @@ body {
     justify-content: left;
 }
 
+.cart-price {
+    display: inline;
+}
 
+.cart-quantity {
+    width: 150px;
+    margin-top: 38px;
+}
+
+.cart-remove {
+    margin-top: 25px;
+    margin-left: 10px;
+    height: 30px;
+}
+
+.cart-update {
+    padding: 3px 7px 3px 7px;
+}
