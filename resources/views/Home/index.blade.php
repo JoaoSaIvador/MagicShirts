@@ -8,13 +8,41 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{{asset('img/Carrousel2.jpg')}}" class="d-block" alt="...">
+      <div class="album">
+        <div class="container-xl">
+          <div class="row" style="justify-content: center;">
+            <div class="card col-lg-3 m-2">
+              <div class="view overlay">
+                <img class="card-img-top estampa-img" id="card-img-top" src="{{asset('img/Carrousel1.jpg')}}" alt="Imagem da Estampa">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+    <div class="album">
+        <div class="container-xl">
+          <div class="row" style="justify-content: center;">
+            <div class="card col-lg-3 m-2">
+              <div class="view overlay">
+                <img class="card-img-top estampa-img" id="card-img-top" src="{{asset('img/Carrousel3.jpg')}}" alt="Imagem da Estampa">
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
     <div class="carousel-item">
-      <img src="{{asset('img/Carrousel2.jpg')}}" class="d-block" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="{{asset('img/Carrousel2.jpg')}}" class="d-block" alt="...">
+    <div class="album">
+        <div class="container-xl">
+          <div class="row" style="justify-content: center;">
+            <div class="card col-lg-3 m-2">
+              <div class="view overlay">
+                <img class="card-img-top estampa-img" id="card-img-top" src="{{asset('img/Carrousel2.jpg')}}" alt="Imagem da Estampa">
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

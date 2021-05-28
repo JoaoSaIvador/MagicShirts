@@ -1,5 +1,5 @@
 @extends('template')
-
+@section('title', 'MagicShirts - Registar')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

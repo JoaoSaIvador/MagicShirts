@@ -118,10 +118,31 @@ body {
     justify-content: left;
 }
 
-#carouselExampleIndicators{
+
+
+.carouselExampleIndicators img{
+    height: 500px;
+}
+
+.authCardBody{
+    display: flex;
+    margin: 80px 15%;
+    padding: 40px 0px;
+    background-color: rgb(26, 26, 26); 
+    color:white;
+    justify-content: center;
+
+} 
+
+.authLogo{
+    flex-direction: column;
+    padding: 50px 0px;
 
 }
 
-#carouselExampleIndicators img{
-    height: 500px;
+@media (max-device-width: 960px){
+    .authCardBody{
+        margin: 80px 5%;
+        background-color:blue;
+    }
 }
