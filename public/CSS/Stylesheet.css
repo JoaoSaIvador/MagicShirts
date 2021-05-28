@@ -118,4 +118,10 @@ body {
     justify-content: left;
 }
 
+#carouselExampleIndicators{
 
+}
+
+#carouselExampleIndicators img{
+    height: 500px;
+}
