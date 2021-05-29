@@ -23,7 +23,7 @@
     @auth
         <button class="btn btn-dark" type="submit">Mostrar Estampas Pessoais</button>
     @endauth
-        
+
     </div>
 </div>
 <div class="album">
@@ -45,6 +45,9 @@
             @empty
             <p class="display-4 font-weight-bold">Não existem estampas</p>
             @endforelse
+        </div>
+        <div class="d-flex justify-content-center">
+            {{ $estampas->withQueryString()->links() }}
         </div>
     </div>
 </div>

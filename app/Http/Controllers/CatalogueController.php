@@ -16,7 +16,7 @@ class CatalogueController extends Controller
         $listaCategorias = Categoria::pluck('nome', 'id');
         $categoria = $request->query('categoria_id', null);
 
-        $listaEstampas = Estampa::where('categoria_id', $categoria)->whereNull('cliente_id')->get();
+        $listaEstampas = Estampa::where('categoria_id', $categoria)->whereNull('cliente_id')->paginate(9);
 
         //dd($precoEstampa->preco_un_catalogo);
         return view('catalogue.Catalogue')

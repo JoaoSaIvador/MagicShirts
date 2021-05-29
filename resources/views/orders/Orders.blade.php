@@ -1,6 +1,33 @@
 @extends('template')
 @section('content')
 <div class="container">
+    <div class="col-5 ">
+        <form method="GET" action="#" class="form-group">
+            <div class="input-group">
+                <select class="custom-select" id="idFiltro">
+                    <option value="none" selected disabled hidden>Filtrar por</option>
+                    <option value="" >Sem Filtro</option>
+                    <option value="cliente_id">Cliente Id
+
+                    </option>
+                    <option value="estado">Estado
+                        <select name="valor" id="PLACEHOLDER">
+                            <option value="anulada">Anulada</option>
+                            <option value="fechada">Fechada</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="aberta">Aberta</option>
+                        </select>
+                    </option>
+                    <option value="data">Data
+
+                    </option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -13,7 +40,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-light">
             @foreach ($encomendas as $encomenda)
             <tr>
                 <td>{{$encomenda->id}}</td>
@@ -21,29 +48,7 @@
                 <td>{{$encomenda->data}}</td>
                 <td>${{$encomenda->preco_total}}</td>
                 <td>
-                    <button type="button" class="btn btn-primary launch" data-toggle="modal" data-target="#staticBackdrop">Detalhes</button>
-                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body ">
-                                    <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
-                                    <div class="px-4 py-5">
-                                        <h5 class="text-uppercase">Jonathan Adler</h5>
-                                        <h4 class="mt-5 theme-color mb-5">Obrigado pelo seu pedido</h4> <span class="theme-color">Sumário do Pagamento</span>
-                                        <div class="mb-3">
-                                            <hr class="new1">
-                                        </div>
-                                        @foreach ($tshirts[$encomenda->id] as $tshirt)
-                                            <div class="d-flex justify-content-between"> <span class="font-weight-bold">Ether Chair(Qty:1)</span> <span class="text-muted">$1750.00</span> </div>
-                                            <div class="d-flex justify-content-between"> <small>Shipping</small> <small>$175.00</small> </div>
-                                            <div class="d-flex justify-content-between"> <small>Tax</small> <small>$200.00</small> </div>
-                                        @endforeach
-                                        <div class="d-flex justify-content-between mt-3"> <span class="font-weight-bold">Total</span> <span class="font-weight-bold theme-color">${{$encomenda->preco_total}}</span> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="{{route('Orders.view', ['encomenda' => $encomenda])}}"><button type="button" class="btn btn-primary launch">Detalhes</button></a>
                 </td>
                 <td>
                     <a href="{{route('Orders', ['encomenda' => $encomenda])}}"
