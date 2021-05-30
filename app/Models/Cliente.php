@@ -9,7 +9,7 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nif', 'endereco', 'tipo_pagamento', 'ref_pagamento'];
+    protected $fillable = ['id','nif', 'endereco', 'tipo_pagamento', 'ref_pagamento'];
 
     public function encomendas()
     {
