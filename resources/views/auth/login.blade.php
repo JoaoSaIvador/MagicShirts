@@ -51,7 +51,7 @@
                             <button type="button" class="authButtons">{{ __('Registar') }}</button>   
                         </a>
 
-                        <button type="submit" id="loginButton" class="authButtons">{{ __('Entrar') }}</button>         
+                        <button type="submit" class="authButtons authRightButton">{{ __('Entrar') }}</button>         
                     </div>
                 </div> 
 

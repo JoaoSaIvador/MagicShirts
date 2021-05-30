@@ -164,7 +164,7 @@ border-width: 1px;
     background-color: rgb(46, 46, 46);
 }
 
-#loginButton{
+.authRightButton{
     margin-left: 60px;
 }
 #authLinkContainer{
