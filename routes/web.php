@@ -26,7 +26,7 @@ use App\Http\Controllers\CartController;
 Route::get('/',[HomeController::class,'index'])->name('Home');
 Route::get('/home', [HomeController::class, 'index']);
 
-Route::get('admin', [DashboardController::class, 'index'])->name('Dashboard');
+//Route::get('admin', [DashboardController::class, 'index'])->name('Dashboard');
 
 Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
 Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Catalogue.view');
@@ -44,6 +44,9 @@ Route::delete('carrinho', [CartController::class, 'destroy_tshirt'])->name('Cart
 Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
 Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');
 Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');
+
+
+Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard'); 
 
 Route::post('register', [UserController::class, 'register']);
 Auth::routes();
