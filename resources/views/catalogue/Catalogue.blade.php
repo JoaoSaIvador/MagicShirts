@@ -32,7 +32,7 @@
             @forelse ($estampas as $estampa)
                 <div class="card col-lg-3 m-2">
                     <div class="view overlay">
-                        <a href="{{route('Product.view', ['estampa' => $estampa])}}">
+                        <a href="{{route('Catalogue.view', ['estampa' => $estampa])}}">
                             <img class="card-img-top estampa-img" id="card-img-top" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
                         </a>
                         <div class="mask rgba-white-slight"></div>
@@ -49,7 +49,7 @@
         <div class="d-flex justify-content-center">
             {{ $estampas->withQueryString()->links() }}
             @auth
-                <a class="btn btn-success btn-s ml-2 mb-3" href="{{route('Product.create')}}" role="button" aria-pressed="true">Adicionar Estampa</a>
+                <a class="btn btn-success btn-s ml-2 mb-3" href="{{route('Catalogue.create')}}" role="button" aria-pressed="true">Adicionar Estampa</a>
             @endauth
         </div>
     </div>

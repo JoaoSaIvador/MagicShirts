@@ -29,12 +29,12 @@ Route::get('/home', [HomeController::class, 'index']);
 Route::get('admin', [DashboardController::class, 'index'])->name('Dashboard');
 
 Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
-Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Product.view');
-Route::get('catalogo/create', [CatalogueController::class, 'create'])->name('Product.create');
-Route::get('catalogo/edit/{estampa}', [CatalogueController::class, 'edit'])->name('Product.edit');
-Route::post('catalogo/{estampa}', [CatalogueController::class, 'store'])->name('Product.store');
-Route::put('catalogo/{estampa}', [CatalogueController::class, 'update'])->name('Product.update');
-Route::delete('catalogo/{estampa}', [CatalogueController::class, 'destroy'])->name('Product.destroy');
+Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Catalogue.view');
+Route::get('catalogo/create', [CatalogueController::class, 'create'])->name('Catalogue.create');
+Route::get('catalogo/{estampa}/edit', [CatalogueController::class, 'edit'])->name('Catalogue.edit');
+Route::post('catalogo', [CatalogueController::class, 'store'])->name('Catalogue.store');
+Route::put('catalogo/{estampa}', [CatalogueController::class, 'update'])->name('Catalogue.update');
+Route::delete('catalogo/{estampa}', [CatalogueController::class, 'destroy'])->name('Catalogue.destroy');
 
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');

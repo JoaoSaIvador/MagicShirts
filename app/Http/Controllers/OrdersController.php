@@ -55,7 +55,7 @@ class OrdersController extends Controller
         }
         //dd($listaEstampas);
 
-        return view('details.Details-order')
+        return view('orders.Details-order')
             ->withPageTitle('Detalhes')
             ->withUser($user)
             ->withEncomenda($encomenda)
