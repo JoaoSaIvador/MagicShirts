@@ -23,14 +23,17 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="dropdown-item text-light" href="#">Administrador</a>
-            </li>
-            <li class="nav-item">
                 <a class="dropdown-item text-light" href="{{route('Catalogue')}}">Catálogo</a>
             </li>
+            @auth
             <li class="nav-item">
                 <a class="dropdown-item text-light" href="{{route('Orders')}}">Encomendas</a>
             </li>
+            <li class="nav-item">
+                <a class="dropdown-item text-light" href="#">Administrador</a>
+            </li>
+            @endauth
+
         </ul>
         </div>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
