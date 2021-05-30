@@ -72,4 +72,19 @@ class OrdersController extends Controller
             ->withPageTitle('Encomendas');
     }
 
+    public function filter($filtro)
+    {
+        $data;
+        switch($filtro)
+        {
+            case 'nome':
+                //$data = select ordenado por nome
+                break;
+            case 'id':
+                // $data = select ordenado por id
+
+                break;
+        }
+    }
+    return view('orders.Details-order')-> with($data);
 }
