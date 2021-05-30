@@ -48,6 +48,9 @@
         </div>
         <div class="d-flex justify-content-center">
             {{ $estampas->withQueryString()->links() }}
+            @auth
+                <a class="btn btn-success btn-s ml-2 mb-3" href="{{route('Product.create')}}" role="button" aria-pressed="true">Adicionar Estampa</a>
+            @endauth
         </div>
     </div>
 </div>

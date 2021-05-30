@@ -9,6 +9,8 @@ use App\Models\Estampa;
 use App\Models\User;
 use App\Models\Cor;
 
+use App\Http\Requests\OrderPost;
+
 class OrdersController extends Controller
 {
     public function index(Request $request)
@@ -62,8 +64,12 @@ class OrdersController extends Controller
             ->withCores($listaCores);
     }
 
-    public function destroy(Encomenda $encomenda)
+    public function update(OrderPost $request, Encomenda $encomenda)
     {
-        return redirect()->route('Order');
+        $encomenda->fill($request->validated());
+        $encomenda->save();
+        return redirect()->route('Orders')
+            ->withPageTitle('Encomendas');
     }
+
 }

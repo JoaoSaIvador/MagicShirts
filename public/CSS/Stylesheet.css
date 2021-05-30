@@ -9,11 +9,11 @@ body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
-    background-color: rgba(39, 39, 39, 1);
+    background-color: #212121;
 }
 
 .mainmenu{
-    background-color: rgba(24, 24, 24, 1);
+    background-color: rgba(12, 12, 12, 1);
 }
 
 /*catalogue*/
@@ -122,3 +122,71 @@ body {
 
 
 
+
+.carouselExampleIndicators img{
+    height: 500px;
+}
+
+/*auth pages*/
+
+.authCardBody{
+    display: flex;
+    padding: 40px 0px;
+    background-color:  rgba(12, 12, 12, 1); 
+    color:white;
+    justify-content: center;
+    border-radius: 8px;
+} 
+
+.authLogo{
+    padding: 30px 0px;
+    margin-bottom:40px;
+}
+
+.authButtonsContainer{
+    padding: 0px 10px;
+    display: flex;
+    flex-direction:row;
+    margin-top: 10px;
+}
+
+.authButtons{
+padding: 10px 40px;
+background-color: rgb(25, 25, 25);
+color: white;
+border-radius: 5px;
+border-color: white;
+border-style: solid;
+border-width: 1px;
+}
+
+.authButtons:hover{
+    background-color: rgb(46, 46, 46);
+}
+
+#loginButton{
+    margin-left: 60px;
+}
+#authLinkContainer{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.authLink{
+    align-self: center;
+    font-size: medium;
+    color: white; 
+}
+.authLink:hover{
+    color: white; 
+}
+
+
+
+@media (max-device-width: 960px){
+    .authCardBody{
+        margin: 80px 5%;
+        background-color:blue;
+    }
+}

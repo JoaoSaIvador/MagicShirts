@@ -45,4 +45,9 @@ class CatalogueController extends Controller
             ->withPreco($precoEstampa)
             ->withCategoria($categoria);
     }
+
+    public function create()
+    {
+
+    }
 }

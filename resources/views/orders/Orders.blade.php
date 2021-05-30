@@ -37,7 +37,6 @@
                 <th>Preço Total</th>
                 <th>Opcional</th>
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody class="bg-light">
@@ -51,15 +50,24 @@
                     <a href="{{route('Orders.view', ['encomenda' => $encomenda])}}"><button type="button" class="btn btn-primary launch">Detalhes</button></a>
                 </td>
                 <td>
-                    <a href="{{route('Orders', ['encomenda' => $encomenda])}}"
-                    class="btn btn-success" role="button" aria-pressed="true">Alterar</a>
-                </td>
-                <td>
-                    <form action="{{route('Orders', ['encomenda' => $encomenda])}}" method="POST">
+                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$encomenda->id}}" aria-expanded="false" aria-controls="collapseOrder">
+                        Alterar
+                    </button>
+                    <div class="collapse mb-n3 mt-2" id="collapse{{$encomenda->id}}">
+                        <form action="{{route('Orders.update', ['encomenda' => $encomenda])}}" method="POST" class="form-group">
                         @csrf
-                        @method("DELETE")
-                            <input type="submit" class="btn btn-danger" value="Apagar">
-                    </form>
+                        @method('PUT')
+                            <div class="row">
+                                <select name="estado" class="custom-select col">
+                                    <option value="none" selected disabled hidden>Alterar Estado</option>
+                                    <option value="paga">Paga</option>
+                                    <option value="fechada">Fechada</option>
+                                    <option value="anulada">Anulada</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm col ml-1">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </td>
             </tr>
             @endforeach
