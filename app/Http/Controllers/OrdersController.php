@@ -15,6 +15,7 @@ class OrdersController extends Controller
 {
     public function index(Request $request)
     {
+
         $filtro = $request->except('_token');;
         //$key = array_keys($data);
 
@@ -28,11 +29,6 @@ class OrdersController extends Controller
         //$listaEncomendas = Encomenda::where('cliente_id', 511)->paginate(20);
 
         //$listaEncomendas = Encomenda::where('data', "2019-12-03")->paginate(20);
-
-        foreach ($listaEncomendas as $encomenda) {
-            $listaTshirts[$encomenda['id']] = $encomenda->tshirts;
-        }
-
         //dd($listaEstampas);
 
         return view('orders.Orders')
@@ -50,8 +46,8 @@ class OrdersController extends Controller
         }
 
         foreach ($listaTshirts as $tshirt) {
-            $listaEstampas[] = Estampa::where('id', $tshirt->estampa_id)->value('nome');
-            $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->value('nome');
+            $listaEstampas[] = Estampa::where('id', $tshirt->estampa_id)->withTrashed()->value('nome');
+            $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->withTrashed()->value('nome');
         }
         //dd($listaEstampas);
 
@@ -85,6 +81,7 @@ class OrdersController extends Controller
 
                 break;
         }
+        return view('orders.Details-order')-> with($data);
     }
-    return view('orders.Details-order')-> with($data);
+
 }

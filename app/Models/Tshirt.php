@@ -24,6 +24,6 @@ class Tshirt extends Model
 
     public function corRef()
     {
-        return $this->belongsTo(Cor::class, 'cor_codigo', 'codigo');
+        return $this->belongsTo(Cor::class, 'cor_codigo', 'codigo')->withTrashed();
     }
 }

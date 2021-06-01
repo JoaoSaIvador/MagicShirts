@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StampPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Estampa;
 use App\Models\Categoria;
@@ -20,7 +21,6 @@ class CatalogueController extends Controller
 
         $listaEstampas = Estampa::where('categoria_id', $categoria)->whereNull('cliente_id')->paginate(9);
 
-        //dd($precoEstampa->preco_un_catalogo);
         return view('catalogue.Catalogue')
             ->withPageTitle('Catalogo')
             ->withEstampas($listaEstampas)
@@ -28,15 +28,33 @@ class CatalogueController extends Controller
             ->withCategorias($listaCategorias);
     }
 
+    public function view_personal()
+    {
+        //dd(Auth::user()->id);
+        $userId = Auth::user()->id;
+        $listaEstampas = Estampa::where('cliente_id', $userId)->paginate(9);
+        return view('catalogue.Personal')
+            ->withPageTitle('Catalogo Pessoal')
+            ->withEstampas($listaEstampas);
+    }
+
     public function view_product(Estampa $estampa)
     {
         $listaCores = Cor::pluck('nome', 'codigo');
-        $precoEstampa = Preco::find(1);
+        $preco = Preco::find(1);
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $categoria = Categoria::where('id', $estampa->categoria_id)->value('nome');
 
         if (is_null($categoria)) {
             $categoria = "Sem Categoria";
+        }
+        if (!is_null($estampa->cliente_id)) {
+
+            $precoEstampa = $preco['preco_un_proprio'];
+        }
+        else
+        {
+            $precoEstampa = $preco['preco_un_catalogo'];
         }
 
         return view('catalogue.Product')
@@ -71,9 +89,9 @@ class CatalogueController extends Controller
         }
         $path = $request->imagem_url->store('public/estampas');
         $newEstampa->imagem_url = basename($path);
-        //$newEstampa->cliente_id = auth()->user()->id;
+        $newEstampa->cliente_id = auth()->user()->id;
         $newEstampa->save();
-        return redirect()->route('Catalogue')
+        return redirect()->route('Catalogue.personal')
             ->with('alert-msg', 'Estampa "' . $newEstampa->nome . '" foi criada com sucesso!')
             ->with('alert-type', 'success');
     }
@@ -97,16 +115,17 @@ class CatalogueController extends Controller
     public function destroy(Estampa $estampa)
     {
         $oldName = $estampa->nome;
+        $oldStampImage = $estampa->url_foto;
         try {
             $estampa->delete();
-            return redirect()->route('catalogue.Catalogue')
+            Storage::delete('public/estampas/' . $oldStampImage);
+            return back()
                 ->with('alert-msg', 'Estampa "' . $estampa->nome . '" foi apagada com sucesso!')
                 ->with('alert-type', 'success');
         } catch (\Throwable $th) {
             // $th é a exceção lançada pelo sistema - por norma, erro ocorre no servidor BD MySQL
             // Descomentar a próxima linha para verificar qual a informação que a exceção tem
             //dd($th, $th->errorInfo);
-
             if ($th->errorInfo[1] == 1451) {   // 1451 - MySQL Error number for "Cannot delete or update a parent row: a foreign key constraint fails (%s)"
                 return redirect()->route('catalogue.Catalogue')
                     ->with('alert-msg', 'Não foi possível apagar a Estampa "' . $oldName . '", porque esta estampa já está em uso!')
