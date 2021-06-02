@@ -32,6 +32,7 @@ Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue')
 Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Catalogue.view');
 Route::get('catalogo/create', [CatalogueController::class, 'create'])->name('Catalogue.create');
 Route::get('catalogo/{estampa}/edit', [CatalogueController::class, 'edit'])->name('Catalogue.edit');
+Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->name('Catalogue.personal');
 Route::post('catalogo', [CatalogueController::class, 'store'])->name('Catalogue.store');
 Route::put('catalogo/{estampa}', [CatalogueController::class, 'update'])->name('Catalogue.update');
 Route::delete('catalogo/{estampa}', [CatalogueController::class, 'destroy'])->name('Catalogue.destroy');
@@ -48,7 +49,7 @@ Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name(
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
 
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard'); 
+Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
 
 Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);

@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <section class="row">
         <div class="col d-flex justify-content-center">
-            <img class="product-img mx-auto" src="{{($estampa->cliente_id == null) ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
+            <img class="product-img mx-auto" src="{{$estampa->imagem_url ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
         </div>
         <div class="col">
             <p class="display-6 font-weight-bold">{{$estampa->nome}}</p>
@@ -16,7 +16,7 @@
             <form action="{{route('Cart.store', ['estampa' => $estampa])}}" method="post">
             @csrf
                 <input type="number" name="estampa_id" hidden value="{{$estampa->id}}">
-                <div class="m-bot15"> <input type="text" hidden value="{{$preco->preco_un_catalogo}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco->preco_un_catalogo}}</span></div>
+                <div class="m-bot15"> <input type="text" hidden value="{{$preco}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco}}</span></div>
                 <hr>
                 <select name="cor_codigo" class="custom-select catalogue-select">
                     <option value="none" selected disabled hidden>Cor da T-shirt</option>

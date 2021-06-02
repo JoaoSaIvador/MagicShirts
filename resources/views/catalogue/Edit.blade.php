@@ -8,11 +8,11 @@
             <div class="form-group">
                 <img src="{{$estampa->imagem_url ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}"
                      alt="Foto da estampa"  class="img-profile"
-                     style="max-width:100%">
+                     style="max-width:25%">
             </div>
             <div class="form-group text-right">
                 <button type="submit" class="btn btn-success" name="ok">Alterar</button>
-                <a href="{{route('Catalogue.edit', ['estampa' => $estampa])}}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{route('Catalogue')}}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
