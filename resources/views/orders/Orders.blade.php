@@ -1,5 +1,5 @@
-@extends('template')
-@section('content')
+@extends('home.dashboard')
+@section('adminContent')
 <div class="container">
     <div class="col-5 ">
         <form method="GET" action="#" class="form-group">

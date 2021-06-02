@@ -190,3 +190,31 @@ border-width: 1px;
         background-color:blue;
     }
 }
+<<<<<<< Updated upstream
+=======
+
+.adminMenu{
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    margin-top: 97px;
+    padding-top: 20px;
+}
+
+.adminMenu a {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.adminContent{
+    padding-left: 200px;
+}
+>>>>>>> Stashed changes
