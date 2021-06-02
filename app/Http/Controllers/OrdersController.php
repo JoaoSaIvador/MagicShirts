@@ -35,7 +35,7 @@ class OrdersController extends Controller
 
         //dd($listaEstampas);
 
-        return view('orders.Orders')
+        return view('orders.ClientFilterForm')
             ->withPageTitle('Encomendas')
             ->withEncomendas($listaEncomendas);
     }
@@ -86,5 +86,5 @@ class OrdersController extends Controller
                 break;
         }
     }
-    return view('orders.Details-order')-> with($data);
+    //return view('orders.Details-order')-> with($data);
 }

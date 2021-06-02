@@ -45,6 +45,8 @@ Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
 Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');
 Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');
 
+Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders');
+
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard'); 
 
