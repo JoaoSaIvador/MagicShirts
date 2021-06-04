@@ -6,7 +6,7 @@
             @method('PUT')
             @include('catalogue.partials.create-edit')
             <div class="form-group">
-                <img src="{{$estampa->imagem_url ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}"
+                <img src="{{$estampa->getImagemFullUrl() }}"
                      alt="Foto da estampa"  class="img-profile"
                      style="max-width:25%">
             </div>

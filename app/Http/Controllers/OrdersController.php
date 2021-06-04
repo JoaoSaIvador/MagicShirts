@@ -24,7 +24,7 @@ class OrdersController extends Controller
             $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->paginate(20);
         }
         else{
-            $listaEncomendas = Encomenda::paginate(20);
+            $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
         }
         //$listaEncomendas = Encomenda::where('cliente_id', 511)->paginate(20);
 

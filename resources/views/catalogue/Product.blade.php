@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <section class="row">
         <div class="col d-flex justify-content-center">
-            <img class="product-img mx-auto" src="{{$estampa->imagem_url ? asset('storage/estampas/' . $estampa->imagem_url) : asset('img/default_img.jpg') }}" alt="Imagem da Estampa">
+            <img class="product-img mx-auto" src="{{$estampa->getImagemFullUrl()}}" alt="Imagem da Estampa">
         </div>
         <div class="col">
             <p class="display-6 font-weight-bold">{{$estampa->nome}}</p>

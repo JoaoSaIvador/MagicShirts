@@ -38,6 +38,13 @@ class CatalogueController extends Controller
             ->withEstampas($listaEstampas);
     }
 
+    public function view_image(Estampa $estampa)
+    {
+        //dd($estampa->getImagemFullUrl());
+        $path = storage_path('app/estampas_privadas/'. $estampa->imagem_url);
+        return response()->file($path);
+    }
+
     public function view_product(Estampa $estampa)
     {
         $listaCores = Cor::pluck('nome', 'codigo');
@@ -87,9 +94,18 @@ class CatalogueController extends Controller
         if ($request->has('descricao')) {
             $newEstampa->descricao = $validated_data['descricao'];
         }
-        $path = $request->imagem_url->store('public/estampas');
+
+        if (auth()->user()->tipo == 'C') {
+            $path = $validated_data['imagem_url']->store('estampas_privadas');
+            $newEstampa->cliente_id = auth()->user()->id;
+        }
+        else
+        {
+            $path = $validated_data['imagem_url']->store('public/estampas');
+            $newEstampa->cliente_id = null;
+        }
+
         $newEstampa->imagem_url = basename($path);
-        $newEstampa->cliente_id = auth()->user()->id;
         $newEstampa->save();
         return redirect()->route('Catalogue.personal')
             ->with('alert-msg', 'Estampa "' . $newEstampa->nome . '" foi criada com sucesso!')
@@ -103,8 +119,16 @@ class CatalogueController extends Controller
         if ($request->has('descricao')) {
             $estampa->descricao = $validated_data['descricao'];
         }
-        Storage::delete('public/estampas/' . $estampa->imagem_url);
-        $path = $request->imagem_url->store('public/estampas');
+
+        if (auth()->user()->tipo == 'C') {
+            Storage::delete('estampas_privadas' . $estampa->imagem_url);
+            $path = $validated_data['imagem_url']->store('estampas_privadas');
+        }
+        else{
+            Storage::delete('public/estampas/' . $estampa->imagem_url);
+            $path = $validated_data['imagem_url']->store('public/estampas');
+        }
+
         $estampa->imagem_url = basename($path);
         $estampa->save();
         return redirect()->route('Catalogue')
@@ -118,9 +142,15 @@ class CatalogueController extends Controller
         $oldStampImage = $estampa->url_foto;
         try {
             $estampa->delete();
-            Storage::delete('public/estampas/' . $oldStampImage);
+            if (auth()->user()->tipo == 'C') {
+                Storage::delete('estampas_privadas' . $oldStampImage);
+            }
+            else{
+                Storage::delete('public/estampas/' . $oldStampImage);
+            }
+
             return back()
-                ->with('alert-msg', 'Estampa "' . $estampa->nome . '" foi apagada com sucesso!')
+                ->with('alert-msg', 'Estampa "' . $oldName . '" foi apagada com sucesso!')
                 ->with('alert-type', 'success');
         } catch (\Throwable $th) {
             // $th é a exceção lançada pelo sistema - por norma, erro ocorre no servidor BD MySQL

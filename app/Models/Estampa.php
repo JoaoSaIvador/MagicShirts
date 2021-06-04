@@ -26,4 +26,15 @@ class Estampa extends Model
     {
         return $this->belongsTo(Categoria::class)->withTrashed();
     }
+
+    public function getImagemFullUrl()
+    {
+        if (is_null($this['cliente_id'])) {
+            return asset('storage/estampas/'. $this['imagem_url']);
+        }
+        else
+        {
+            return route('Catalogue.image', ['estampa' => $this]);
+        }
+    }
 }

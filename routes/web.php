@@ -33,6 +33,8 @@ Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_prod
 Route::get('catalogo/create', [CatalogueController::class, 'create'])->name('Catalogue.create');
 Route::get('catalogo/{estampa}/edit', [CatalogueController::class, 'edit'])->name('Catalogue.edit');
 Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->name('Catalogue.personal');
+Route::get('catalogo/pessoal/{estampa}/imagem', [CatalogueController::class , 'view_image'])->name('Catalogue.image');
+
 Route::post('catalogo', [CatalogueController::class, 'store'])->name('Catalogue.store');
 Route::put('catalogo/{estampa}', [CatalogueController::class, 'update'])->name('Catalogue.update');
 Route::delete('catalogo/{estampa}', [CatalogueController::class, 'destroy'])->name('Catalogue.destroy');
