@@ -17,15 +17,9 @@ class EstampaPolicy
 
     public function view(User $user, Estampa $estampa)
     {
-        return $estampa->client_id === null || $estampa->client_id === $user->id;
+        return $estampa->client_id === null || $estampa->client_id === $user->id ||$user->tipo === 'A' || $user->tipo === 'F';
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
     public function create(User $user)
     {
         return $user->tipo === 'A' || $user->tipo === 'C';

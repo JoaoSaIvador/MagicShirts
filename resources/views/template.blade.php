@@ -27,10 +27,7 @@
             </li>
             @auth
             <li class="nav-item">
-                <a class="dropdown-item text-light" href="{{route('Orders')}}">Encomendas</a>
-            </li>
-            <li class="nav-item">
-                <a class="dropdown-item text-light" href="#">Administrador</a>
+                <a class="dropdown-item text-light" href="{{route('Dashboard')}}">Administrador</a>
             </li>
             @endauth
 
