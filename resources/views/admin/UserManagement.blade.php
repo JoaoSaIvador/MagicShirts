@@ -4,11 +4,13 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th>Nº Cliente</th>
+                <th>User Id</th>
                 <th>Nome</th>
                 <th>Data Inscrição</th>
+                <th>Tipo</th>
                 <th>Permissões</th>
                 <th>Opcional</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="bg-light">
@@ -17,8 +19,9 @@
                 <td>{{$user->id}}</td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->created_at}}</td>
+                <td>{{$user->tipo}}</td>
                 <td>
-                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$user->id}}" aria-expanded="false" aria-controls="collapseOrder">
+                    <button class="btn btn-success btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$user->id}}" aria-expanded="false" aria-controls="collapseOrder">
                         Alterar Permissões
                     </button>
                     <div class="collapse mb-n3 mt-2" id="collapse{{$user->id}}">
@@ -29,13 +32,13 @@
                                 <select name="tipo" class="custom-select col">
                                     <option value="none" selected disabled hidden>Alterar permissões</option>
                                     @if ($user->tipo != "A")
-                                        <option value="paga">Admin</option>
+                                        <option value="A">Admin</option>
                                     @endif
                                     @if ($user->tipo != "F")
-                                        <option value="fechada">Funcionario</option>
+                                        <option value="F">Funcionario</option>
                                     @endif
                                     @if ($user->tipo != "C")
-                                        <option value="fechada">Cliente</option>
+                                        <option value="C">Cliente</option>
                                     @endif
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm col ml-1">Salvar</button>
@@ -44,12 +47,23 @@
                     </div>
                 </td>
                 <td>
-                @if ($user->bloqueado != "0")
-                    <a href="{{route('users.block', ['user' => $user])}}"><button type="button" class="btn btn-primary launch">Bloquear</button></a>
-                @endif
-                @if ($user->bloqueado != "1")
-                    <a href="{{route('users.unblock', ['user' => $user])}}"><button type="button" class="btn btn-primary launch">Desbloquear</button></a>
-                @endif 
+                    <form action="{{route('Users.block', ['user' => $user])}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        @if ($user->bloqueado != "0")
+                            <button type="submit" class="btn btn-primary btn-sm launch">Bloquear</button>
+                        @endif
+                        @if ($user->bloqueado != "1")
+                            <button type="submit" class="btn btn-primary btn-sm launch">Desbloquear</button>
+                        @endif
+                    </form>
+                </td>
+                <td>
+                    <form action="{{route('Users.delete', ['user' => $user])}}" method="post">
+                        @csrf
+                        @method("DELETE")
+                            <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                    </form>
                 </td>
             </tr>
             @endforeach

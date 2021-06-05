@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Models\Users;
 
@@ -11,6 +13,17 @@ class UserController extends Controller
     {
         //if(!logged)
         return view('user.Login')->withPageTitle('Entrar');
+    }
+
+    public function indexUsers(Request $request)
+    {
+        $listaUsers = User::select('id', 'name', 'created_at', 'tipo', 'bloqueado')->paginate(20);
+
+        //dd($listaUsers);
+
+        return view('admin.UserManagement')
+            ->withPageTitle('Users')
+            ->withUsers($listaUsers);
     }
 
     public function registerPage()
@@ -40,7 +53,7 @@ class UserController extends Controller
             'password.confirmed' => 'As password têm de ser iguais',
         ]);
 
-        
+
 
         $inputName = $request->input('name');
         $inputEmail= $request->input('email');
@@ -50,5 +63,32 @@ class UserController extends Controller
       return response()->json($inputName." ".$inputEmail." ".$inputPassword." ".$confirmPassword, 200);
     }
 
+    public function permission(Request $request, User $user)
+    {
+        //dd($request['tipo']);
+        $user->tipo = $request['tipo'];
+        $user->save();
+        return redirect()->route('Users')
+            ->withPageTitle('Encomendas');
+    }
 
+    public function block(User $user)
+    {
+        if ($user->bloqueado == 1) {
+            $user->bloqueado = 0;
+        }
+        else{
+            $user->bloqueado = 1;
+        }
+
+        //dd($user->bloqueado);
+        $user->save();
+        return redirect()->route('Users')
+            ->withPageTitle('Encomendas');
+    }
+
+    public function delete(User $user)
+    {
+        dd('Adieu');
+    }
 }

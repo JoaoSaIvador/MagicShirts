@@ -7,10 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
-
-
-
-
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +48,10 @@ Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name(
 
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
 
+Route::get('users', [UserController::class, 'indexUsers'])->name('Users');
+Route::put('users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions');
+Route::put('users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block');
+Route::delete('users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete');
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
 
