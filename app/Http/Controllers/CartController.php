@@ -17,13 +17,13 @@ class CartController extends Controller
         $listaCores = Cor::pluck('nome', 'codigo');
         $precoEstampa = Preco::find(1);
         $carrinho = $request->session()->get('carrinho', []);
-        $listaEstampas[] = null;
+        $listaEstampas = [];
         foreach($carrinho as $row) {
-            $listaEstampas[] = Estampa::where('id', $row['estampa_id'])->pluck('cliente_id', 'imagem_url');
+            $listaEstampas[$row['estampa_id']] = Estampa::where('id', $row['estampa_id'])->value('imagem_url');
         }
 
-        //dd(session('carrinho') ?? []);
-        return view('orders.Cart')
+        //dd($listaEstampas);
+        return view('cart.Cart')
             ->with('pageTitle', 'Carrinho de compras')
             ->with('carrinho', session('carrinho') ?? [])
             ->withTamanhos($listaTamanhos)
