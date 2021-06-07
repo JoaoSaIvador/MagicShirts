@@ -5,7 +5,7 @@
 <a href="{{route('Dashboard')}}">Dashboard</a>
 <a href="{{route('Orders')}}">Encomendas</a>
 <a href="{{route('Users')}}">Utilizadores</a>
-<a href="#">Estampas</a>
+<a href="{{route('Stamps')}}">Estampas</a>
 <a href="#">Cores</a>
 </div>
 <div class="adminContent">

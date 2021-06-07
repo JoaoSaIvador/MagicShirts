@@ -17,12 +17,12 @@ class Estampa extends Model
         return $this->hasMany(Tshirt::class);
     }
 
-    public function clienteRef()
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }
 
-    public function categoriaRef()
+    public function categoria()
     {
         return $this->belongsTo(Categoria::class)->withTrashed();
     }
@@ -34,7 +34,7 @@ class Estampa extends Model
         }
         else
         {
-            return route('Catalogue.image', ['estampa' => $this]);
+            return route('Stamp.image', ['estampa' => $this]);
         }
     }
 }

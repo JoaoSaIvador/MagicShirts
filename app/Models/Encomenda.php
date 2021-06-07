@@ -11,7 +11,7 @@ class Encomenda extends Model
 
     protected $fillable = ['estado', 'cliente_id', 'preco_total', 'notas', 'nif', 'tipo_pagamento', 'ref_pagamento', 'recibo_url'];
 
-    public function clienteRef()
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }

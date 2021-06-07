@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
     <div class="container">
-        <form method="POST" action="{{route('Catalogue.update', ['estampa' => $estampa])}}" class="form-group" enctype="multipart/form-data">
+        <form method="POST" action="{{route('Stamps.update', ['estampa' => $estampa])}}" class="form-group" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             @include('catalogue.partials.create-edit')
