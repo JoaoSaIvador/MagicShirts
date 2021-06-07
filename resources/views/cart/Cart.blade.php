@@ -12,11 +12,11 @@
             @if (!empty($carrinho) && $carrinho['quantidadeItens'] != 0)
             @foreach ($carrinho['items'] as $key=>$row)
             
-            <form action="{{route('carrinho.destroy_tshirt', $key)}}" method="POST" id="formDelete_{{$key}}">
+            <form action="{{route('Cart.destroy', $key)}}" method="POST" id="formDelete_{{$key}}">
               @csrf
               @method('DELETE')
             </form>
-            <form action="{{route('carrinho.update_tshirt', $key)}}" method="POST" id="formUpdate_{{$key}}">
+            <form action="{{route('Cart.update', $key)}}" method="POST" id="formUpdate_{{$key}}">
               @csrf
               @method('PUT')
               {{-- Single item --}}
