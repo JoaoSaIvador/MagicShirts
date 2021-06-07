@@ -136,3 +136,11 @@ body {
 .cart-update {
     padding: 3px 7px 3px 7px;
 }
+
+#carouselExampleIndicators {
+
+}
+
+#carouselExampleIndicators img{
+    height: 500px;
+}

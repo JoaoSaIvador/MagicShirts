@@ -10,14 +10,15 @@
           </div>
           <div class="card-body">
             @if (!empty($carrinho) && $carrinho['quantidadeItens'] != 0)
-            @foreach ($carrinho['items'] as $row)
-            <form action="{{route('carrinho.destroy_tshirt', $loop->index)}}" method="POST" id="formDelete">
+            @foreach ($carrinho['items'] as $key=>$row)
+            
+            <form action="{{route('carrinho.destroy_tshirt', $key)}}" method="POST" id="formDelete_{{$key}}">
               @csrf
               @method('DELETE')
             </form>
-            <form action="{{route('carrinho.destroy_tshirt', $loop->index)}}" method="POST" id="formUpdate">
+            <form action="{{route('carrinho.update_tshirt', $key)}}" method="POST" id="formUpdate_{{$key}}">
               @csrf
-              @method('DELETE')
+              @method('PUT')
               {{-- Single item --}}
               <div class="row">
                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
@@ -36,7 +37,7 @@
                   <h5>{{$row['nome']}} T-shirt</h5>
                   <div class="cart-select" style="margin-bottom: 10px;">
                     <p class="text-start text-md-left" style="margin-bottom: 0px;">Cores:</p>
-                    <select class="custom-select " name="color_id">
+                    <select class="custom-select " name="cor_codigo">
                       @foreach ($cores as $id => $nome)
                       <option value="{{$id}}" {{$id == $row['cor_codigo'] ? 'selected' : ''}}>{{$nome}}</option>
                       @endforeach
@@ -46,23 +47,25 @@
                   <p class="text-start text-md-left" style="margin-bottom: 0px;">Tamanho:</p>
                   @foreach ($tamanhos as $abrev)
                   <div class="form-check form-check-inline" style=" margin-bottom: 10px;">
-                    <input class="form-check-input" type="radio" name="{{$loop->parent->index}}" id="inlineRadio1" value="{{$abrev}}" {{$abrev == $row['tamanho'] ? 'checked="checked"' : ''}}>
+                    <input class="form-check-input" type="radio" name="{{$key}}" id="inlineRadio1" value="{{$abrev}}" {{$abrev == $row['tamanho'] ? 'checked="checked"' : ''}}>
                     <label class="form-check-label" for="inlineRadio1">{{$abrev}}</label>
                   </div>
                   @endforeach
                   {{-- Data --}}
-                  <button type="submit" class="btn btn-primary cart-update" form="formUpdate">Atualizar</button>
+                  
+                  <button type="submit" class="btn btn-primary cart-update" form="formUpdate_{{$key}}">Atualizar</button>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                   {{-- Quantity --}}
                   <div class="d-flex mb-4 cart-quantity">
                     <div class="form-outline">
                       <label class="form-label" style="margin-bottom: 0px;">Quantidade:</label>
-                      <input id="form1" min="0" name="quantity" value="{{$row['quantidade']}}" type="number" class="form-control" />
+                      <input id="form1" min="0" name="quantidade" value="{{$row['quantidade']}}" type="number" class="form-control" />
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm me-1 mb-2 cart-remove" data-mdb-toggle="tooltip" form="formDelete">
+                    <button type="submit" class="btn btn-primary btn-sm me-1 mb-2 cart-remove" data-mdb-toggle="tooltip" form="formDelete_{{$key}}">
                       <i class="fa fa-trash-o"></i>
                     </button>
+                    
                   </div>
                   {{-- Quantity --}}
                   {{-- Price --}}

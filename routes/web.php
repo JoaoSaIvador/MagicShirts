@@ -26,7 +26,8 @@ use App\Http\Controllers\HomeController;
 Route::get('entrar', [UserController::class, 'index'])->name('Login');
 Route::get('registar', [UserController::class, 'registerPage'])->name('Register');
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/',[HomeController::class,'index'])->name('Home');
+Route::get('/home', [HomeController::class, 'index']);
 
 Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
 Route::get('catalogo/produto/{estampa}', [ProductController::class, 'index'])->name('Product.view');
@@ -34,11 +35,10 @@ Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 
 //Other
-Route::post('catalogo', [ProductController::class, 'store'])->name('Product.store');
 Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');
 
-Route::put('carrinho/{id}', [CartController::class, 'update_tshirt'])->name('carrinho.update_tshirt');
-Route::delete('carrinho/{id}', [CartController::class, 'destroy_tshirt'])->name('carrinho.destroy_tshirt');
+Route::put('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('carrinho.update_tshirt');
+Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('carrinho.destroy_tshirt');
 
 Auth::routes();
 
