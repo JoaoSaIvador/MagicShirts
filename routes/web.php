@@ -9,6 +9,8 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,9 @@ Route::put('catalogo/{estampa}', [CatalogueController::class, 'update'])->name('
 Route::delete('catalogo/{estampa}', [CatalogueController::class, 'destroy'])->name('Catalogue.destroy');
 
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
+Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
+
+//Other
 Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');
 Route::put('carrinho', [CartController::class, 'update_tshirt'])->name('Cart.update');
 Route::delete('carrinho', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy');

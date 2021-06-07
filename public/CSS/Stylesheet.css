@@ -118,12 +118,30 @@ body {
     justify-content: left;
 }
 
-/*order details*/
+.cart-price {
+    display: inline;
+}
 
+.cart-quantity {
+    width: 150px;
+    margin-top: 38px;
+}
 
+.cart-remove {
+    margin-top: 25px;
+    margin-left: 10px;
+    height: 30px;
+}
 
+.cart-update {
+    padding: 3px 7px 3px 7px;
+}
 
-.carouselExampleIndicators img{
+#carouselExampleIndicators {
+
+}
+
+#carouselExampleIndicators img{
     height: 500px;
 }
 

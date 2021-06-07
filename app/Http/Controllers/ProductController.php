@@ -31,23 +31,4 @@ class ProductController extends Controller
             ->withPreco($precoEstampa)
             ->withCategoria($categoria);
     }
-
-    public function store(Request $request)
-    {/*
-        $validated = $request->validate([
-            'estampa_id' =>  'required|exists:estampas,id',
-            'cor_codigo' =>  'required|exists:cores,codigo',
-            'tamanho' =>     'required|in:XS,S,M,L,XL',
-            'quantidade' =>  'required|integer|min:1',
-            'preco_un' =>    'nullable',
-        ], [  // Custom Error Messages
-            'cor_codigo.required' => 'Deve selecionar uma cor para a T-Shirt',
-            'tamanho.required' => 'Deve escolher o tamanho da T-Shirt',
-            'quantidade.required' => 'Tem que inserir um valor para a quantidade',
-            'quantidade.integer' => 'O valor tem que ser um número inteiro',
-        ]);
-        // If something is not valid, execution is interrupted.
-        // Remaining code is only executed if validation passes
-        Tshirt::create($validated);
-    }
 }
