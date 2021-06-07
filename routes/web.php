@@ -46,6 +46,8 @@ Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->na
 
 Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 
+Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
+
 Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
 Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');
 Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');

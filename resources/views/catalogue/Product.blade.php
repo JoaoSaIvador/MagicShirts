@@ -13,7 +13,7 @@
                     <input type="submit" hidden><a rel="tag" href="{{route('Catalogue', ['categoria_id' => $estampa->categoria_id])}}">{{$categoria}}</a>
                 </span>
             </div>
-            <form action="{{route('Cart.store', ['estampa' => $estampa])}}" method="post">
+            <form action="{{route('Cart.store')}}" method="post">
             @csrf
                 <input type="number" name="estampa_id" hidden value="{{$estampa->id}}">
                 <div class="m-bot15"> <input type="text" hidden value="{{$preco}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco}}</span></div>
@@ -34,14 +34,11 @@
                         <label class="form-check-label">{{$abrev}}</label>
                     </div>
                 @endforeach
-                @error('tamanho')
-                    <div class="small text-danger">{{$message}}</div>
-                @enderror
                 <div class="d-flex mb-4 " style="width: 100px">
-                    <div class="form-outline">
-                        <label class="form-label" for="form1">Quantidade:</label>
-                        <input id="form1" min="0" name="quantidade" value="1" type="number" class="form-control" />
-                    </div>
+                  <div class="form-outline">
+                    <label class="form-label" for="form1">Quantidade:</label>
+                    <input id="form1" min="0" name="quantidade" value="1" type="number" class="form-control" />
+                  </div>
                 </div>
                 @error('quantidade')
                     <div class="small text-danger">{{$message}}</div>
