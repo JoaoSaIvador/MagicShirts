@@ -1,9 +1,15 @@
 @extends('template')
 @section('content')
-<style>.mainmenu{
+<style>
+.mainmenu{
     position: fixed;
-    width: 100%;
-}</style>
+    width:100%;
+    margin-bottom: 80px;
+}
+</style>
+<div >
+
+</div >
 <div class="adminMainMenu">
     <div class="adminMenu">
         <a href="{{route('Dashboard')}}">Dashboard</a>
