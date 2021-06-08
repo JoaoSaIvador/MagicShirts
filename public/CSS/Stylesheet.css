@@ -14,6 +14,7 @@ body {
 
 .mainmenu{
     background-color: rgba(12, 12, 12, 1);
+    
 }
 
 /*catalogue*/
@@ -231,4 +232,5 @@ border-width: 1px;
 
 .adminContent{
     padding-left: 200px;
+    margin-top: 97px;
 }
