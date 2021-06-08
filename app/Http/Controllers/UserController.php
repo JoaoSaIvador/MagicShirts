@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Models\Users;
 
 class UserController extends Controller
@@ -14,11 +15,10 @@ class UserController extends Controller
         return view('user.Login');
     }
 
-    public function indexUsers(Request $request)
+    public function indexUsers()
     {
         $listaUsers = User::select('id', 'name', 'created_at', 'tipo', 'bloqueado')->paginate(20);
-
-        //dd($listaUsers);
+        //dd($listaUsers[19]->cliente);
 
         return view('admin.UserManagement')
             ->withUsers($listaUsers);
@@ -50,8 +50,6 @@ class UserController extends Controller
             'password_confirmation.min:8' => 'A password tem de ter entre 8 a 24 carateres',
             'password.confirmed' => 'As password têm de ser iguais',
         ]);
-
-
 
         $inputName = $request->input('name');
         $inputEmail= $request->input('email');
@@ -85,9 +83,40 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
-        $user = User::where('id', $user->id);
-        $user->delete();
-        return redirect()->route('Users');
-        //dd($user);
+        $oldUserName = $user->name;
+        try {
+            $user->delete();
+            if (!is_null($user->foto_url)) {
+                $oldFotoUrl = $user->foto_url;
+                Storage::delete('public/fotos/' . $oldFotoUrl);
+            }
+            return redirect()->route('Users')
+            ->with('alert-msg', 'Utilizador "' . $oldUserName . '" foi apagado com sucesso!')
+            ->with('alert-type', 'success');
+
+        } catch (\Throwable $th) {
+            // $th é a exceção lançada pelo sistema - por norma, erro ocorre no servidor BD MySQL
+            // Descomentar a próxima linha para verificar qual a informação que a exceção tem
+
+            if ($th->errorInfo[1] == 1451) {   // 1451 - MySQL Error number for "Cannot delete or update a parent row: a foreign key constraint fails (%s)"
+                return redirect()->route('admin.users')
+                    ->with('alert-msg', 'Não foi possível apagar o Utilizador "' . $oldUserName . '", porque este utilizador já está em uso!')
+                    ->with('alert-type', 'danger');
+            } else {
+                return redirect()->route('admin.users')
+                    ->with('alert-msg', 'Não foi possível apagar o Utilizador "' . $oldUserName . '". Erro: ' . $th->errorInfo[2])
+                    ->with('alert-type', 'danger');
+            }
+        }
+    }
+
+    public function destroy_foto(User $user)
+    {
+        Storage::delete('public/fotos/' . $user->user->url_foto);
+        $user->foto_url = null;
+        $user->user->save();
+        return redirect()->route('admin.users.edit', ['user' => $user])
+            ->with('alert-msg', 'Foto do user "' . $user->name . '" foi removida!')
+            ->with('alert-type', 'success');
     }
 }

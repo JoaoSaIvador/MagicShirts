@@ -20,11 +20,28 @@
         </form>
     </div>
     <div style="width: 250px">
-    @auth
-        <a class="btn btn-dark text-light" href="{{route('Catalogue.personal')}}">Mostrar Estampas Pessoais</a>
-    @endauth
-
+        @auth
+            @if (auth()->user()->tipo == 'C')
+                <a class="btn btn-dark text-light" href="{{route('Catalogue.personal')}}">Mostrar Estampas Pessoais</a>
+            @endif
+        @endauth
     </div>
 </div>
-@include('partials.Catalogue-card')
+<div class="album">
+    <div class="container-xl">
+        <div class="row" style="justify-content: center;">
+            @forelse ($estampas as $estampa)
+                @include('partials.Catalogue-card')
+                    </div>
+                </div>
+            @empty
+                <p class="display-4 font-weight-bold">Não existem estampas</p>
+            @endforelse
+            <div class="d-flex justify-content-center">
+                {{ $estampas->withQueryString()->links() }}
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

@@ -134,13 +134,12 @@ class StampsController extends Controller
         $oldStampImage = $estampa->url_foto;
         try {
             $estampa->delete();
-            if (auth()->user()->tipo == 'C') {
-                Storage::delete('estampas_privadas' . $oldStampImage);
-            }
-            else{
+            if (auth()->user()->tipo == 'A') {
                 Storage::delete('public/estampas/' . $oldStampImage);
             }
-
+            else if (auth()->user()->tipo == 'C'){
+                Storage::delete('estampas_privadas' . $oldStampImage);
+            }
             return back()
                 ->with('alert-msg', 'Estampa "' . $oldName . '" foi apagada com sucesso!')
                 ->with('alert-type', 'success');
@@ -149,11 +148,11 @@ class StampsController extends Controller
             // Descomentar a próxima linha para verificar qual a informação que a exceção tem
             //dd($th, $th->errorInfo);
             if ($th->errorInfo[1] == 1451) {   // 1451 - MySQL Error number for "Cannot delete or update a parent row: a foreign key constraint fails (%s)"
-                return redirect()->route('catalogue.Catalogue')
+                return back()
                     ->with('alert-msg', 'Não foi possível apagar a Estampa "' . $oldName . '", porque esta estampa já está em uso!')
                     ->with('alert-type', 'danger');
             } else {
-                return redirect()->route('catalogue.Catalogue')
+                return back()
                     ->with('alert-msg', 'Não foi possível apagar a Estampa "' . $oldName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }

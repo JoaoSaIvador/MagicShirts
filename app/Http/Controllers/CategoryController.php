@@ -11,22 +11,24 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return view('home.dashboard')
-            ->withPageTitle('Categorias');
+        $categorias = Categoria::select('id', 'nome')->withTrashed()->paginate(20);
+
+        return view('admin.CategoryManagement')
+            ->withCategorias($categorias);
     }
 
 
     public function create()
     {
         $categoria = new Categoria();
-        return view('Category.create')
-            ->with($categoria);
+        return view('categories.Create')
+            ->withCategoria($categoria);
     }
 
     public function edit(Categoria $categoria)
     {
-        return view('Category.edit')
-            ->with($categoria);
+        return view('categories.Edit')
+            ->withCategoria($categoria);
     }
 
     public function store(CategoryPost $request)
@@ -37,7 +39,7 @@ class CategoryController extends Controller
 
         $newCategoria->save();
 
-        return redirect()->route('Category.view');
+        return redirect()->route('Categories');
     }
 
     public function update(CategoryPost $request, Categoria $categoria)
@@ -46,8 +48,8 @@ class CategoryController extends Controller
         $categoria->nome = $validated_data['nome'];
 
         $categoria->save();
-        return redirect()->route('Catalogue.view')
-            ->with('alert-msg', 'Estampa "' . $categoria->nome . '" foi alterada com sucesso!')
+        return redirect()->route('Categories')
+            ->with('alert-msg', 'Categoria "' . $categoria->nome . '" foi alterada com sucesso!')
             ->with('alert-type', 'success');
     }
 
@@ -58,19 +60,19 @@ class CategoryController extends Controller
             $categoria->delete();
 
             return back()
-                ->with('alert-msg', 'Estampa "' . $oldName . '" foi apagada com sucesso!')
+                ->with('alert-msg', 'Categoria "' . $oldName . '" foi apagada com sucesso!')
                 ->with('alert-type', 'success');
         } catch (\Throwable $th) {
             // $th é a exceção lançada pelo sistema - por norma, erro ocorre no servidor BD MySQL
             // Descomentar a próxima linha para verificar qual a informação que a exceção tem
             //dd($th, $th->errorInfo);
             if ($th->errorInfo[1] == 1451) {   // 1451 - MySQL Error number for "Cannot delete or update a parent row: a foreign key constraint fails (%s)"
-                return redirect()->route('catalogue.Catalogue')
-                    ->with('alert-msg', 'Não foi possível apagar a Estampa "' . $oldName . '", porque esta estampa já está em uso!')
+                return redirect()->route('Categories')
+                    ->with('alert-msg', 'Não foi possível apagar a Categoria "' . $oldName . '", porque esta categoria já está em uso!')
                     ->with('alert-type', 'danger');
             } else {
-                return redirect()->route('catalogue.Catalogue')
-                    ->with('alert-msg', 'Não foi possível apagar a Estampa "' . $oldName . '". Erro: ' . $th->errorInfo[2])
+                return redirect()->route('Categories')
+                    ->with('alert-msg', 'Não foi possível apagar a Categoria "' . $oldName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
         }

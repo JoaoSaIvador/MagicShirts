@@ -8,6 +8,7 @@ use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\StampsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\UserController;
@@ -34,13 +35,6 @@ Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue')
 Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Catalogue.view');
 Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->name('Catalogue.personal');
 
-Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create');
-Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit');
-Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image');
-Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store');
-Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update');
-Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete');
-
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');
 Route::put('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update');
@@ -50,10 +44,32 @@ Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Ch
 
 Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 
+Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
+
 Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
 Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');
 Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
+
+Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
+Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,App\Models\User');
+Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
+Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');;
+
+Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories')->middleware('can:viewAny,App\Models\User');;
+Route::get('admin/categorias/create', [CategoryController::class, 'create'])->name('Categories.create');
+Route::get('admin/categorias/{categoria}/edit', [CategoryController::class, 'edit'])->name('Categories.edit');
+Route::post('admin/categorias/store', [CategoryController::class, 'store'])->name('Categories.store');
+Route::put('admin/categorias/{categoria}', [CategoryController::class, 'update'])->name('Categories.update');
+Route::delete('admin/categorias/{categoria}', [CategoryController::class, 'destroy'])->name('Categories.delete');
+
+Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps');
+Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create');
+Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit');
+Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image');
+Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store');
+Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update');
+Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete');
 
 Route::get('admin/cores', [ColorsController::class, 'index'])->name('Colors');
 Route::get('admin/cores/create', [ColorsController::class, 'create'])->name('Colors.create');
@@ -62,18 +78,15 @@ Route::post('admin/cores/store', [ColorsController::class, 'store'])->name('Colo
 Route::put('admin/cores/{cor}', [ColorsController::class, 'update'])->name('Colors.update');
 Route::delete('admin/cores/{cor}', [ColorsController::class, 'destroy'])->name('Colors.delete');
 
-Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users');
-Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions');
-Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block');
-Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete');
 
-Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps');
+
+
 
 //Route::get('profile', [UserController::class, 'indexUsers'])->name('Profile')->middleware('can:view,App\Models\User');
 
 //Route::get('estampas', [StampsController::class, 'index'])->name('Stamps');
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
+
 
 Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);

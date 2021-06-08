@@ -1,4 +1,4 @@
-@extends('orders.Orders')
+@extends('admin.Orders')
 @section('orders')
 <div class="col-5 ">
         <form method="GET" action="#" class="form-group">

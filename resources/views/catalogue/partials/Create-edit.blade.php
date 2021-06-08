@@ -5,6 +5,7 @@
        <div class="small text-danger">{{$message}}</div>
     @enderror
 </div>
+@if (auth()->user()->tipo == 'A')
 <div class="form-group">
     <label for="inputCategoria" class="fs-2">Categoria</label>
     <select class="custom-select" name="categoria_id" id="idCategoria">
@@ -17,6 +18,7 @@
         @endforeach
     </select>
 </div>
+@endif
 <div class="form-group">
     <label for="inputDescricao" class="fs-2">Descrição</label>
     <input type="text" class="form-control" name="descricao" id="inputDescricao" value="{{old('descricao', $estampa->descricao)}}">
