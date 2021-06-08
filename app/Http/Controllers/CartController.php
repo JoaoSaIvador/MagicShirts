@@ -2,93 +2,124 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tshirt;
 use App\Models\Estampa;
 use Illuminate\Http\Request;
 use App\Models\Cor;
-use App\Models\Preco;
 use App\Http\Requests\ProductPost;
 
 class CartController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $listaCores = Cor::pluck('nome', 'codigo');
-        $precoEstampa = Preco::find(1);
-        $carrinho = $request->session()->get('carrinho', []);
-        $listaEstampas = [];
-        foreach($carrinho as $row) {
-            $listaEstampas[$row['estampa_id']] = Estampa::where('id', $row['estampa_id'])->value('imagem_url');
-        }
 
-        //dd($listaEstampas);
         return view('cart.Cart')
             ->with('pageTitle', 'Carrinho de compras')
             ->with('carrinho', session('carrinho') ?? [])
             ->withTamanhos($listaTamanhos)
-            ->withCores($listaCores)
-            ->withPreco($precoEstampa)
-            ->withEstampas($listaEstampas);
+            ->withCores($listaCores);
     }
 
     public function store_tshirt(ProductPost $request)
     {
         $request->validated();
-        //dd($validated_data);
         $carrinho = $request->session()->get('carrinho', []);
-        $carrinho[] = [
+        $key = "$request->estampa_id" . '-' . "$request->cor_codigo" . '-' . "$request->tamanho";
+
+        if (empty($carrinho)) {
+            $carrinho['precoTotal'] = 0;
+            $carrinho['quantidadeItens'] = 0;
+        } 
+        else {
+            if(array_key_exists($key, $carrinho['items'])) {
+                $quantidade = $carrinho['items'][$key]['quantidade'] + $request->quantidade;
+                $request->session()->put("carrinho.items.$key.quantidade", $quantidade);
+
+                return back()
+                ->with('alert-msg', 'Foi adicionada uma tshirt carrinho!')
+                ->with('alert-type', 'success');
+            }
+        } 
+
+        $carrinho['items']["$request->estampa_id" . '-' . "$request->cor_codigo" . '-' . "$request->tamanho"] = [
             'quantidade' => $request->quantidade,
             'estampa_id' => $request->estampa_id,
             'cor_codigo' => $request->cor_codigo,
             'tamanho' => $request->tamanho,
             'preco_un' => $request->preco_un,
+            'subtotal' => ($request->preco_un * $request->quantidade),
+            'nome' => Estampa::where('id', $request->estampa_id)->value('nome'),
+            'imagem' => Estampa::where('id', $request->estampa_id)->value('imagem_url')
         ];
+
+        $carrinho['precoTotal'] += $request->preco_un * $request->quantidade;
+        $carrinho['quantidadeItens'] += 1;
+
         $request->session()->put('carrinho', $carrinho);
         return back()
             ->with('alert-msg', 'Foi adicionada uma tshirt carrinho!')
             ->with('alert-type', 'success');
     }
 
-    public function update_tshirt(ProductPost $request)
+    public function update_tshirt(Request $request, string $index)
     {
-        $request->validate();
         $carrinho = $request->session()->get('carrinho', []);
-        $quantidade = $carrinho[$request->id]['quantidade'] ?? 0;
-        $quantidade += $request->quantidade;
-        if ($request->quantidade < 0) {
-            $msg = 'Foram removidas ' . -$request->quantidade . ' tshirts! Quantidade de tshirts atuais = ' .  $quantidade;
-        } elseif ($request->quantidade > 0) {
-            $msg = 'Foram adicionadas ' . $request->quantidade . ' tshirts! Quantidade de tshirts atuais = ' .  $quantidade;
-        }
+        $quantidade = $request->quantidade;
+        $newIndex = $carrinho['items'][$index]['estampa_id'] . '-' . $request->cor_codigo . '-' . $request->$index;
+        
         if ($quantidade <= 0) {
-            unset($carrinho[$request->id]);
-            $msg = 'Foram removidas todas as tshirts';
+            $carrinho['quantidadeItens']--;
+            $precoTotal = $carrinho['precoTotal'] - $carrinho['items'][$index]['subtotal'];
+            $carrinho['precoTotal'] = $precoTotal;
+            unset($carrinho['items'][$index]);
+
+            $msg = 'T-shirt foi removida';
         } else {
-            $carrinho[$request->id] = [
-                'id' => $request->id,
-                'quantidade' => $quantidade,
-                'id_encomenda' => $request->id_encomenda,
-                'estampa_id' => $request->estampa_id,
-                'cor_codigo' => $request->cor_codigo,
-                'tamanho' => $request->tamanho,
-                'preco_un' => $request->preco_un
-            ];
+            if(array_key_exists($newIndex, $carrinho['items']) && $index != $newIndex) {
+                $quantidade = $carrinho['items'][$newIndex]['quantidade'] + $request->quantidade;
+                $carrinho['items'][$newIndex]['quantidade'] = $quantidade;
+                $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco_un'] * $quantidade);
+                $carrinho['quantidadeItens']--;
+                unset($carrinho['items'][$index]);
+                $request->session()->put('carrinho', $carrinho);
+
+                return back()
+                ->with('alert-msg', 'Foi adicionada uma tshirt carrinho!')
+                ->with('alert-type', 'success');
+            }
+
+            $carrinho['items'][$newIndex] = $carrinho['items'][$index];
+            $carrinho['items'][$newIndex]['quantidade'] = $request->quantidade;
+            $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco_un'] * $request->quantidade);
+            $carrinho['items'][$newIndex]['cor_codigo'] = $request->cor_codigo;
+            $carrinho['items'][$newIndex]['tamanho'] = $request->$index;
+
+            if($index != $newIndex) {
+                unset($carrinho['items'][$index]);
+            }
+
+            $msg = 'T-shirt foi alterada';
         }
         $request->session()->put('carrinho', $carrinho);
+        
         return back()
             ->with('alert-msg', $msg)
             ->with('alert-type', 'success');
     }
 
-    public function destroy_tshirt(Request $request, Tshirt $tshirt)
+    public function destroy_tshirt(Request $request, string $index)
     {
         $carrinho = $request->session()->get('carrinho', []);
-        if (array_key_exists($tshirt->id, $carrinho)) {
-            unset($carrinho[$tshirt->id]);
+        if (array_key_exists($index, $carrinho['items'])) {
+            $carrinho['quantidadeItens']--;
+            $carrinho['precoTotal'] -= $carrinho['items'][$index]['subtotal'];
+            unset($carrinho['items'][$index]);
+
             $request->session()->put('carrinho', $carrinho);
+            
             return back()
-                ->with('alert-msg', 'Foram removidas todas tshirts')
+                ->with('alert-msg', 'A T-shirt foi removida')
                 ->with('alert-type', 'success');
         }
         return back()
@@ -102,13 +133,5 @@ class CartController extends Controller
             'Place code to store the shopping cart / transform the cart into a sale',
             $request->session()->get('carrinho')
         );
-    }
-
-    public function destroy(Request $request)
-    {
-        $request->session()->forget('carrinho');
-        return back()
-            ->with('alert-msg', 'Carrinho foi limpo!')
-            ->with('alert-type', 'danger');
     }
 }

@@ -11,8 +11,7 @@ class UserController extends Controller
 
     public function index()
     {
-        //if(!logged)
-        return view('user.Login')->withPageTitle('Entrar');
+        return view('user.Login');
     }
 
     public function indexUsers(Request $request)
@@ -22,14 +21,13 @@ class UserController extends Controller
         //dd($listaUsers);
 
         return view('admin.UserManagement')
-            ->withPageTitle('Users')
             ->withUsers($listaUsers);
     }
 
     public function registerPage()
     {
        echo(csrf_token());
-        return view('user.Register')->withPageTitle('Registar');
+        return view('user.Register');
     }
 
     public function register(Request $request)
@@ -68,8 +66,7 @@ class UserController extends Controller
         //dd($request['tipo']);
         $user->tipo = $request['tipo'];
         $user->save();
-        return redirect()->route('Users')
-            ->withPageTitle('Encomendas');
+        return redirect()->route('Users');
     }
 
     public function block(User $user)
@@ -83,12 +80,14 @@ class UserController extends Controller
 
         //dd($user->bloqueado);
         $user->save();
-        return redirect()->route('Users')
-            ->withPageTitle('Encomendas');
+        return redirect()->route('Users');
     }
 
     public function delete(User $user)
     {
-        dd('Adieu');
+        $user = User::where('id', $user->id);
+        $user->delete();
+        return redirect()->route('Users');
+        //dd($user);
     }
 }

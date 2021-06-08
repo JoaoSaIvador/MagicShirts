@@ -8,8 +8,10 @@ use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\StampsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\UserController;
+use App\Http\Policies\UserPolicy;
 use App\Models\User;
 
 /*
@@ -41,8 +43,12 @@ Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('
 
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
 Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');
-Route::put('carrinho', [CartController::class, 'update_tshirt'])->name('Cart.update');
-Route::delete('carrinho', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy');
+Route::put('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update');
+Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy');
+
+Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
+
+Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 
 Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
 Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');
@@ -63,13 +69,14 @@ Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->n
 
 Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps');
 
+//Route::get('profile', [UserController::class, 'indexUsers'])->name('Profile')->middleware('can:view,App\Models\User');
+
+//Route::get('estampas', [StampsController::class, 'index'])->name('Stamps');
+
 Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
 
 Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);
-
-
-
 
 Auth::routes();
 

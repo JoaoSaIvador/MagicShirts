@@ -4,6 +4,7 @@
 
 <a href="{{route('Dashboard')}}">Dashboard</a>
 <a href="{{route('Orders')}}">Encomendas</a>
+<<<<<<< Updated upstream
 <a href="{{route('Users')}}">Utilizadores</a>
 <a href="{{route('Stamps')}}">Estampas</a>
 <a href="{{route('Colors')}}">Cores</a>
