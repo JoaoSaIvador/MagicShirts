@@ -16,10 +16,10 @@
                         @auth
                         <div class="row">
                             <div class="col">
-                                <a class="btn btn-primary btn-sm" href="{{route('Catalogue.edit', ['estampa' => $estampa])}}" role="button" aria-pressed="true">Editar</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('Stamps.edit', ['estampa' => $estampa])}}" role="button" aria-pressed="true">Editar</a>
                             </div>
                             <div class="col">
-                                <form action="{{route('Catalogue.destroy', ['estampa' => $estampa])}}" method="post">
+                                <form action="{{route('Stamps.delete', ['estampa' => $estampa])}}" method="post">
                                     @csrf
                                     @method("DELETE")
                                         <input type="submit" class="btn btn-danger btn-sm" value="Apagar">

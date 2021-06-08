@@ -12,17 +12,17 @@ class Tshirt extends Model
     public $timestamps = false;
     protected $fillable = ['estampa_id', 'cor_codigo', 'tamanho', 'quantidade', 'preco_un'];
 
-    public function encomendaRef()
+    public function encomenda()
     {
         return $this->belongsTo(Encomenda::class);
     }
 
-    public function estampaRef()
+    public function estampa()
     {
         return $this->belongsTo(Estampa::class);
     }
 
-    public function corRef()
+    public function cor()
     {
         return $this->belongsTo(Cor::class, 'cor_codigo', 'codigo')->withTrashed();
     }
