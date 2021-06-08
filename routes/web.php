@@ -9,6 +9,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Policies\UserPolicy;
 use App\Models\User;
 
 /*
@@ -54,10 +55,12 @@ Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name(
 
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
 
-Route::get('users', [UserController::class, 'indexUsers'])->name('Users');
-Route::put('users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions');
-Route::put('users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block');
-Route::delete('users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete');
+Route::get('user', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
+Route::put('users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,App\Models\User');
+Route::put('users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
+Route::delete('users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');
+
+//Route::get('profile', [UserController::class, 'indexUsers'])->name('Profile')->middleware('can:view,App\Models\User');
 
 //Route::get('estampas', [StampsController::class, 'index'])->name('Stamps');
 

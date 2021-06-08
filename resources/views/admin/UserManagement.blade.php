@@ -51,10 +51,10 @@
                         @csrf
                         @method('PUT')
                         @if ($user->bloqueado != "0")
-                            <button type="submit" class="btn btn-primary btn-sm launch">Bloquear</button>
+                            <button type="submit" class="btn btn-primary btn-sm launch">Desbloquear</button>
                         @endif
                         @if ($user->bloqueado != "1")
-                            <button type="submit" class="btn btn-primary btn-sm launch">Desbloquear</button>
+                            <button type="submit" class="btn btn-primary btn-sm launch">Bloquear</button>
                         @endif
                     </form>
                 </td>
