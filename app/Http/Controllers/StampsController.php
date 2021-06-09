@@ -9,15 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Estampa;
 use App\Models\Categoria;
-use App\Models\Cor;
-use App\Models\Preco;
 
 class StampsController extends Controller
 {
     public function index()
     {
-        $listaEstampas = Estampa::select('id', 'nome', 'categoria_id')->paginate(20);
-
+        $listaEstampas = Estampa::where('cliente_id', null)->select('id', 'nome', 'categoria_id', 'deleted_at')
+        ->withTrashed()->paginate(20);
         //dd(($listaEstampas[0]->categoria_id == $listaCategorias[4]->id) ? $listaCategorias[4]->nome : 'NO');
 
         return view('admin.StampsManagement')
@@ -156,6 +154,24 @@ class StampsController extends Controller
                     ->with('alert-msg', 'Não foi possível apagar a Estampa "' . $oldName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
+        }
+    }
+
+    public function restore(Request $request)
+    {
+        //dd($request['estampa']);
+        $estampa = Estampa::withTrashed()->find($request['estampa']);
+        //dd($estampa);
+        try {
+            $estampa->restore();
+            return back()
+                ->with('alert-msg', 'Estampa "' . $estampa->nome . '" foi restaurada com sucesso!')
+                ->with('alert-type', 'success');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()
+                ->with('alert-msg', 'Não foi possível recuperar a Estampa "' . $estampa->nome . '". Erro: ' . $th->errorInfo)
+                ->with('alert-type', 'danger');
         }
     }
 

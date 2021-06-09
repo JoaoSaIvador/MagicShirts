@@ -11,7 +11,7 @@ class ColorsController extends Controller
 {
     public function index()
     {
-        $cores = Cor::select('codigo', 'nome')->orderBy('nome')->paginate(20);
+        $cores = Cor::orderBy('nome')->withTrashed()->paginate(20);
 
         return view('admin.ColorManagement')
             ->withPageTitle('Cores')
@@ -79,6 +79,24 @@ class ColorsController extends Controller
                     ->with('alert-msg', 'Não foi possível apagar a Cor "' . $oldName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
+        }
+    }
+
+    public function restore(Request $request)
+    {
+        //dd($request['cor']);
+        $cor = Cor::withTrashed()->find($request['cor']);
+        //dd($cor);
+        try {
+            $cor->restore();
+            return back()
+            ->with('alert-msg', 'Cor "' . $cor->name . '" foi restaurada com sucesso!')
+            ->with('alert-type', 'success');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('admin.ColorManagement')
+            ->with('alert-msg', 'Não foi possível recuperar a Cor "' . $cor->name . '". Erro: ' . $th->errorInfo)
+            ->with('alert-type', 'danger');
         }
     }
 }

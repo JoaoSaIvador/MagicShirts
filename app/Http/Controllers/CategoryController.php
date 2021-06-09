@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categorias = Categoria::select('id', 'nome')->withTrashed()->paginate(20);
+        $categorias = Categoria::select('id', 'nome', 'deleted_at')->withTrashed()->paginate(20);
 
         return view('admin.CategoryManagement')
             ->withCategorias($categorias);
@@ -75,6 +75,24 @@ class CategoryController extends Controller
                     ->with('alert-msg', 'Não foi possível apagar a Categoria "' . $oldName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
+        }
+    }
+
+    public function restore(Request $request)
+    {
+        //dd($request['categoria']);
+        $categoria = Categoria::withTrashed()->find($request['categoria']);
+        //dd($categoria);
+        try {
+            $categoria->restore();
+            return back()
+                ->with('alert-msg', 'Categoria "' . $categoria->nome . '" foi restaurada com sucesso!')
+                ->with('alert-type', 'success');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()
+                ->with('alert-msg', 'Não foi possível recuperar a Categoria "' . $categoria->nome . '". Erro: ' . $th->errorInfo)
+                ->with('alert-type', 'danger');
         }
     }
 }

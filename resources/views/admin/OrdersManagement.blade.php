@@ -55,28 +55,32 @@
                     <a href="{{route('Orders.view', ['encomenda' => $encomenda])}}"><button type="button" class="btn btn-primary launch">Detalhes</button></a>
                 </td>
                 <td>
-                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$encomenda->id}}" aria-expanded="false" aria-controls="collapseOrder">
-                        Alterar
-                    </button>
-                    <div class="collapse mb-n3 mt-2" id="collapse{{$encomenda->id}}">
-                        <form action="{{route('Orders.update', ['encomenda' => $encomenda])}}" method="POST" class="form-group">
-                        @csrf
-                        @method('PUT')
-                            <div class="row">
-                                <select name="estado" class="custom-select col">
-                                    <option value="none" selected disabled hidden>Alterar Estado</option>
-                                    @if ($encomenda->estado != "paga")
-                                        <option value="paga">Paga</option>
-                                    @endif
-                                    @if ($encomenda->estado != "fechada")
-                                        <option value="fechada">Fechada</option>
-                                    @endif
-                                        <option value="anulada">Anulada</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm col ml-1">Save</button>
-                            </div>
-                        </form>
-                    </div>
+                    @if (auth()->user()->tipo == 'A' || $encomenda->estado != "anulada")
+                        <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$encomenda->id}}" aria-expanded="false" aria-controls="collapseOrder">
+                            Alterar
+                        </button>
+                        <div class="collapse mb-n3 mt-2" id="collapse{{$encomenda->id}}">
+                            <form action="{{route('Orders.update', ['encomenda' => $encomenda])}}" method="POST" class="form-group">
+                            @csrf
+                            @method('PUT')
+                                <div class="row">
+                                    <select name="estado" class="custom-select col">
+                                        <option value="none" selected disabled hidden>Alterar Estado</option>
+                                        @if ($encomenda->estado != "paga")
+                                            <option value="paga">Paga</option>
+                                        @endif
+                                        @if ($encomenda->estado != "fechada")
+                                            <option value="fechada">Fechada</option>
+                                        @endif
+                                        @if (auth()->user()->tipo == 'A')
+                                            <option value="anulada">Anulada</option>
+                                        @endif
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm col ml-1">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 </td>
             </tr>
             @endforeach

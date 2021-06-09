@@ -59,11 +59,19 @@
                     </form>
                 </td>
                 <td>
-                    <form action="{{route('Users.delete', ['user' => $user])}}" method="post">
-                        @csrf
-                        @method("DELETE")
-                            <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
-                    </form>
+                    @if (is_null($user->deleted_at))
+                        <form action="{{route('Users.delete', ['user' => $user])}}" method="post">
+                            @csrf
+                            @method("DELETE")
+                                <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                        </form>
+                    @else
+                        <form action="{{route('Users.restore', $user)}}" method="POST">
+                            @csrf
+                                <input type="text" name="user" hidden value="{{$user->id}}">
+                                <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
+                        </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

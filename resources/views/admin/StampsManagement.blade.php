@@ -24,11 +24,19 @@
                     <a href="{{route('Stamps.edit', ['estampa' => $estampa])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
                 </td>
                 <td>
-                    <form action="{{route('Stamps.delete', ['estampa' => $estampa])}}" method="post">
-                        @csrf
-                        @method("DELETE")
-                            <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
-                    </form>
+                    @if (is_null($estampa->deleted_at))
+                        <form action="{{route('Stamps.delete', ['estampa' => $estampa])}}" method="post">
+                            @csrf
+                            @method("DELETE")
+                                <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                        </form>
+                    @else
+                        <form action="{{route('Stamps.restore', $estampa)}}" method="POST">
+                            @csrf
+                                <input type="text" name="estampa" hidden value="{{$estampa->id}}">
+                                <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
+                        </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

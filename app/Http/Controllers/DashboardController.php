@@ -8,7 +8,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('home.dashboard');
+        return view('home.Dashboard');
+    }
+
+    public function view_dashboard()
+    {
+        return view('home.Info');
     }
 
 }

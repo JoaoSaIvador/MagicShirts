@@ -19,7 +19,7 @@ class CatalogueController extends Controller
         $listaCategorias = Categoria::pluck('nome', 'id');
         $categoria = $request->query('categoria_id', null);
 
-        $listaEstampas = Estampa::where('categoria_id', $categoria)->whereNull('cliente_id')->paginate(9);
+        $listaEstampas = Estampa::where('categoria_id', $categoria)->select('id', 'nome', 'imagem_url', 'cliente_id')->paginate(9);
 
         return view('catalogue.Catalogue')
             ->withPageTitle('Catalogo')
@@ -30,9 +30,11 @@ class CatalogueController extends Controller
 
     public function view_personal()
     {
+
         //dd(Auth::user()->id);
         $userId = Auth::user()->id;
-        $listaEstampas = Estampa::where('cliente_id', $userId)->paginate(9);
+        $listaEstampas = Estampa::where('cliente_id', $userId)->select('id', 'nome', 'imagem_url', 'cliente_id')->paginate(9);
+
         return view('catalogue.Personal')
             ->withPageTitle('Catalogo Pessoal')
             ->withEstampas($listaEstampas);

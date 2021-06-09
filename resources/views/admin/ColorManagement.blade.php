@@ -24,11 +24,19 @@
                     <a href="{{route('Colors.edit', ['cor' => $cor])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
                 </td>
                 <td>
-                    <form action="{{route('Colors.delete', ['cor' => $cor])}}" method="post">
-                        @csrf
-                        @method("DELETE")
-                            <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
-                    </form>
+                    @if (is_null($cor->deleted_at))
+                        <form action="{{route('Colors.delete', ['cor' => $cor])}}" method="post">
+                            @csrf
+                            @method("DELETE")
+                                <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                        </form>
+                    @else
+                        <form action="{{route('Colors.restore', $cor)}}" method="POST">
+                            @csrf
+                                <input type="text" name="cor" hidden value="{{$cor->codigo}}">
+                                <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
+                        </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

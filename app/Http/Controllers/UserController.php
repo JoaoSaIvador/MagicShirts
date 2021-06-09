@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function indexUsers()
     {
-        $listaUsers = User::select('id', 'name', 'created_at', 'tipo', 'bloqueado')->paginate(20);
+        $listaUsers = User::select('id', 'name', 'created_at', 'tipo', 'bloqueado', 'deleted_at')->withTrashed()->paginate(20);
         //dd($listaUsers[19]->cliente);
 
         return view('admin.UserManagement')
@@ -64,7 +64,7 @@ class UserController extends Controller
         //dd($request['tipo']);
         $user->tipo = $request['tipo'];
         $user->save();
-        return redirect()->route('Users');
+        return back();
     }
 
     public function block(User $user)
@@ -78,7 +78,7 @@ class UserController extends Controller
 
         //dd($user->bloqueado);
         $user->save();
-        return redirect()->route('Users');
+        return back();
     }
 
     public function delete(User $user)
@@ -90,7 +90,7 @@ class UserController extends Controller
                 $oldFotoUrl = $user->foto_url;
                 Storage::delete('public/fotos/' . $oldFotoUrl);
             }
-            return redirect()->route('Users')
+            return back()
             ->with('alert-msg', 'Utilizador "' . $oldUserName . '" foi apagado com sucesso!')
             ->with('alert-type', 'success');
 
@@ -107,6 +107,24 @@ class UserController extends Controller
                     ->with('alert-msg', 'Não foi possível apagar o Utilizador "' . $oldUserName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
+        }
+    }
+
+    public function restore(Request $request)
+    {
+        //dd($request['user']);
+        $user = User::withTrashed()->find($request['user']);
+        //dd($user);
+        try {
+            $user->restore();
+            return back()
+                ->with('alert-msg', 'Utilizador "' . $user->name . '" foi restaurada com sucesso!')
+                ->with('alert-type', 'success');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('admin.ColorManagement')
+                ->with('alert-msg', 'Não foi possível recuperar o Utilizador "' . $user->name . '". Erro: ' . $th->errorInfo)
+                ->with('alert-type', 'danger');
         }
     }
 

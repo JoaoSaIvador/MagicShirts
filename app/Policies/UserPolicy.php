@@ -24,19 +24,19 @@ class UserPolicy
         //
     }
 
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
-        return $user->id === $model->id || $user->tipo === 'A';
+        return $user->tipo === 'A';
     }
 
 
-    public function delete(User $user, User $model)
+    public function delete(User $user)
     {
-        return $user->id === $model->id || $user->tipo === 'A';
+        return $user->tipo === 'A';
     }
 
 
-    public function restore(User $user, User $model)
+    public function restore(User $user)
     {
         return $user->tipo === 'A';
     }

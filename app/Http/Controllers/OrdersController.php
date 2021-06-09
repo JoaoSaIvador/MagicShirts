@@ -20,7 +20,7 @@ class OrdersController extends Controller
 
         if (!empty($filtro['filtro'])) {
             //dd($filtro['filtro']);
-            $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->paginate(20);
+            $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->select('id', 'nome', 'estado', 'preco_total', 'data')->paginate(20);
         }
         else{
             $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
@@ -28,11 +28,6 @@ class OrdersController extends Controller
         //$listaEncomendas = Encomenda::where('cliente_id', 511)->paginate(20);
 
         //$listaEncomendas = Encomenda::where('data', "2019-12-03")->paginate(20);
-
-        foreach ($listaEncomendas as $encomenda) {
-            $listaTshirts[$encomenda['id']] = $encomenda->tshirts;
-        }
-
         //dd($listaEstampas);
 
         return view('orders.ClientFilterForm')

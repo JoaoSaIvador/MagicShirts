@@ -28,9 +28,10 @@
 </div>
 <div class="form-group">
     <label for="inputImagem" class="fs-2">Imagem da Estampa</label>
-    <input type="file" class="form-control" name="imagem_url" id="inputImagem" value="{{old('imagem_url', $estampa->imagem_url)}}">
+    <input type="file" class="form-control" name="imagem_url" id="inputImagem" value="{{old('imagem_url', $estampa->getImagemFullUrl())}}">
     @error('imagem_url')
        <div class="small text-danger">{{$message}}</div>
     @enderror
 </div>
+
 

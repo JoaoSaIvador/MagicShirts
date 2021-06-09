@@ -1,42 +1,47 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\PricesPost;
 
-class PricesPost extends FormRequest
+use App\Models\Preco;
+
+class PricesController extends Controller
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function index()
     {
-        return true;
+        $precos = Preco::all();
+        return view('admin.PricesManagement')
+            ->withPrecos($precos);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function edit(Preco $preco)
     {
-        return [
-            'preco_un_catalogo'             =>  'required',
-            'preco_un_proprio'              =>  'required',
-            'preco_un_catalogo_desconto'    =>  'required',
-            'preco_un_proprio_desconto'     =>  'required',
-            'quantidade_desconto'           =>  'required'
-        ];
+        return view('prices.Edit')
+            ->withPreco($preco);
     }
 
-    public function messages()
+    public function update(Request $request, Preco $preco)
     {
-        return [
-            //'nome.required' => 'Deve atribuir um nome à sua estampa',
-            //'imagem_url.required' => 'Deve atribuir uma imagem à sua estampa',
-        ];
+        //dd($request);
+
+        if (isset($request['preco_un_catalogo'])) {
+            $preco->preco_un_catalogo = $request['preco_un_catalogo'];
+        } elseif ($request['preco_un_proprio']) {
+            $preco->preco_un_proprio = $request['preco_un_proprio'];
+        } elseif ($request['preco_un_catalogo_desconto']) {
+            $preco->preco_un_catalogo_desconto = $request['preco_un_catalogo_desconto'];
+        } elseif ($request['preco_un_proprio_desconto']) {
+            $preco->preco_un_proprio_desconto = $request['preco_un_proprio_desconto'];
+        } elseif ($request['quantidade_desconto']) {
+            $preco->quantidade_desconto = $request['quantidade_desconto'];
+        }
+
+        //dd($preco);
+        $preco->save();
+        return redirect()->route('Prices')
+            ->with('alert-msg', 'Preço foi alterado com sucesso!')
+            ->with('alert-type', 'success');
     }
 }
