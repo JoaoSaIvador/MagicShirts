@@ -1,6 +1,14 @@
 @extends('home.dashboard')
 @section('adminContent')
 <div class="container">
+    <h3>Filtro</h3>
+    <div class="d-flex justify-content-start mb-4">
+        <form action="{{route('Users.filter')}}" method="get">
+            <button class="btn btn-dark btn-s mr-1" type="submit" name="tipo" value="A" aria-pressed="true">Administradores</button>
+            <button class="btn btn-dark btn-s mr-1" type="submit" name="tipo" value="F" aria-pressed="true">Funcionários</button>
+            <button class="btn btn-dark btn-s mr-1" type="submit" name="tipo" value="C" aria-pressed="true">Clientes</button>
+        </form>
+    </div>
     <table class="table">
         <thead class="thead-dark">
             <tr>

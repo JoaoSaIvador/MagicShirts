@@ -11,7 +11,7 @@
           <div class="card-body">
             @if (!empty($carrinho) && $carrinho['quantidadeItens'] != 0)
             @foreach ($carrinho['items'] as $key=>$row)
-            
+
             <form action="{{route('Cart.destroy', $key)}}" method="POST" id="formDelete_{{$key}}">
               @csrf
               @method('DELETE')
@@ -24,7 +24,7 @@
                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                   {{-- Image --}}
                   <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                    <img src="{{asset('storage/estampas/' . $row['imagem'])}}" class="w-100" />
+                    <img src="{{$row['imagem']}}" class="w-100" />
                     <a href="#!">
                       <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                     </a>
@@ -52,7 +52,7 @@
                   </div>
                   @endforeach
                   {{-- Data --}}
-                  
+
                   <button type="submit" class="btn btn-primary cart-update" form="formUpdate_{{$key}}">Atualizar</button>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
@@ -65,7 +65,7 @@
                     <button type="submit" class="btn btn-primary btn-sm me-1 mb-2 cart-remove" data-mdb-toggle="tooltip" form="formDelete_{{$key}}">
                       <i class="fa fa-trash-o"></i>
                     </button>
-                    
+
                   </div>
                   {{-- Quantity --}}
                   {{-- Price --}}

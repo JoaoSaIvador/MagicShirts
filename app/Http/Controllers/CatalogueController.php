@@ -51,7 +51,6 @@ class CatalogueController extends Controller
             $categoria = "Sem Categoria";
         }
         if (!is_null($estampa->cliente_id)) {
-
             $precoEstampa = $preco['preco_un_proprio'];
         }
         else

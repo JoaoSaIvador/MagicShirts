@@ -14,9 +14,18 @@ class StampsController extends Controller
 {
     public function index()
     {
-        $listaEstampas = Estampa::where('cliente_id', null)->select('id', 'nome', 'categoria_id', 'deleted_at')
+        $listaEstampas = Estampa::where('cliente_id', null)->select('id', 'nome', 'categoria_id', 'deleted_at', 'cliente_id')
         ->withTrashed()->paginate(20);
         //dd(($listaEstampas[0]->categoria_id == $listaCategorias[4]->id) ? $listaCategorias[4]->nome : 'NO');
+
+        return view('admin.StampsManagement')
+            ->withEstampas($listaEstampas);
+    }
+
+    public function index_private()
+    {
+        $listaEstampas = Estampa::whereNotNull('cliente_id')->whereNull('categoria_id')->select('id', 'nome', 'categoria_id', 'deleted_at', 'cliente_id')
+            ->orderBy('cliente_id')->paginate(20);
 
         return view('admin.StampsManagement')
             ->withEstampas($listaEstampas);

@@ -209,6 +209,12 @@ border-width: 1px;
         background-color:blue;
     }
 }
+
+.adminSideBar{
+    background-color: black;
+    background-size: cover;
+}
+
 .adminMenu{
     height: 100%;
     width: 200px;

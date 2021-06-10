@@ -9,14 +9,20 @@ use App\Http\Requests\ProductPost;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $listaCores = Cor::pluck('nome', 'codigo');
 
+        $carrinho = $request->session()->get('carrinho', []);
+
+        foreach ($carrinho['items'] as $key=>$row) {
+            $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
+        }
+
         return view('cart.Cart')
             ->with('pageTitle', 'Carrinho de compras')
-            ->with('carrinho', session('carrinho') ?? [])
+            ->withCarrinho($carrinho)
             ->withTamanhos($listaTamanhos)
             ->withCores($listaCores);
     }
@@ -30,7 +36,7 @@ class CartController extends Controller
         if (empty($carrinho)) {
             $carrinho['precoTotal'] = 0;
             $carrinho['quantidadeItens'] = 0;
-        } 
+        }
         else {
             if(array_key_exists($key, $carrinho['items'])) {
                 $quantidade = $carrinho['items'][$key]['quantidade'] + $request->quantidade;
@@ -40,7 +46,7 @@ class CartController extends Controller
                 ->with('alert-msg', 'Foi adicionada uma tshirt carrinho!')
                 ->with('alert-type', 'success');
             }
-        } 
+        }
 
         $carrinho['items']["$request->estampa_id" . '-' . "$request->cor_codigo" . '-' . "$request->tamanho"] = [
             'quantidade' => $request->quantidade,
@@ -67,7 +73,7 @@ class CartController extends Controller
         $carrinho = $request->session()->get('carrinho', []);
         $quantidade = $request->quantidade;
         $newIndex = $carrinho['items'][$index]['estampa_id'] . '-' . $request->cor_codigo . '-' . $request->$index;
-        
+
         if ($quantidade <= 0) {
             $carrinho['quantidadeItens']--;
             $precoTotal = $carrinho['precoTotal'] - $carrinho['items'][$index]['subtotal'];
@@ -102,7 +108,7 @@ class CartController extends Controller
             $msg = 'T-shirt foi alterada';
         }
         $request->session()->put('carrinho', $carrinho);
-        
+
         return back()
             ->with('alert-msg', $msg)
             ->with('alert-type', 'success');
@@ -117,7 +123,7 @@ class CartController extends Controller
             unset($carrinho['items'][$index]);
 
             $request->session()->put('carrinho', $carrinho);
-            
+
             return back()
                 ->with('alert-msg', 'A T-shirt foi removida')
                 ->with('alert-type', 'success');

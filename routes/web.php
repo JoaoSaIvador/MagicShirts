@@ -54,6 +54,7 @@ Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name(
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
 
 Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
+Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter');
 Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,App\Models\User');
 Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
 Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');;
@@ -68,6 +69,7 @@ Route::delete('admin/categorias/{categoria}', [CategoryController::class, 'destr
 Route::post('admin/categorias/store', [CategoryController::class, 'restore'])->name('Categories.restore');
 
 Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps');
+Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private');
 Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create');
 Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit');
 Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image');

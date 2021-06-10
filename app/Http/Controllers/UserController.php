@@ -15,10 +15,16 @@ class UserController extends Controller
         return view('user.Login');
     }
 
-    public function indexUsers()
+    public function indexUsers(Request $request)
     {
-        $listaUsers = User::select('id', 'name', 'created_at', 'tipo', 'bloqueado', 'deleted_at')->withTrashed()->paginate(20);
-        //dd($listaUsers[19]->cliente);
+        //dd($request->tipo);
+        //$tipo;
+        if (isset($request->tipo)) {
+            $listaUsers = User::where('tipo', $request->tipo)->select('id', 'name', 'created_at', 'tipo', 'bloqueado', 'deleted_at')->withTrashed()->paginate(20);
+        }
+        else {
+            $listaUsers = User::select('id', 'name', 'created_at', 'tipo', 'bloqueado', 'deleted_at')->withTrashed()->paginate(20);
+        }
 
         return view('admin.UserManagement')
             ->withUsers($listaUsers);
