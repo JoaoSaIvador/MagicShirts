@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfilePost;
+use App\Http\Requests\PasswordPost;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -45,10 +47,16 @@ class ProfileController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function reset_password() {
+    public function password_update(Request $request, User $user){
         
-        return view('auth.passwords.reset')
-            ->withPageTitle('Password Reset');
+        if (Hash::check($request->password_atual, $user->password)) {
+            $user->password = Hash::make($request->nova_password);
+            $user->save();
+        }
+        
+        return back()
+            ->with('alert-msg', "Password atualizada com sucesso!")
+            ->with('alert-type', 'success');
     }
 
     public function destroy_foto()

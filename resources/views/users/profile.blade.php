@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-md-12 order-md-1">
                 <h4 class="mb-3">Informação de Utilizador</h4>
+
                 <form method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -25,6 +26,7 @@
                             @enderror
                         </div>
                     </div>
+
                     @if($user->tipo == 'C')
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -36,7 +38,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Morada</label>
-                            <input type="text" class="form-control" name="morada" value="{{ old('nome') ?? $user->cliente->endereco }}">
+                            <input type="text" class="form-control" name="morada" value="{{ old('morada') ?? $user->cliente->endereco }}">
                         </div>
                     </div>
 
@@ -51,10 +53,11 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Referência de Pagamento Predefinida</label>
-                            <input type="text" class="form-control" name="ref_pagamento" value="{{ old('nome') ?? $user->cliente->ref_pagamento }}">
+                            <input type="text" class="form-control" name="ref_pagamento" value="{{ old('ref_pagamento') ?? $user->cliente->ref_pagamento }}">
                         </div>
                     </div>
                     @endif
+
                     <div class="row">
                         <div class="form-group">
                             <label for="inputFoto">Upload da foto</label>
@@ -71,18 +74,45 @@
                     </div>
 
                     <button type="submit" action="{{route('Profile.edit')}}" class="btn btn-primary cart-update">Atualizar</button>
-                    <a href="{{route('Profile.reset')}}" class="btn btn-primary cart-update">Reset Password</a>
                     @isset($user->foto_url)
                     <button type="submit" class="btn btn-danger cart-update" name="deletefoto" form="form_delete_photo">Apagar Foto</button>
                     @endisset
                 </form>
+
+                <hr class="mb-4">
+
+                <form action="{{route('Profile.password', auth()->user())}}" method="POST" id="form_password">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Password Atual</label>
+                            <input type="password" class="form-control" name="password_atual">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Nova Password</label>
+                            <input type="password" class="form-control" name="nova_password">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Confirmar Nova Password</label>
+                            <input type="password" class="form-control" name="conf_nova_password">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary cart-update" form="form_password">Atualizar Password</button>
+                </form>
+
                 <form id="form_delete_photo" action="{{route('Profile.foto.destroy')}}" method="POST">
                     @csrf
                     @method('DELETE')
                 </form>
+
             </div>
         </div>
-        <hr class="mb-4">
     </div>
 </div>
 

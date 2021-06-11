@@ -119,7 +119,7 @@
             </ul>
             @if (!empty($carrinho) && $carrinho['quantidadeItens'] != 0)
             <a href="{{route('Checkout')}}" class="btn btn-primary btn-lg btn-block">
-              Go to checkout
+              Ir para o checkout
             </a>
             @endif
           </div>

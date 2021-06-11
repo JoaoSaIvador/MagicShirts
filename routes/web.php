@@ -96,7 +96,7 @@ Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name
 Route::middleware('auth')->group(function() {
     Route::get('perfil', [ProfileController::class, 'index'])->name('Profile');
     Route::put('perfil', [ProfileController::class, 'edit'])->name('Profile.edit');
-    Route::get('perfil/reset', [ProfileController::class, 'reset_password'])->name('Profile.reset');
+    Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password');
     Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
 });
 
