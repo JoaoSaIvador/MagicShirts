@@ -16,7 +16,7 @@
             <form action="{{route('Cart.store')}}" method="post">
             @csrf
                 <input type="number" name="estampa_id" hidden value="{{$estampa->id}}">
-                <div class="m-bot15"> <input type="text" hidden value="{{$preco}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco}}</span></div>
+                <div class="m-bot15"> <input type="text" hidden value="{{$estampa->getPreco()}}" name="preco"><strong>Preco: </strong><span class="pro-price"> ${{$estampa->getPreco()}}</span></div>
                 <hr>
                 <select name="cor_codigo" class="custom-select catalogue-select">
                     <option value="none" selected disabled hidden>Cor da T-shirt</option>
@@ -34,6 +34,9 @@
                         <label class="form-check-label">{{$abrev}}</label>
                     </div>
                 @endforeach
+                @error('tamanho')
+                    <div class="small text-danger">{{$message}}</div>
+                @enderror
                 <div class="d-flex mb-4 " style="width: 100px">
                   <div class="form-outline">
                     <label class="form-label" for="form1">Quantidade:</label>

@@ -100,12 +100,12 @@
                                 @endguest
                             </ul>
                         </div>
-                        @if (session('alert-msg'))
+                        {{-- @if (session('alert-msg'))
                             @include('partials.message')
                         @endif
                         @if ($errors->any())
                             @include('partials.errors-message')
-                        @endif
+                        @endif --}}
                     </div>
                 </nav>
                 <div class="row">
@@ -117,4 +117,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.js" integrity="sha512-CAv0l04Voko2LIdaPmkvGjH3jLsH+pmTXKFoyh5TIimAME93KjejeP9j7wSeSRXqXForv73KUZGJMn8/P98Ifg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{asset('js/Chart.min.js')}}"></script>
+    @yield('script')
 </body>

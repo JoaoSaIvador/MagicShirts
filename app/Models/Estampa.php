@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Preco;
 
 class Estampa extends Model
 {
@@ -35,6 +36,17 @@ class Estampa extends Model
         else
         {
             return route('Stamp.image', ['estampa' => $this]);
+        }
+    }
+
+    public function getPreco()
+    {
+        $precos = Preco::first();
+
+        if(is_null($this->cliente_id)) {
+            return $precos->preco_un_catalogo;
+        } else {
+            return $precos->preco_un_proprio;
         }
     }
 }

@@ -43,19 +43,11 @@ class CatalogueController extends Controller
     public function view_product(Estampa $estampa)
     {
         $listaCores = Cor::pluck('nome', 'codigo');
-        $preco = Preco::find(1);
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $categoria = Categoria::where('id', $estampa->categoria_id)->value('nome');
 
         if (is_null($categoria)) {
             $categoria = "Sem Categoria";
-        }
-        if (!is_null($estampa->cliente_id)) {
-            $precoEstampa = $preco['preco_un_proprio'];
-        }
-        else
-        {
-            $precoEstampa = $preco['preco_un_catalogo'];
         }
 
         return view('catalogue.Product')
@@ -63,7 +55,6 @@ class CatalogueController extends Controller
             ->withEstampa($estampa)
             ->withCores($listaCores)
             ->withTamanhos($listaTamanhos)
-            ->withPreco($precoEstampa)
             ->withCategoria($categoria);
     }
 }

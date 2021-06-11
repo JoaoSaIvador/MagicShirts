@@ -28,7 +28,7 @@ class ProductPost extends FormRequest
             'cor_codigo' =>  'required|exists:cores,codigo',
             'tamanho' =>     'required|in:XS,S,M,L,XL',
             'quantidade' =>  'required|integer|min:1',
-            'preco_un' =>    'nullable',
+            'preco' =>    'nullable',
         ];
     }
 

@@ -45,7 +45,7 @@ Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->na
 Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard');//->middleware('can:accessDashboard');
 Route::get('dashboard/home', [DashboardController::class, 'view_dashboard'])->name('Dashboard.details');
 
 Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
@@ -53,14 +53,14 @@ Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])-
 Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
 
-Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
+Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users');//->middleware('can:viewAny,App\Models\User');
 Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter');
-Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,App\Models\User');
-Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
-Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');;
-Route::post('admin/users/restore', [UserController::class, 'restore'])->name('Users.restore')->middleware('can:restore,App\Models\User');
+Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions');//->middleware('can:update,App\Models\User');
+Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block');//->middleware('can:update,App\Models\User');
+Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete');//->middleware('can:delete,App\Models\User');;
+Route::post('admin/users/restore', [UserController::class, 'restore'])->name('Users.restore');//->middleware('can:restore,App\Models\User');
 
-Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories')->middleware('can:viewAny,App\Models\User');;
+Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories');//->middleware('can:viewAny,App\Models\User');;
 Route::get('admin/categorias/create', [CategoryController::class, 'create'])->name('Categories.create');
 Route::get('admin/categorias/{categoria}/edit', [CategoryController::class, 'edit'])->name('Categories.edit');
 Route::post('admin/categorias/store', [CategoryController::class, 'store'])->name('Categories.store');

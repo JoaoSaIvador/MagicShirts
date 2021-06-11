@@ -16,8 +16,10 @@ class CartController extends Controller
 
         $carrinho = $request->session()->get('carrinho', []);
 
-        foreach ($carrinho['items'] as $key=>$row) {
-            $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
+        if ($carrinho != []) {
+            foreach ($carrinho['items'] as $key=>$row) {
+                $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
+            }
         }
 
         return view('cart.Cart')
@@ -53,13 +55,13 @@ class CartController extends Controller
             'estampa_id' => $request->estampa_id,
             'cor_codigo' => $request->cor_codigo,
             'tamanho' => $request->tamanho,
-            'preco_un' => $request->preco_un,
-            'subtotal' => ($request->preco_un * $request->quantidade),
+            'preco' => $request->preco,
+            'subtotal' => ($request->preco * $request->quantidade),
             'nome' => Estampa::where('id', $request->estampa_id)->value('nome'),
             'imagem' => Estampa::where('id', $request->estampa_id)->value('imagem_url')
         ];
 
-        $carrinho['precoTotal'] += $request->preco_un * $request->quantidade;
+        $carrinho['precoTotal'] += $request->preco * $request->quantidade;
         $carrinho['quantidadeItens'] += 1;
 
         $request->session()->put('carrinho', $carrinho);
@@ -85,7 +87,7 @@ class CartController extends Controller
             if(array_key_exists($newIndex, $carrinho['items']) && $index != $newIndex) {
                 $quantidade = $carrinho['items'][$newIndex]['quantidade'] + $request->quantidade;
                 $carrinho['items'][$newIndex]['quantidade'] = $quantidade;
-                $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco_un'] * $quantidade);
+                $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco'] * $quantidade);
                 $carrinho['quantidadeItens']--;
                 unset($carrinho['items'][$index]);
                 $request->session()->put('carrinho', $carrinho);
@@ -97,7 +99,7 @@ class CartController extends Controller
 
             $carrinho['items'][$newIndex] = $carrinho['items'][$index];
             $carrinho['items'][$newIndex]['quantidade'] = $request->quantidade;
-            $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco_un'] * $request->quantidade);
+            $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco'] * $request->quantidade);
             $carrinho['items'][$newIndex]['cor_codigo'] = $request->cor_codigo;
             $carrinho['items'][$newIndex]['tamanho'] = $request->$index;
 

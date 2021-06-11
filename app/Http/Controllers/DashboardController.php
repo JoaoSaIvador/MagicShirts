@@ -13,7 +13,9 @@ class DashboardController extends Controller
 
     public function view_dashboard()
     {
-        return view('home.Info');
+        $labels = ['1','2'];
+        return view('home.Info')
+        ->withLabels($labels);
     }
 
 }
