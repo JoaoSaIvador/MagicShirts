@@ -58,10 +58,10 @@ Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->nam
 
 Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
 Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter');
-Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,App\Models\User');
-Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
+Route::patch('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,user');
+Route::patch('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,user');
 Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');;
-Route::post('admin/users/restore', [UserController::class, 'restore'])->name('Users.restore')->middleware('can:restore,App\Models\User');
+Route::patch('admin/users/restore', [UserController::class, 'restore'])->name('Users.restore')->middleware('can:restore,App\Models\User');
 
 Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories')->middleware('can:viewAny,App\Models\User');;
 Route::get('admin/categorias/create', [CategoryController::class, 'create'])->name('Categories.create');
@@ -99,13 +99,6 @@ Route::middleware('auth')->group(function() {
     Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password');
     Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
 });
-
-Route::get('user', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
-Route::put('users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,user');
-Route::put('users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
-//Route::put('users/{user}/restaurar', [UserController::class, 'restore'])->name('Users.restore');//->middleware('can:update,App\Models\User');
-Route::delete('users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');
-
 
 Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);

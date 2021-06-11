@@ -35,7 +35,7 @@
                     <div class="collapse mb-n3 mt-2" id="collapse{{$user->id}}">
                         <form action="{{route('Users.permissions', ['user' => $user])}}" method="POST" class="form-group">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
                             <div class="row">
                                 <select name="tipo" class="custom-select col">
                                     <option value="none" selected disabled hidden>Alterar permissões</option>
@@ -57,7 +57,7 @@
                 <td>
                     <form action="{{route('Users.block', ['user' => $user])}}" method="post">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
                         @if ($user->bloqueado != "0")
                             <button type="submit" class="btn btn-primary btn-sm launch">Desbloquear</button>
                         @endif
