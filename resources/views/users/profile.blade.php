@@ -25,7 +25,7 @@
                             @enderror
                         </div>
                     </div>
-
+                    @if($user->tipo == 'C')
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>NIF</label>
@@ -54,7 +54,7 @@
                             <input type="text" class="form-control" name="ref_pagamento" value="{{ old('nome') ?? $user->cliente->ref_pagamento }}">
                         </div>
                     </div>
-
+                    @endif
                     <div class="row">
                         <div class="form-group">
                             <label for="inputFoto">Upload da foto</label>
