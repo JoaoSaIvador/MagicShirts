@@ -89,6 +89,9 @@
                         <div class="col-md-6 mb-3">
                             <label>Password Atual</label>
                             <input type="password" class="form-control" name="password_atual">
+                            @error('password_atual')
+                            <div class="small text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -96,10 +99,16 @@
                         <div class="col-md-6 mb-3">
                             <label>Nova Password</label>
                             <input type="password" class="form-control" name="nova_password">
+                            @error('nova_password')
+                            <div class="small text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Confirmar Nova Password</label>
                             <input type="password" class="form-control" name="conf_nova_password">
+                            @error('conf_nova_password')
+                            <div class="small text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                     </div>
 
