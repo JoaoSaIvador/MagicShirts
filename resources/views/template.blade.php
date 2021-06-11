@@ -47,7 +47,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="dropdown-item text-light" href="{{route('login')}}">Perfil</a>
+                        <a class="dropdown-item text-light" href="{{route('Profile')}}">Perfil</a>
                     </li>
                     <li>
                         <a class="dropdown-item text-light" href="{{ route('logout') }}"
