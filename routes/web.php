@@ -56,6 +56,7 @@ Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])-
 Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');
 Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
 
+<<<<<<< Updated upstream
 Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
 Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter');
 Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,App\Models\User');
@@ -99,6 +100,13 @@ Route::middleware('auth')->group(function() {
     Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password');
     Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
 });
+=======
+Route::get('user', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
+Route::put('users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,user');
+Route::put('users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,App\Models\User');
+//Route::put('users/{user}/restaurar', [UserController::class, 'restore'])->name('Users.restore');//->middleware('can:update,App\Models\User');
+Route::delete('users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');
+>>>>>>> Stashed changes
 
 
 Route::post('register', [UserController::class, 'register']);
