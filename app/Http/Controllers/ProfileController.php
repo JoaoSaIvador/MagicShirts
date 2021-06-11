@@ -52,6 +52,10 @@ class ProfileController extends Controller
         if (Hash::check($request->password_atual, $user->password)) {
             $user->password = Hash::make($request->nova_password);
             $user->save();
+        } else {
+            return back()
+            ->with('alert-msg', "Password incorreta!")
+            ->with('alert-type', 'danger');
         }
         
         return back()
