@@ -46,6 +46,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function cliente()
     {
-        return $this->hasOne(Cliente::class)->withTrashed();
+        return $this->hasOne(Cliente::class, 'id', 'id')->withTrashed();
     }
 }

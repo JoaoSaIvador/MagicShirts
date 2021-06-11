@@ -13,10 +13,15 @@ class CartController extends Controller
     {
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $listaCores = Cor::pluck('nome', 'codigo');
+        $carrinho = $request->session()->get('carrinho', []);
+
+        foreach ($carrinho['items'] as $key=>$row) {
+            $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
+        }
 
         return view('cart.Cart')
             ->with('pageTitle', 'Carrinho de compras')
-            ->with('carrinho', session('carrinho') ?? [])
+            ->withCarrinho($carrinho)
             ->withTamanhos($listaTamanhos)
             ->withCores($listaCores);
     }
