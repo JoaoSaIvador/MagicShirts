@@ -25,8 +25,8 @@ class PasswordPost extends FormRequest
     {
         return [
             'password_atual' =>     'required',
-            'nova_password' => 'bail|required|max:24||min:8confirmed',
-            'conf_nova_password' => 'bail|required|max:24|min:8'
+            'nova_password' => 'bail|required|max:24||min:8',
+            'conf_nova_password' => 'bail|required|max:24|min:8|same:nova_password'
         ];
     }
 
@@ -39,7 +39,7 @@ class PasswordPost extends FormRequest
             'conf_nova_password.required' => 'É obrigatório introduzir a confirmação de password',
             'conf_nova_password.max:24' => 'A password tem de ter entre 8 a 24 carateres',
             'conf_nova_password.min:8' => 'A password tem de ter entre 8 a 24 carateres',
-            'nova_password.confirmed' => 'As password têm de ser iguais'
+            'nova_password.same:nova_password' => 'As password têm de ser iguais'
         ];
     }
 }

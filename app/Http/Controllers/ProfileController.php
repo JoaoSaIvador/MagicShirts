@@ -47,7 +47,7 @@ class ProfileController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function password_update(Request $request, User $user){
+    public function password_update(PasswordPost $request, User $user){
         
         if (Hash::check($request->password_atual, $user->password)) {
             $user->password = Hash::make($request->nova_password);
