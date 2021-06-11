@@ -15,14 +15,10 @@ class CartController extends Controller
         $listaCores = Cor::pluck('nome', 'codigo');
         $carrinho = $request->session()->get('carrinho', []);
 
-        foreach ($carrinho['items'] as $key=>$row) {
-            $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
-        }
-
-        $carrinho = $request->session()->get('carrinho', []);
-
-        foreach ($carrinho['items'] as $key=>$row) {
-            $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
+        if(!empty($carrinho['items'])) {
+            foreach ($carrinho['items'] as $key=>$row) {
+                $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
+            }
         }
 
         return view('cart.Cart')

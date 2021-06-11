@@ -100,12 +100,12 @@
                                 @endguest
                             </ul>
                         </div>
-                        @if (session('alert-msg'))
+                        {{-- @if (session('alert-msg'))
                             @include('partials.message')
                         @endif
                         @if ($errors->any())
                             @include('partials.errors-message')
-                        @endif
+                        @endif --}}
                     </div>
                 </nav>
                 <div class="row">
