@@ -11,7 +11,7 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $metodos = ['VISA', 'MC', 'PAYPAL'];
 
