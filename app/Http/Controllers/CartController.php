@@ -13,10 +13,9 @@ class CartController extends Controller
     {
         $listaTamanhos = ['XS', 'S', 'M', 'L', 'XL'];
         $listaCores = Cor::pluck('nome', 'codigo');
-
         $carrinho = $request->session()->get('carrinho', []);
 
-        if ($carrinho != []) {
+        if(!empty($carrinho['items'])) {
             foreach ($carrinho['items'] as $key=>$row) {
                 $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
             }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,54 +15,63 @@
     <title>@yield('title')</title>
 
 </head>
+
 <body>
     <nav class="mainmenu navbar navbar-expand-lg mb-4 static-top shadow">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="{{asset('img/MagicShirtsLogo.png')}}" alt="MagicShirts LOGO">
-        </a>
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <a class="dropdown-item text-light" href="{{route('Catalogue')}}">Catálogo</a>
-            </li>
-            @auth
-                @if (auth()->user()->tipo != 'C')
-                <li class="nav-item">
-                    <a class="dropdown-item text-light" href="{{route('Dashboard')}}">Administrador</a>
-                </li>
-                @endif
-            @endauth
-        </ul>
-        </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="dropdown-item text-light" href="{{route('Cart')}}">Carrinho</a>
-                </li>
-                @guest
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{{asset('img/MagicShirtsLogo.png')}}" alt="MagicShirts LOGO">
+            </a>
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="dropdown-item text-light" href="{{route('Catalogue')}}">Catálogo</a>
+                    </li>
+                    @auth
+                    @if (auth()->user()->tipo != 'C')
+                    <li class="nav-item">
+                        <a class="dropdown-item text-light" href="{{route('Dashboard')}}">Administrador</a>
+                    </li>
+                    @endif
+                    @endauth
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="dropdown-item text-light" href="{{route('Cart')}}">Carrinho</a>
+                    </li>
+                    @guest
                     @if (Route::has('login'))
                     <li class="nav-item">
                         <a class="dropdown-item text-light" href="{{route('login')}}">Entrar/Registar</a>
                     </li>
                     @endif
-                @else
+                    @else
                     <li class="nav-item">
-                        <a class="dropdown-item text-light" href="{{route('login')}}">Perfil</a>
+                        <a class="dropdown-item text-light" href="{{route('Profile')}}">Perfil</a>
                     </li>
                     <li>
-                        <a class="dropdown-item text-light" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
+                        <a class="dropdown-item text-light" href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                     </li>
-                @endguest
+                    @endguest
 
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
     </nav>
-    @yield('content')
+    <div>
+        @if (session('alert-msg'))
+        <div class="alert alert-{{ session('alert-type') }}">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <span>{{ session('alert-msg') }}</span>
+        </div>
+        @endif
+        @yield('content')
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
+
 </html>

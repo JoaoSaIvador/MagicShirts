@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PricesController;
 use App\Http\Policies\UserPolicy;
 use App\Models\User;
@@ -42,8 +43,10 @@ Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.sto
 Route::put('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update');
 Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy');
 
-Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
-Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
+Route::middleware('auth')->prefix('carrinho')->group(function() {
+    Route::get('checkout',  [CheckoutController::class, 'index'])->name('Checkout');
+    Route::post('checkout', [CheckoutController::class, 'finalize_order'])->name('Checkout.finalize');
+});
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard');//->middleware('can:accessDashboard');
 
@@ -89,12 +92,12 @@ Route::get('admin/precos', [PricesController::class, 'index'])->name('Prices');
 Route::post('admin/precos/{preco}', [PricesController::class, 'update'])->name('Prices.update');
 Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name('Prices.edit');
 
-
-//Route::get('profile', [UserController::class, 'indexUsers'])->name('Profile')->middleware('can:view,App\Models\User');
-
-//Route::get('estampas', [StampsController::class, 'index'])->name('Stamps');
-
-
+Route::middleware('auth')->group(function() {
+    Route::get('perfil', [ProfileController::class, 'index'])->name('Profile');
+    Route::put('perfil', [ProfileController::class, 'edit'])->name('Profile.edit');
+    Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password');
+    Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
+});
 
 Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);
