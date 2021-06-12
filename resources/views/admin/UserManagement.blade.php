@@ -17,7 +17,7 @@
                 <th>Data Inscrição</th>
                 <th>Tipo</th>
                 <th>Permissões</th>
-                <th>Opcional</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -76,6 +76,7 @@
                     @else
                         <form action="{{route('Users.restore', $user)}}" method="POST">
                             @csrf
+                            @method("PATCH")
                                 <input type="text" name="user" hidden value="{{$user->id}}">
                                 <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
                         </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Estampa;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index')->withPageTitle('MagicShirts');
+        $listaEstampas = Estampa::all()->random(10);
+        return view('home.index')->withPageTitle('MagicShirts') ->withEstampas($listaEstampas);;
     }
 }
