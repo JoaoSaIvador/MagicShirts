@@ -46,7 +46,6 @@ Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Ch
 Route::get('carrinho/checkout',  [CheckoutController::class, 'index'])->name('Checkout');
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard');//->middleware('can:accessDashboard');
-Route::get('dashboard/home', [DashboardController::class, 'view_dashboard'])->name('Dashboard.details');
 
 Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
 Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');

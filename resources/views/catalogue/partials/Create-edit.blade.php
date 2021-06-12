@@ -18,7 +18,6 @@
         @endforeach
     </select>
 </div>
-@endif
 <div class="form-group">
     <label for="inputDescricao" class="fs-2">Descrição</label>
     <input type="text" class="form-control" name="descricao" id="inputDescricao" value="{{old('descricao', $estampa->descricao)}}">
@@ -26,6 +25,7 @@
        <div class="small text-danger">{{$message}}</div>
     @enderror
 </div>
+@endif
 <div class="form-group">
     <label for="inputImagem" class="fs-2">Imagem da Estampa</label>
     <input type="file" class="form-control" name="imagem_url" id="inputImagem" value="{{old('imagem_url', $estampa->getImagemFullUrl())}}">

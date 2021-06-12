@@ -24,7 +24,7 @@
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item ml-2">
-                <a class="nav-link" href="{{route('Dashboard.details')}}">
+                <a class="nav-link" href="{{route('Dashboard')}}">
                     <span>Dashboard</span>
                 </a>
             </li>
