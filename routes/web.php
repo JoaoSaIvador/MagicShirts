@@ -29,56 +29,90 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Home
+
 Route::get('/',[HomeController::class,'index'])->name('Home');
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-//Route::get('admin', [DashboardController::class, 'index'])->name('Dashboard');
 
-Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue');
-Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Catalogue.view');
-Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->name('Catalogue.personal');
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Catalogue
 
-Route::get('carrinho', [CartController::class, 'index'])->name('Cart');
-Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store');
-Route::put('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update');
-Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy');
+Route::get('catalogo', [CatalogueController::class, 'index'])->name('Catalogue')->middleware('can:viewCatalogue,App\Models\Estampa');
+Route::get('catalogo/produto/{estampa}', [CatalogueController::class, 'view_product'])->name('Catalogue.view')->middleware('can:view,estampa');
+Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->name('Catalogue.personal')->middleware('can:viewPersonal,App\Models\Estampa');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin Stamps
+
+Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps')->middleware('can:viewAny,App\Models\Estampa');
+Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private')->middleware('can:view,App\Models\Estampa');
+Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create')->middleware('can:create,App\Models\Estampa');
+Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit')->middleware('can:update,estampa');
+Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image')->middleware('can:update,estampa');
+Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store');
+Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update');
+Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete');
+Route::post('estampa/restore', [StampsController::class, 'restore'])->name('Stamps.restore');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Cart
+
+Route::get('carrinho', [CartController::class, 'index'])->name('Cart')->middleware('can:create,App\Models\Encomenda');
+Route::patch('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store')->middleware('can:create,App\Models\Encomenda');
+Route::patch('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update')->middleware('can:create,App\Models\Encomenda');
+Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy')->middleware('can:create,App\Models\Encomenda');
 
 Route::middleware('auth')->prefix('carrinho')->group(function() {
     Route::get('checkout',  [CheckoutController::class, 'index'])->name('Checkout');
     Route::post('checkout', [CheckoutController::class, 'finalize_order'])->name('Checkout.finalize');
 });
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard');//->middleware('can:accessDashboard');
 
-Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders');
-Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view');
-Route::put('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update');
-Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter');
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin
 
-Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users');//->middleware('can:viewAny,App\Models\User');
-Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter');
-Route::put('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions');//->middleware('can:update,App\Models\User');
-Route::put('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block');//->middleware('can:update,App\Models\User');
-Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete');//->middleware('can:delete,App\Models\User');;
-Route::post('admin/users/restore', [UserController::class, 'restore'])->name('Users.restore');//->middleware('can:restore,App\Models\User');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard')->middleware('can:accessDashboard');
 
-Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories');//->middleware('can:viewAny,App\Models\User');;
-Route::get('admin/categorias/create', [CategoryController::class, 'create'])->name('Categories.create');
-Route::get('admin/categorias/{categoria}/edit', [CategoryController::class, 'edit'])->name('Categories.edit');
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin Orders
+
+Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny,App\Models\Encomenda');
+Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:viewAny,App\Models\Encomenda');
+Route::patch('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:viewAny,App\Models\Encomenda');
+Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny,App\Models\Encomenda');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin Users
+
+Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
+Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter')->middleware('can:viewAny,App\Models\User');
+Route::patch('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,user');
+Route::patch('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,user');
+Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');
+Route::patch('admin/users/restore', [UserController::class, 'restore'])->name('Users.restore')->middleware('can:restore,App\Models\User');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin Categories
+
+Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories')->middleware('can:viewAny,App\Models\Categoria');
+Route::get('admin/categorias/create', [CategoryController::class, 'create'])->name('Categories.create')->middleware('can:create,App\Models\Categoria');
+Route::get('admin/categorias/{categoria}/edit', [CategoryController::class, 'edit'])->name('Categories.edit')->middleware('can:update,categoria');
 Route::post('admin/categorias/store', [CategoryController::class, 'store'])->name('Categories.store');
-Route::put('admin/categorias/{categoria}', [CategoryController::class, 'update'])->name('Categories.update');
-Route::delete('admin/categorias/{categoria}', [CategoryController::class, 'destroy'])->name('Categories.delete');
-Route::post('admin/categorias/store', [CategoryController::class, 'restore'])->name('Categories.restore');
+Route::put('admin/categorias/{categoria}', [CategoryController::class, 'update'])->name('Categories.update')->middleware('can:update,categoria');
+Route::delete('admin/categorias/{categoria}', [CategoryController::class, 'destroy'])->name('Categories.delete')->middleware('can:delete,App\Models\Categoria');
+Route::post('admin/categorias/store', [CategoryController::class, 'restore'])->name('Categories.restore')->middleware('can:restore,App\Models\Categoria');
 
-Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps');
-Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private');
-Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create');
-Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit');
-Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image');
-Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store');
-Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update');
-Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete');
-Route::post('estampa/restore', [StampsController::class, 'restore'])->name('Stamps.restore');
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin Colors
 
 Route::get('admin/cores', [ColorsController::class, 'index'])->name('Colors');
 Route::get('admin/cores/create', [ColorsController::class, 'create'])->name('Colors.create');
@@ -88,9 +122,17 @@ Route::put('admin/cores/{cor}', [ColorsController::class, 'update'])->name('Colo
 Route::delete('admin/cores/{cor}', [ColorsController::class, 'destroy'])->name('Colors.delete');
 Route::post('admin/cores/restore', [ColorsController::class, 'restore'])->name('Colors.restore');
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Admin Prices
+
 Route::get('admin/precos', [PricesController::class, 'index'])->name('Prices');
 Route::post('admin/precos/{preco}', [PricesController::class, 'update'])->name('Prices.update');
 Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name('Prices.edit');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Profile
 
 Route::middleware('auth')->group(function() {
     Route::get('perfil', [ProfileController::class, 'index'])->name('Profile');
@@ -99,9 +141,12 @@ Route::middleware('auth')->group(function() {
     Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
 });
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Register
+
 Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);
 
-//Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

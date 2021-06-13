@@ -18,7 +18,7 @@
             </form>
             <form action="{{route('Cart.update', $key)}}" method="POST" id="formUpdate_{{$key}}">
               @csrf
-              @method('PUT')
+              @method('PATCH')
               {{-- Single item --}}
               <div class="row">
                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">

@@ -21,9 +21,9 @@ class EncomendaPolicy
         return $user->tipo === 'A' ||  $user->tipo === 'F' || $user->id === $encomenda->cliente_id;
     }
 
-    public function create(User $user)
+    public function create(?User $user)
     {
-        return $user->tipo === 'C';
+        return $user == null || optional($user)->tipo === 'C';
     }
 
     public function update(User $user, Encomenda $encomenda)

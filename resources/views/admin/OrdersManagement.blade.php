@@ -62,7 +62,7 @@
                         <div class="collapse mb-n3 mt-2" id="collapse{{$encomenda->id}}">
                             <form action="{{route('Orders.update', ['encomenda' => $encomenda])}}" method="POST" class="form-group">
                             @csrf
-                            @method('PUT')
+                            @method('PATCH')
                                 <div class="row">
                                     <select name="estado" class="custom-select col">
                                         <option value="none" selected disabled hidden>Alterar Estado</option>

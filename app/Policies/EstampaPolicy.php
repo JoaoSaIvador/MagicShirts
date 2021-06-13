@@ -10,18 +10,26 @@ class EstampaPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user)
+    public function viewAny(?User $user)
     {
-        return false;
+        return optional($user)->tipo != 'F';
     }
 
-    public function view(User $user, Estampa $estampa)
+    public function view(?User $user, Estampa $estampa)
     {
-        return $estampa->client_id === null || $estampa->client_id === $user->id ||$user->tipo === 'A' || $user->tipo === 'F';
+        return $estampa->cliente_id === null ? true : $estampa->client_id === $user->id;// ||$user->tipo === 'A' || $user->tipo === 'F';
     }
 
     public function viewImage(){
 
+    }
+
+    public function viewPersonal(User $user){
+        return $user->tipo === 'C';
+    }
+
+    public function viewCatalogue(?User $user){
+        return $user == null || optional($user)->tipo === 'C';
     }
 
     public function create(User $user)
@@ -31,7 +39,7 @@ class EstampaPolicy
 
     public function update(User $user, Estampa $estampa)
     {
-        return $user->tipo === 'A' || $user->tipo === 'C';
+        return $user->tipo === 'A' && $estampa->cliente_id == null || $user->tipo === 'C' && $estampa->cliente_id === $user->id;
     }
 
     public function delete(User $user, Estampa $estampa)
