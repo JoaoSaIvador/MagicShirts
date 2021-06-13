@@ -50,13 +50,13 @@ Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->n
 
 Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps')->middleware('can:viewAny,App\Models\Estampa');
 Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private')->middleware('can:viewPersonalStamps,App\Models\Estampa');
-Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create')->middleware('can:create,App\Models\Estampa');
-Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit')->middleware('can:update,estampa');
+Route::get('admin/estampa/create', [StampsController::class, 'create'])->name('Stamps.create')->middleware('can:create,App\Models\Estampa');
+Route::get('admin/estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit')->middleware('can:update,estampa');
 Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image')->middleware('can:update,estampa');
-Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store');
-Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update');
-Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete');
-Route::post('estampa/restore', [StampsController::class, 'restore'])->name('Stamps.restore');
+Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store')->middleware('can:create, App\Models\Estampa');
+Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update')->middleware('can:update, estampa');
+Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete')->middleware('can:delete, App\Models\Estampa');
+Route::post('admin/estampa/restore', [StampsController::class, 'restore'])->name('Stamps.restore')->middleware('can:restore, App\Models\Estampa');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,10 +82,10 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard'
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Orders
 
-Route::get('encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny,App\Models\Encomenda');
-Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:viewAny,App\Models\Encomenda');
-Route::patch('encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:viewAny,App\Models\Encomenda');
-Route::get('encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny,App\Models\Encomenda');
+Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny,App\Models\Encomenda');
+Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:viewAny,App\Models\Encomenda');
+Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update,encomenda');
+Route::get('admin/encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny,App\Models\Encomenda');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

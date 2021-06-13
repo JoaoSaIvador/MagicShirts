@@ -28,7 +28,7 @@ class EncomendaPolicy
 
     public function update(User $user, Encomenda $encomenda)
     {
-        return $user->tipo === 'A' || $user->id === $encomenda->cliente_id;
+        return $user->tipo === 'A' || $user->id === $encomenda->cliente_id || $user->tipo === 'F';
     }
 
     public function delete(User $user, Encomenda $encomenda)

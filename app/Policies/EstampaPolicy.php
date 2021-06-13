@@ -10,9 +10,9 @@ class EstampaPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(?User $user)
+    public function viewAny(User $user)
     {
-        return optional($user)->tipo != 'F';
+        return $user->tipo === 'F' || $user->tipo === 'A';
     }
 
     public function view(?User $user, Estampa $estampa)
@@ -28,7 +28,7 @@ class EstampaPolicy
         return $user->tipo === 'C';
     }
 
-    public function viewPersonalStamps()
+    public function viewPersonalStamps(User $user)
     {
         return $user->tipo != 'C';
     }
@@ -53,7 +53,7 @@ class EstampaPolicy
 
     public function restore(User $user, Estampa $estampa)
     {
-       return false;
+        return $user->tipo === 'A';
     }
 
     public function forceDelete(User $user, Estampa $estampa)

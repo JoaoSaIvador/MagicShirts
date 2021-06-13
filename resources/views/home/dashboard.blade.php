@@ -7,10 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     <link href="{{asset('CSS/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('CSS/Stylesheet.css')}}" rel="stylesheet">
 
@@ -92,7 +89,7 @@
                                     @endif
                                 @else
                                     <li class="nav-item">
-                                        <a class="dropdown-item text-light" href="{{route('login')}}">Perfil</a>
+                                        <a class="dropdown-item text-light" href="{{route('Profile')}}">Perfil</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item text-light" href="{{ route('logout') }}"
