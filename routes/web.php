@@ -49,7 +49,7 @@ Route::get('catalogo/pessoal', [CatalogueController::class, 'view_personal'])->n
 //Admin Stamps
 
 Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps')->middleware('can:viewAny,App\Models\Estampa');
-Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private')->middleware('can:view,App\Models\Estampa');
+Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private')->middleware('can:viewPersonalStamps,App\Models\Estampa');
 Route::get('estampa/create', [StampsController::class, 'create'])->name('Stamps.create')->middleware('can:create,App\Models\Estampa');
 Route::get('estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit')->middleware('can:update,estampa');
 Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image')->middleware('can:update,estampa');
@@ -105,10 +105,10 @@ Route::patch('admin/users/restore', [UserController::class, 'restore'])->name('U
 Route::get('admin/categorigas', [CategoryController::class, 'index'])->name('Categories')->middleware('can:viewAny,App\Models\Categoria');
 Route::get('admin/categorias/create', [CategoryController::class, 'create'])->name('Categories.create')->middleware('can:create,App\Models\Categoria');
 Route::get('admin/categorias/{categoria}/edit', [CategoryController::class, 'edit'])->name('Categories.edit')->middleware('can:update,categoria');
-Route::post('admin/categorias/store', [CategoryController::class, 'store'])->name('Categories.store');
+Route::post('admin/categorias/store', [CategoryController::class, 'store'])->name('Categories.store')->middleware('can:create,App\Models\Categoria');
 Route::put('admin/categorias/{categoria}', [CategoryController::class, 'update'])->name('Categories.update')->middleware('can:update,categoria');
 Route::delete('admin/categorias/{categoria}', [CategoryController::class, 'destroy'])->name('Categories.delete')->middleware('can:delete,App\Models\Categoria');
-Route::post('admin/categorias/store', [CategoryController::class, 'restore'])->name('Categories.restore')->middleware('can:restore,App\Models\Categoria');
+Route::post('admin/categorias/restore', [CategoryController::class, 'restore'])->name('Categories.restore')->middleware('can:restore,App\Models\Categoria');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

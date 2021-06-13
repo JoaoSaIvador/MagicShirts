@@ -28,6 +28,10 @@ class EstampaPolicy
         return $user->tipo === 'C';
     }
 
+    public function viewPersonalStamps()
+    {
+        return $user->tipo != 'C';
+    }
     public function viewCatalogue(?User $user){
         return $user == null || optional($user)->tipo === 'C';
     }
