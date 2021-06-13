@@ -15,6 +15,7 @@
             </div>
             <form action="{{route('Cart.store')}}" method="post">
             @csrf
+            @method('PATCH')
                 <input type="number" name="estampa_id" hidden value="{{$estampa->id}}">
                 <div class="m-bot15"> <input type="text" hidden value="{{$preco}}" name="preco_un"><strong>Preco: </strong><span class="pro-price"> ${{$preco}}</span></div>
                 <hr>
