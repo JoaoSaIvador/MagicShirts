@@ -38,7 +38,7 @@
 
                     <div class="mb-3">
                         <label>NIF <span class="text-muted"></span></label>
-                        <input type="text" class="form-control" name="nif" value="{{ old('nif') ?? $user->cliente->nif }}">
+                        <input type="text" class="form-control" name="nif" value="{{ old('nif') ?? ($user->cliente->nif ?? '') }}">
                         @error('nif')
                         <div class="small text-danger">{{$message}}</div>
                         @enderror
@@ -46,7 +46,7 @@
 
                     <div class="mb-3">
                         <label>Morada de Envio</label>
-                        <input type="text" class="form-control" name="morada" value="{{ old('morada') ?? $user->cliente->endereco }}">
+                        <input type="text" class="form-control" name="morada" value="{{ old('morada') ?? ($user->cliente->endereco ?? '') }}">
                         @error('morada')
                         <div class="small text-danger">{{$message}}</div>
                         @enderror
@@ -84,7 +84,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Referência de Pagamento</label>
-                            <input type="text" class="form-control" name="ref_pagamento" value="{{$user->cliente->ref_pagamento}}">
+                            <input type="text" class="form-control" name="ref_pagamento" value="{{$user->cliente->ref_pagamento ?? ''}}">
                         </div>
                     </div>
                     <hr class="mb-4">

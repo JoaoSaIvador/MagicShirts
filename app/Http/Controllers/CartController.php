@@ -16,8 +16,8 @@ class CartController extends Controller
         $listaCores = Cor::pluck('nome', 'codigo');
         $carrinho = $request->session()->get('carrinho', []);
 
-        if(!empty($carrinho['items'])) {
-            foreach ($carrinho['items'] as $key=>$row) {
+        if (!empty($carrinho['items'])) {
+            foreach ($carrinho['items'] as $key => $row) {
                 $carrinho['items'][$key]['imagem'] = Estampa::find($row['estampa_id'])->getImagemFullUrl();
             }
         }
@@ -40,16 +40,15 @@ class CartController extends Controller
         if (empty($carrinho)) {
             $carrinho['precoTotal'] = 0;
             $carrinho['quantidadeItens'] = 0;
-        }
-        else {
-            if(array_key_exists($key, $carrinho['items'])) {
+        } else {
+            if (array_key_exists($key, $carrinho['items'])) {
                 $quantidade = $carrinho['items'][$key]['quantidade'] + $request->quantidade;
                 $carrinho['items'][$key]['quantidade'] = $quantidade;
 
-                if($quantidade >= $preco['quantidade_desconto']) {
-                    $oldSubtotal = $carrinho['items'][$key]['subtotal'];    
+                if ($quantidade >= $preco['quantidade_desconto']) {
+                    $oldSubtotal = $carrinho['items'][$key]['subtotal'];
 
-                    if($estampa['cliente_id'] != null) {
+                    if ($estampa['cliente_id'] != null) {
                         $precoTshirt = $preco['preco_un_proprio_desconto'];
                     } else {
                         $precoTshirt = $preco['preco_un_catalogo_desconto'];
@@ -65,19 +64,19 @@ class CartController extends Controller
 
                 $request->session()->put('carrinho', $carrinho);
                 return back()
-                ->with('alert-msg', 'Foi adicionada uma tshirt ao carrinho!')
-                ->with('alert-type', 'success');
+                    ->with('alert-msg', 'Foi adicionada uma tshirt ao carrinho!')
+                    ->with('alert-type', 'success');
             }
         }
 
         if ($request->quantidade >= $preco['quantidade_desconto']) {
-            if($estampa['cliente_id'] != null) {
+            if ($estampa['cliente_id'] != null) {
                 $precoTshirt = $preco['preco_un_proprio_desconto'];
             } else {
                 $precoTshirt = $preco['preco_un_catalogo_desconto'];
             }
         } else {
-            $precoTshirt = $request->preco_un;
+            $precoTshirt = $request->preco;
         }
 
         $carrinho['items']["$request->estampa_id" . '-' . "$request->cor_codigo" . '-' . "$request->tamanho"] = [
@@ -116,48 +115,43 @@ class CartController extends Controller
 
             $msg = 'T-shirt foi removida';
         } else {
-            if(array_key_exists($newIndex, $carrinho['items']) && $index != $newIndex) {
+            if (array_key_exists($newIndex, $carrinho['items']) && $index != $newIndex) {
                 $quantidade = $carrinho['items'][$newIndex]['quantidade'] + $request->quantidade;
-                $carrinho['items'][$newIndex]['quantidade'] = $quantidade;
-
-                if($quantidade >= $preco['quantidade_desconto']) {
-                    $oldSubtotal = $carrinho['items'][$newIndex]['subtotal'];    
-
-                    if($estampa['cliente_id'] != null) {
-                        $precoTshirt = $preco['preco_un_proprio_desconto'];
-                    } else {
-                        $precoTshirt = $preco['preco_un_catalogo_desconto'];
-                    }
-
-                    $newSubtotal = $precoTshirt * $quantidade;
-
-                    $carrinho['items'][$newIndex]['preco_un'] = $precoTshirt;
-                    $carrinho['items'][$newIndex]['subtotal'] = $newSubtotal;
-                    $carrinho['precoTotal'] -= $oldSubtotal;
-                    $carrinho['precoTotal'] += $newSubtotal;
-                } else {
-                    $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco_un'] * $quantidade);
-                }
-
+                $carrinho['precoTotal'] -= $carrinho['items'][$index]['subtotal'];
                 $carrinho['quantidadeItens']--;
-                unset($carrinho['items'][$index]);
-                $request->session()->put('carrinho', $carrinho);
-
-                return back()
-                ->with('alert-msg', 'Foi adicionada uma tshirt ao carrinho!')
-                ->with('alert-type', 'success');
+            } else {
+                $carrinho['items'][$newIndex] = $carrinho['items'][$index];
             }
 
-            $carrinho['items'][$newIndex] = $carrinho['items'][$index];
-            $carrinho['items'][$newIndex]['quantidade'] = $request->quantidade;
-            $carrinho['items'][$newIndex]['subtotal'] = ($carrinho['items'][$newIndex]['preco'] * $request->quantidade);
+            $carrinho['items'][$newIndex]['quantidade'] = $quantidade;
+            $oldSubtotal = $carrinho['items'][$newIndex]['subtotal'];
+
+            if ($quantidade >= $preco['quantidade_desconto']) {
+                if (isset($estampa['cliente_id'])) {
+                    $precoTshirt = $preco['preco_un_proprio_desconto'];
+                } else {
+                    $precoTshirt = $preco['preco_un_catalogo_desconto'];
+                }
+            } else {
+                if (isset($estampa['cliente_id'])) {
+                    $precoTshirt = $preco['preco_un_proprio'];
+                } else {
+                    $precoTshirt = $preco['preco_un_catalogo'];
+                }
+            }
+
+            $newSubtotal = $precoTshirt * $quantidade;
+            $carrinho['items'][$newIndex]['preco_un'] = $precoTshirt;
+            $carrinho['items'][$newIndex]['subtotal'] = $newSubtotal;
+            $carrinho['precoTotal'] -= $oldSubtotal;
+            $carrinho['precoTotal'] += $newSubtotal;
+
+            if ($index != $newIndex) {
+                unset($carrinho['items'][$index]);
+            }
+
             $carrinho['items'][$newIndex]['cor_codigo'] = $request->cor_codigo;
             $carrinho['items'][$newIndex]['tamanho'] = $request->$index;
-
-            if($index != $newIndex) {
-                unset($carrinho['items'][$index]);
-            }
-
             $msg = 'T-shirt foi alterada';
         }
         $request->session()->put('carrinho', $carrinho);

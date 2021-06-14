@@ -71,7 +71,7 @@
                   {{-- Price --}}
                   <h6 class="cart-price">Preço (unid):</h6>
                   <p class="text-start text-md-left cart-price">
-                    <strong>${{$row['preco']}}</strong>
+                    <strong>${{$row['preco_un']}}</strong>
                   </p>
                   <br>
                   <h6 class="cart-price">Subtotal:</h6>
