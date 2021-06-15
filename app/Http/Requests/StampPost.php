@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 namespace App\Http\Requests;
 
@@ -29,7 +29,6 @@ class StampPost extends FormRequest
         else {
             $imagem_url = 'required|image|max:8192';
         }
-
 
         return [
             'nome' =>            'required',

@@ -12,9 +12,8 @@ body {
     background-color: #212121;
 }
 
-.mainmenu{
+.mainmenu {
     background-color: rgba(12, 12, 12, 1);
-
 }
 
 /*catalogue*/
@@ -69,19 +68,19 @@ body {
     position: absolute;
 }
 
-.adtocart i{
+.adtocart i {
     color: #fff;
     font-size: 25px;
     line-height: 42px;
 }
 
 .product-list .price {
-    color:#fc5959 ;
+    color: #fc5959;
     font-size: 15px;
 }
 
 .product-img {
-    width:50%;
+    width: 50%;
     object-fit: scale-down;
 }
 
@@ -97,11 +96,13 @@ body {
     margin-bottom: 10px;
 }
 
-.product_meta a, .pro-price{
-    color:#fc5959 ;
+.product_meta a,
+.pro-price {
+    color: #fc5959;
 }
 
-.pro-price, .amount-old {
+.pro-price,
+.amount-old {
     font-size: 18px;
     padding: 0 10px;
 }
@@ -139,83 +140,80 @@ body {
 }
 
 #carouselExampleIndicators {
-
 }
 
-#carouselExampleIndicators img{
+#carouselExampleIndicators img {
     height: 500px;
 }
 
 /*auth pages*/
 
-.authCardBody{
+.authCardBody {
     display: flex;
     padding: 40px 0px;
-    background-color:  rgba(12, 12, 12, 1);
-    color:white;
+    background-color: rgba(12, 12, 12, 1);
+    color: white;
     justify-content: center;
     border-radius: 8px;
 }
 
-.authLogo{
+.authLogo {
     padding: 30px 0px;
-    margin-bottom:40px;
+    margin-bottom: 40px;
 }
 
-.authButtonsContainer{
+.authButtonsContainer {
     padding: 0px 10px;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     margin-top: 10px;
 }
 
-.authButtons{
-padding: 10px 40px;
-background-color: rgb(25, 25, 25);
-color: white;
-border-radius: 5px;
-border-color: white;
-border-style: solid;
-border-width: 1px;
+.authButtons {
+    padding: 10px 40px;
+    background-color: rgb(25, 25, 25);
+    color: white;
+    border-radius: 5px;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
 }
 
-.authButtons:hover{
+.authButtons:hover {
     background-color: rgb(46, 46, 46);
 }
 
-.authRightButton{
+.authRightButton {
     margin-left: 60px;
 }
-#authLinkContainer{
+#authLinkContainer {
     margin-top: 30px;
     display: flex;
     justify-content: center;
 }
 
-.authLink{
+.authLink {
     align-self: center;
     font-size: medium;
     color: white;
 }
-.authLink:hover{
+.authLink:hover {
     color: white;
 }
 
-
-
-@media (max-device-width: 960px){
-    .authCardBody{
+@media (max-device-width: 960px) {
+    .authCardBody {
         margin: 80px 5%;
-        background-color:blue;
+        background-color: blue;
     }
 }
 
-.adminSideBar{
+.adminSideBar {
     background-color: black;
     background-size: cover;
 }
 
-.adminMenu{
+.adminMenu {
     height: 100%;
     width: 200px;
     position: fixed;
@@ -236,7 +234,7 @@ border-width: 1px;
     display: block;
 }
 
-.adminContent{
+.adminContent {
     padding-left: 200px;
     margin-top: 120px;
 }
@@ -245,22 +243,22 @@ border-width: 1px;
     position: relative;
     top: 0;
     left: 0;
-  }
-  .previewTshirt {
+}
+.previewTshirt {
     position: relative;
     top: 0;
     left: 0;
     width: 150px;
-  }
-  .previewStamp {
+}
+.previewStamp {
     position: absolute;
     top: 30px;
     left: 35px;
     width: 80px;
     height: 80px;
-  }
+}
 
-.color{
+.color {
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -268,4 +266,39 @@ border-width: 1px;
     border-style: solid;
     border-width: 2px;
     border-color: black;
+}
+
+.preview {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#product-preview-svg {
+    position: relative;
+    top: 2;
+    left: 0;
+    width: 150px;
+    z-index: 2;
+    height: auto;
+    mix-blend-mode: multiply;
+}
+
+#product-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    z-index: 1;
+    height: auto;
+}
+
+.preview-stamp {
+    position: absolute;
+    top: 28px;
+    left: 38px;
+    z-index: 3;
+    width: 75px;
+    height: 75px;
+    object-fit: scale-down;
 }
