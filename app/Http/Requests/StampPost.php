@@ -23,11 +23,19 @@ class StampPost extends FormRequest
      */
     public function rules()
     {
+        if ($this->estampa != null) {
+            $imagem_url = 'nullable|image|max:8192';
+        }
+        else {
+            $imagem_url = 'required|image|max:8192';
+        }
+
+
         return [
             'nome' =>            'required',
             'categoria_id' =>    'nullable',
             'descricao' =>       'nullable',
-            'imagem_url' =>      'required|image|max:8192',
+            'imagem_url' =>      $imagem_url,
             'informacao_extra' =>'nullable'
         ];
     }

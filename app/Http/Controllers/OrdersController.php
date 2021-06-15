@@ -23,7 +23,13 @@ class OrdersController extends Controller
             $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->select('id', 'nome', 'estado', 'preco_total', 'data')->paginate(20);
         }
         else{
-            $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+            if (auth()->user()->tipo == 'F') {
+                $listaEncomendas = Encomenda::whereIn('estado', ['pendente','paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+            }
+            else {
+                $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+            }
+            //dd($listaEncomendas);
         }
         //$listaEncomendas = Encomenda::where('cliente_id', 511)->paginate(20);
 

@@ -20,11 +20,9 @@
         </form>
     </div>
     <div style="width: 250px">
-        @auth
-            @if (auth()->user()->tipo == 'C')
-                <a class="btn btn-dark text-light" href="{{route('Catalogue.personal')}}">Mostrar Estampas Pessoais</a>
-            @endif
-        @endauth
+        @can ('viewPersonal',App\Models\Estampa::class)
+            <a class="btn btn-dark text-light" href="{{route('Catalogue.personal')}}">Mostrar Estampas Pessoais</a>
+        @endcan
     </div>
 </div>
 <div class="album">

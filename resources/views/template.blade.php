@@ -27,13 +27,11 @@
                     <li class="nav-item">
                         <a class="dropdown-item text-light" href="{{route('Catalogue')}}">Catálogo</a>
                     </li>
-                    @auth
-                    @if (auth()->user()->tipo != 'C')
-                    <li class="nav-item">
-                        <a class="dropdown-item text-light" href="{{route('Dashboard')}}">Administrador</a>
-                    </li>
-                    @endif
-                    @endauth
+                    @can ('accessDashboard')
+                        <li class="nav-item">
+                            <a class="dropdown-item text-light" href="{{route('Dashboard')}}">Administrador</a>
+                        </li>
+                    @endcan
                 </ul>
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

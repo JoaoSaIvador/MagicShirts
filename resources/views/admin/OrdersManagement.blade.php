@@ -66,10 +66,10 @@
                                 <div class="row">
                                     <select name="estado" class="custom-select col">
                                         <option value="none" selected disabled hidden>Alterar Estado</option>
-                                        @if ($encomenda->estado != "paga")
+                                        @if ($encomenda->estado == "pendente")
                                             <option value="paga">Paga</option>
                                         @endif
-                                        @if ($encomenda->estado != "fechada")
+                                        @if ($encomenda->estado == "paga")
                                             <option value="fechada">Fechada</option>
                                         @endif
                                         @if (auth()->user()->tipo == 'A')

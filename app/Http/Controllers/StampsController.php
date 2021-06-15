@@ -100,10 +100,14 @@ class StampsController extends Controller
     {
         $validated_data = $request->validated();
         $estampa->nome = $validated_data['nome'];
-
+        //dd($validated_data);
         if (auth()->user()->tipo == 'A') {
-            Storage::delete('public/estampas/' . $estampa->imagem_url);
-            $path = $validated_data['imagem_url']->store('public/estampas');
+
+            if ($request->has('imagem_url')) {
+                Storage::delete('public/estampas/' . $estampa->imagem_url);
+                $path = $validated_data['imagem_url']->store('public/estampas');
+                $estampa->imagem_url = basename($path);
+            }
             if ($request->has('categoria_id')) {
                 $estampa->categoria_id = $validated_data['categoria_id'];
             }
@@ -112,21 +116,23 @@ class StampsController extends Controller
                 $estampa->descricao = $validated_data['descricao'];
             }
 
-            $estampa->imagem_url = basename($path);
             $estampa->save();
             return redirect()->route('Stamps')
                 ->with('alert-msg', 'Estampa "' . $estampa->nome . '" foi alterada com sucesso!')
                 ->with('alert-type', 'success');
         }
         else if (auth()->user()->tipo == 'C'){
-            Storage::delete('estampas_privadas' . $estampa->imagem_url);
-            $path = $validated_data['imagem_url']->store('estampas_privadas');
+
+            if ($request->has('imagem_url')) {
+                Storage::delete('public/estampas/' . $estampa->imagem_url);
+                $path = $validated_data['imagem_url']->store('public/estampas');
+                $estampa->imagem_url = basename($path);
+            }
 
             if ($request->has('descricao')) {
                 $estampa->descricao = $validated_data['descricao'];
             }
 
-            $estampa->imagem_url = basename($path);
             $estampa->save();
             return redirect()->route('Catalogue.personal')
                 ->with('alert-msg', 'Estampa "' . $estampa->nome . '" foi alterada com sucesso!')

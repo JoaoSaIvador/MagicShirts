@@ -63,7 +63,7 @@ Route::post('estampa/restore', [StampsController::class, 'restore'])->name('Stam
 //Cart
 
 Route::get('carrinho', [CartController::class, 'index'])->name('Cart')->middleware('can:create,App\Models\Encomenda');
-Route::patch('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store')->middleware('can:create,App\Models\Encomenda');
+Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.store')->middleware('can:create,App\Models\Encomenda');
 Route::patch('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update')->middleware('can:create,App\Models\Encomenda');
 Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy')->middleware('can:create,App\Models\Encomenda');
 

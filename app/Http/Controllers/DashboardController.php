@@ -16,6 +16,10 @@ class DashboardController extends Controller
 
     public function index()
     {
+        if (auth()->user()->tipo == 'F') {
+            return view('home.dashboard');
+        }
+
         $estampaPopular = Estampa::join('tshirts', 'estampas.id', 'tshirts.estampa_id')->groupBy('estampas.id')
                             ->orderByRaw('SUM(tshirts.quantidade) DESC')->limit(1)
                             ->select('estampas.nome', Tshirt::raw('SUM(tshirts.quantidade) as quantidade'))->get();
