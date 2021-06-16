@@ -38,9 +38,9 @@ class OrderShipped extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable, string $recibo)
     {
-        $path = storage_path('app/invoices/' . $this->invoice->filename);
+        $path = storage_path('app/public/recibos/' . $recibo);
 
         return (new MailMessage)
                     ->greeting('Estimado(a) senhor(a),')

@@ -85,7 +85,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard'
 
 Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny, App\Models\Encomenda');
 Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:view,encomenda');
-Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update, encomenda');
+Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update, App\Models\Encomenda');
 Route::get('admin/encomendas/changefilter/{Filter}', [OrdersController::class, 'changefilter'])->name('Orders.changefilter')->middleware('can:viewAny, App\Models\Encomenda');
 Route::get('admin/encomendas/filter/{Filter}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny, App\Models\Encomenda');
 
@@ -148,7 +148,7 @@ Route::middleware('auth')->group(function () {
 //Encomendas
 
 Route::middleware('auth')->group(function () {
-    Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client')->middleware('can:viewOrderHistory, App\Models\Encomenda');
+    Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client')->middleware('can:viewOrderHistory, App\Models\Encomenda');;
     Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Order.client.view')->middleware('can:view,encomenda');
 });
 
@@ -159,4 +159,4 @@ Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);
 
 
-Route::get('recibo/{id}', [PDFController::class, 'create_receipt'])->name('Pdf.create');
+Route::get('recibo/{recibo}', [PDFController::class, 'download_receipt'])->name('Pdf.download');
