@@ -24,7 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $listaEstampas = Estampa::all()->random(10);
+        $listaEstampas = Estampa::whereNull('cliente_id')->limit(10)->get()->random(10);
+        //dd($listaEstampas);
         return view('home.index')->withPageTitle('MagicShirts') ->withEstampas($listaEstampas);;
     }
 }

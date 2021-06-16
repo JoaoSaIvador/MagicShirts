@@ -14,6 +14,7 @@ use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PricesController;
+use App\Http\Controllers\PDFController;
 use App\Http\Policies\UserPolicy;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -149,4 +150,4 @@ Route::post('register', [UserController::class, 'register']);
 Auth::routes(['verify' => true]);
 
 
-
+Route::get('recibo/{id}', [PDFController::class, 'create_receipt'])->name('Pdf.create');
