@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 use App\Models\Encomenda;
 use App\Models\Estampa;
@@ -19,12 +21,10 @@ class OrdersController extends Controller
 
         if (!empty($filtro['filtro'])) {
             $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->select('id', 'nome', 'estado', 'preco_total', 'data')->paginate(20);
-        }
-        else{
+        } else {
             if (auth()->user()->tipo == 'F') {
-                $listaEncomendas = Encomenda::whereIn('estado', ['pendente','paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
-            }
-            else {
+                $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+            } else {
                 $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
             }
         }
@@ -38,7 +38,7 @@ class OrdersController extends Controller
     {
 
         $user = auth()->user();
-        
+
 
         $listaTshirts = $encomenda->tshirts;
 
@@ -49,7 +49,7 @@ class OrdersController extends Controller
         foreach ($listaTshirts as $tshirt) {
             $listaEstampas[] = [
                 'nome' => Estampa::where('id', $tshirt->estampa_id)->withTrashed()->value('nome'),
-                'imagem_url' => Estampa::find($tshirt->estampa_id)->getImagemFullUrl(),
+                'imagem_url' => Estampa::withTrashed()->find($tshirt->estampa_id)->getImagemFullUrl(),
             ];
             $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->withTrashed()->value('nome');
         }
@@ -67,30 +67,62 @@ class OrdersController extends Controller
     {
         $encomenda->fill($request->validated());
         $encomenda->save();
+
+        if ($request->estado == 'fechada') {
+            $listaTshirts = $encomenda->tshirts;
+            $user = User::where('id', $encomenda->cliente_id)->value('name');
+
+            foreach ($listaTshirts as $tshirt) {
+                $listaEstampas[] = Estampa::where('id', $tshirt->estampa_id)->value('nome');
+                $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->value('nome');
+            }
+
+            $data = [
+                'user'           => $user,
+                'nif'            => $encomenda->nif,
+                'endereco'       => $encomenda->endereco,
+                'tipo_pagamento' => $encomenda->tipo_pagamento,
+                'ref_pagamento'  => $encomenda->ref_pagamento,
+                'tshirts'        => $listaTshirts,
+                'estampas'       => $listaEstampas,
+                'cores'          => $listaCores,
+                'preco_total' => $encomenda->preco_total
+
+            ];
+
+            $pdf = PDF::loadView('pdf.Receipt', $data);
+            $content = $pdf->download()->getOriginalContent();
+            Storage::put('public/recibos/' . $encomenda->id . '.pdf', $content);
+
+            $encomenda->recibo_url = $encomenda->id . '.pdf';
+            $encomenda -> save();
+
+            $user->notify(new OrderShipped($encomenda->recibo_url));
+        }
+
         return redirect()->route('Orders');
     }
 
     public function filter($Filter, Request $request)
     {
 
-       // dd($request->input('valor'));
-        switch($Filter)
-        {
+        // dd($request->input('valor'));
+        switch ($Filter) {
             case 'cliente':
-                $listaEncomendas = Encomenda::where('cliente_id',$request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
-                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
+                $listaEncomendas = Encomenda::where('cliente_id', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
                 break;
             case 'estado':
-                $listaEncomendas = Encomenda::where('estado',$request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
-                return view('orders.StateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('estado');
+                $listaEncomendas = Encomenda::where('estado', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                return view('orders.StateFilterForm')->withEncomendas($listaEncomendas)->withFiltro('estado');
                 break;
             case 'data':
                 $listaEncomendas = Encomenda::orderBy('data', $request->input('valor'))->paginate(20);
-                return view('orders.DateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('data');
+                return view('orders.DateFilterForm')->withEncomendas($listaEncomendas)->withFiltro('data');
                 break;
             default:
                 $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
-                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
+                return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
         }
     }
 
@@ -98,20 +130,20 @@ class OrdersController extends Controller
     {
         $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
         //dd($Filter);
-        switch($Filter)
-        {
+        switch ($Filter) {
             case 'data':
-                return view('orders.DateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('data');
+                return view('orders.DateFilterForm')->withEncomendas($listaEncomendas)->withFiltro('data');
                 break;
             case 'estado':
-                return view('orders.StateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('estado');
+                return view('orders.StateFilterForm')->withEncomendas($listaEncomendas)->withFiltro('estado');
                 break;
             default:
-                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
+                return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
         }
     }
 
-    public function client_history() {
+    public function client_history()
+    {
         $user = auth()->user();
         $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'cliente_id', 'preco_total', 'data')->get();
 

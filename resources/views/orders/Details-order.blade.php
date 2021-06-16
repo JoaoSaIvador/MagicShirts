@@ -66,11 +66,14 @@
         <hr>
         <p class="fs-2">Total: {{$encomenda->preco_total}}</p>
         <button class="btn btn-primary mb-4" onclick="goBack()">Voltar</button>
+        @if(($encomenda->estado == 'fechada'))
+        <a href="{{route('Pdf.download', ['recibo'=> $encomenda->recibo_url])}}"><button type="button" class="btn btn-primary mb-4">Download</button></a>
+        @endif
     </div>
 </div>
 <script>
     function goBack() {
-      window.history.back();
+        window.history.back();
     }
-    </script>
+</script>
 @endsection
