@@ -25,9 +25,9 @@ class ProfileController extends Controller
     public function edit(ProfilePost $request) {
 
         $request->validated();
-
         if ($request->id == auth()->user()->id) {
             $user = auth()->user();
+            
             $user->name = $request->nome;
             $user->email = $request->email;
             $user->cliente->nif = $request->nif;

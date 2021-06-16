@@ -148,9 +148,9 @@ class OrdersController extends Controller
     public function client_history()
     {
         $user = auth()->user();
-        $id=$user->cliente->id;
-        $listaEncomendas = Encomenda::where('cliente_id', )->select('id', 'estado', 'cliente_id', 'preco_total', 'data');
-        //dd($listaEncomendas);
+        dd($user->cliente->id);
+        $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'cliente_id', 'preco_total', 'data')->get();
+        dd($listaEncomendas);
         return view('orders.clientHistory')
             ->withPageTitle('Histórico de Encomendas')
             ->with('user', auth()->user())
