@@ -11,12 +11,12 @@
                 </h4>
                 <ul class="list-group mb-3">
                     @foreach ($carrinho['items'] as $item)
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-2 pb-0">
                         {{$item['nome']}} T-shirt ({{$item['quantidade']}}):
                         <span>${{$item['subtotal']}}</span>
                     </li>
                     @endforeach
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-2 mb-3">
                         <div>
                             <strong>Preço Final:</strong>
                         </div>
@@ -66,16 +66,16 @@
 
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input name="metodo_pagamento" value="VISA" type="radio" class="custom-control-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
-                            <label class="custom-control-label">Cartão Visa</label>
+                            <input name="metodo_pagamento" value="VISA" type="radio" class="form-check-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
+                            <label class="form-check-label">Cartão Visa</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input name="metodo_pagamento" value="MC" type="radio" class="custom-control-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
-                            <label class="custom-control-label">Mastercard</label>
+                            <input name="metodo_pagamento" value="MC" type="radio" class="form-check-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
+                            <label class="form-check-label">Mastercard</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input name="metodo_pagamento" value="PAYPAL" type="radio" class="custom-control-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
-                            <label class="custom-control-label">Paypal</label>
+                            <input name="metodo_pagamento" value="PAYPAL" type="radio" class="form-check-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
+                            <label class="form-check-label">Paypal</label>
                         </div>
                         @error('metodo_pagamento')
                         <div class="small text-danger">{{$message}}</div>

@@ -12,7 +12,7 @@
     <link href="{{asset('CSS/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('CSS/Stylesheet.css')}}" rel="stylesheet">
 
-    <title>@yield('title')</title>
+    <title>@yield('title', 'MagicShirts')</title>
 
 </head>
 

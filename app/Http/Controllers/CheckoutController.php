@@ -54,8 +54,8 @@ class CheckoutController extends Controller
             $tshirt->save();
         }
 
-
-        return back()
+        $request->session()->forget('carrinho');
+        return redirect()->route('Home')
             ->with('alert-msg', "Encomenda criada")
             ->with('alert-type', 'success');
     }

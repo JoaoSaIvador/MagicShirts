@@ -25,7 +25,7 @@ class CheckoutPost extends FormRequest
     {
         return [
             'nome' =>               'required',
-            'nif' =>                'required|size:9',
+            'nif' =>                'required|digits:9',
             'morada' =>             'required',
             'notas' =>              'nullable',
             'metodo_pagamento' =>   'required|in:VISA,MC,PAYPAL',
@@ -38,7 +38,7 @@ class CheckoutPost extends FormRequest
         return [
             'nome.required' => 'Tem que inserir o seu nome',
             'nif.required' => 'Tem que inserir o seu NIF',
-            'nif.size' => 'O NIF tem de ter 9 digitos',
+            'nif.digits' => 'O NIF tem de ter 9 dígitos',
             'morada.required' => 'Tem que inserir a sua morada',
             'metodo_pagamento.required' => 'Tem que escolher um método de pagamento',
             'ref_pagamento.required' => 'Tem que inserir uma referência de pagamento'
