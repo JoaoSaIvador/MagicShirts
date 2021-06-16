@@ -27,6 +27,6 @@ class HomeController extends Controller
         $listaEstampas = Estampa::whereNull('cliente_id')->get()->random(10);
         //dd($listaEstampas);
         return view('home.index')
-            ->withEstampas($listaEstampas);;
+            ->withEstampas($listaEstampas);
     }
 }
