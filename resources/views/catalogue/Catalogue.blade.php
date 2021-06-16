@@ -2,7 +2,7 @@
 @section('title', 'Catálogo')
 @section('content')
 <div class="mb-3 cat-top py-5 sel-stamps">
-    <div class="col-5 ">
+    <div class="">
         <form method="GET" action="#" class="form-group">
             <div class="input-group">
                 <select class="custom-select" name="categoria_id" id="idCategoria">
@@ -20,11 +20,19 @@
             </div>
         </form>
     </div>
-    <div style="width: 250px">
+    <div style="width: 250px; padding:0 12px;">
         @can ('viewPrivate',App\Models\Estampa::class)
             <a class="btn btn-dark text-light" href="{{route('Catalogue.personal')}}">Mostrar Estampas Pessoais</a>
         @endcan
     </div>
+    <form method="GET" action="#" class="form-group">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="Search" placeholder="Pesquisar Nome ou Descrição"><br>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+                </div>
+            </div>
+        </form>
 </div>
 <div class="album">
     <div class="container-xl">
