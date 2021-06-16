@@ -14,14 +14,14 @@ class UserPolicy
         return $user->tipo === 'A';
     }
 
-    public function view(User $user, User $model)
+    public function view(User $user)
     {
-        return $user->id === $model->id || $user->tipo === 'A';
+        return $user->tipo === 'C' || $user->tipo === 'A';
     }
 
-    public function create(User $user)
+    public function edit(User $user)
     {
-        //
+        return $user->tipo === 'C' || $user->tipo === 'A';
     }
 
     public function update(User $user)
@@ -35,14 +35,18 @@ class UserPolicy
         return $user->tipo === 'A';
     }
 
+    public function update_password(User $user)
+    {
+        $user->tipo === 'C' || $user->tipo === 'A';
+    }
 
     public function restore(User $user)
     {
         return $user->tipo === 'A';
     }
 
-    public function forceDelete(User $user, User $model)
+    public function destroy_foto(User $user)
     {
-        //
+        return $user->tipo === 'C' || $user->tipo === 'A';
     }
 }

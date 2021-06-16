@@ -38,7 +38,7 @@ class OrdersController extends Controller
     {
 
         $user = auth()->user();
-        
+
 
         $listaTshirts = $encomenda->tshirts;
 
@@ -49,7 +49,7 @@ class OrdersController extends Controller
         foreach ($listaTshirts as $tshirt) {
             $listaEstampas[] = [
                 'nome' => Estampa::where('id', $tshirt->estampa_id)->withTrashed()->value('nome'),
-                'imagem_url' => Estampa::find($tshirt->estampa_id)->getImagemFullUrl(),
+                'imagem_url' => Estampa::withTrashed()->find($tshirt->estampa_id)->getImagemFullUrl(),
             ];
             $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->withTrashed()->value('nome');
         }

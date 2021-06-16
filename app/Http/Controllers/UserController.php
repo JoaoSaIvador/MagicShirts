@@ -65,6 +65,16 @@ class UserController extends Controller
       return response()->json($inputName." ".$inputEmail." ".$inputPassword." ".$confirmPassword, 200);
     }
 
+    public function edit(User $user)
+    {
+        $metodos = ['VISA', 'MC', 'PAYPAL'];
+        //dd($user);
+        return view('users.Profile')
+            ->withPageTitle('Perfil')
+            ->withUser($user)
+            ->withMetodos($metodos);
+    }
+
     public function permission(Request $request, User $user)
     {
         //dd($request['tipo']);

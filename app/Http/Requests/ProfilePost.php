@@ -23,10 +23,19 @@ class ProfilePost extends FormRequest
      */
     public function rules()
     {
+        //dd($this->user);
+        if ($this->user != null) {
+            $email = 'nullable';
+        }
+        else {
+            $email = 'required';
+        }
+
         return [
+            'id'   =>               'required',
             'nome' =>               'required',
-            'email' =>              'required',
-            'nif' =>                'nullable|size:9',
+            'email' =>              $email,
+            'nif' =>                'nullable|digits:9',
             'morada' =>             'nullable',
             'metodo_pagamento' =>   'nullable|in:VISA,MC,PAYPAL',
             'ref_pagamento' =>      'nullable',
@@ -39,7 +48,7 @@ class ProfilePost extends FormRequest
         return [
             'nome.required' => 'Tem que inserir o seu nome',
             'email.required' => 'Tem que inserir o seu email',
-            'nif.size' => 'O NIF tem de ter 9 digitos',
+            'nif.digits' => 'O NIF tem de ter 9 dígitos',
         ];
     }
 }

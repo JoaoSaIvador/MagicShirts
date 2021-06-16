@@ -8,9 +8,10 @@
             <div class="col-md-12">
                 <h4 class="mb-3">Informação de Utilizador</h4>
 
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" action="{{route('Profile.edit', ['user' => $user])}}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="number" name="id" hidden value="{{$user->id}}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Nome</label>
@@ -19,13 +20,16 @@
                             <div class="small text-danger">{{$message}}</div>
                             @enderror
                         </div>
+                    @if ($user->tipo != 'F')
                         <div class="col-md-6 mb-3">
                             <label>Email</label>
                             <input type="text" class="form-control" name="email" value="{{ old('email') ?? $user->email }}">
                             @error('email')
-                            <div class="small text-danger">{{$message}}</div>
+                                <div class="small text-danger">{{$message}}</div>
                             @enderror
                         </div>
+                    @endif
+
                     </div>
 
                     @if($user->tipo == 'C')
@@ -74,7 +78,7 @@
                         @endisset
                     </div>
 
-                    <button type="submit" action="{{route('Profile.edit')}}" class="btn btn-primary cart-update">Atualizar</button>
+                    <button type="submit" class="btn btn-primary cart-update">Atualizar</button>
                     @isset($user->foto_url)
                     <button type="submit" class="btn btn-danger cart-update" name="deletefoto" form="form_delete_photo">Apagar Foto</button>
                     @endisset
@@ -82,40 +86,42 @@
 
                 <hr class="mb-4">
 
-                <form action="{{route('Profile.password', auth()->user())}}" method="POST" id="form_password">
-                    @csrf
-                    @method('PUT')
+                @if ($user->tipo != 'F')
+                    <form action="{{route('Profile.password', auth()->user())}}" method="POST" id="form_password">
+                        @csrf
+                        @method('PUT')
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label>Password Atual</label>
-                            <input type="password" class="form-control" name="password_atual">
-                            @error('password_atual')
-                            <div class="small text-danger">{{$message}}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Password Atual</label>
+                                <input type="password" class="form-control" name="password_atual">
+                                @error('password_atual')
+                                <div class="small text-danger">{{$message}}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label>Nova Password</label>
-                            <input type="password" class="form-control" name="nova_password">
-                            @error('nova_password')
-                            <div class="small text-danger">{{$message}}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Nova Password</label>
+                                <input type="password" class="form-control" name="nova_password">
+                                @error('nova_password')
+                                <div class="small text-danger">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Confirmar Nova Password</label>
+                                <input type="password" class="form-control" name="conf_nova_password">
+                                @error('conf_nova_password')
+                                <div class="small text-danger">{{$message}}</div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label>Confirmar Nova Password</label>
-                            <input type="password" class="form-control" name="conf_nova_password">
-                            @error('conf_nova_password')
-                            <div class="small text-danger">{{$message}}</div>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary cart-update" form="form_password" style="margin-bottom: 50px">Atualizar Password</button>
-                </form>
-
+                        <button type="submit" class="btn btn-primary cart-update" form="form_password" style="margin-bottom: 50px">Atualizar Password</button>
+                    </form>
+                @endif
+                <button class="btn btn-primary mb-4" onclick="goBack()">Voltar</button>
                 <form id="form_delete_photo" action="{{route('Profile.foto.destroy')}}" method="POST">
                     @csrf
                     @method('DELETE')
@@ -125,5 +131,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
 @endsection

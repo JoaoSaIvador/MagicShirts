@@ -25,14 +25,21 @@ class ProfileController extends Controller
     public function edit(ProfilePost $request) {
 
         $request->validated();
-        $user = auth()->user();
 
-        $user->name = $request->nome;
-        $user->email = $request->email;
-        $user->cliente->nif = $request->nif;
-        $user->cliente->endereco = $request->morada;
-        $user->cliente->tipo_pagamento = $request->metodo_pagamento;
-        $user->cliente->ref_pagamento = $request->ref_pagamento;
+        if ($request->id == auth()->user()->id) {
+            $user = auth()->user();
+            $user->name = $request->nome;
+            $user->email = $request->email;
+            $user->cliente->nif = $request->nif;
+            $user->cliente->endereco = $request->morada;
+            $user->cliente->tipo_pagamento = $request->metodo_pagamento;
+            $user->cliente->ref_pagamento = $request->ref_pagamento;
+            $user->cliente->save();
+        }
+        else {
+            $user = User::find($request->id);
+            $user->name = $request->nome;
+        }
 
         if ($request->hasFile('foto')) {
             Storage::delete('public/fotos/' . $user->foto_url);
@@ -41,15 +48,22 @@ class ProfileController extends Controller
         }
 
         $user->save();
-        $user->cliente->save();
 
-        return back()
+        if ($request->id == auth()->user()->id) {
+            return back()
             ->with('alert-msg', "Informação atualizada com sucesso!")
             ->with('alert-type', 'success');
+        }
+        else {
+            return redirect()->route('Users')
+            ->with('alert-msg', "Informação atualizada com sucesso!")
+            ->with('alert-type', 'success');
+        }
+
     }
 
     public function password_update(PasswordPost $request, User $user){
-        
+
         if (Hash::check($request->password_atual, $user->password)) {
             $user->password = Hash::make($request->nova_password);
             $user->save();
@@ -58,7 +72,7 @@ class ProfileController extends Controller
             ->with('alert-msg', "Password incorreta!")
             ->with('alert-type', 'danger');
         }
-        
+
         return back()
             ->with('alert-msg', "Password atualizada com sucesso!")
             ->with('alert-type', 'success');
@@ -75,3 +89,4 @@ class ProfileController extends Controller
             ->with('alert-type', 'success');
     }
 }
+

@@ -20,6 +20,7 @@
                 <th>Permissões</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="bg-light">
@@ -56,6 +57,14 @@
                             </form>
                         </div>
                     </td>
+                    @if ($user->tipo != 'C')
+                        <td>
+                            <a href="{{route('Users.edit', ['user' => $user])}}"><button type="button" class="btn btn-primary btn-sm launch">Editar</button></a>
+                        </td>
+                    @else
+                        <td></td>
+                    @endif
+
                     <td>
                         <form action="{{route('Users.block', ['user' => $user])}}" method="post">
                             @csrf
@@ -76,6 +85,7 @@
                         </form>
                     </td>
                 @else
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td>

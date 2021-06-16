@@ -95,6 +95,7 @@ Route::get('admin/encomendas/filter/{Filter}', [OrdersController::class, 'filter
 
 Route::get('admin/users', [UserController::class, 'indexUsers'])->name('Users')->middleware('can:viewAny,App\Models\User');
 Route::get('admin/users/filter', [UserController::class, 'indexUsers'])->name('Users.filter')->middleware('can:viewAny,App\Models\User');
+Route::get('admin/users/{user}/edit', [UserController::class, 'edit'])->name('Users.edit')->middleware('can:edit,user');
 Route::patch('admin/users/{user}/permissao', [UserController::class, 'permission'])->name('Users.permissions')->middleware('can:update,user');
 Route::patch('admin/users/{user}/bloquear', [UserController::class, 'block'])->name('Users.block')->middleware('can:update,user');
 Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('Users.delete')->middleware('can:delete,App\Models\User');
@@ -137,17 +138,17 @@ Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name
 //Profile
 
 Route::middleware('auth')->group(function () {
-    Route::get('perfil', [ProfileController::class, 'index'])->name('Profile');
-    Route::put('perfil', [ProfileController::class, 'edit'])->name('Profile.edit');
-    Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password');
-    Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
+    Route::get('perfil', [ProfileController::class, 'index'])->name('Profile')->middleware('can:view,App\Models\User');
+    Route::put('perfil', [ProfileController::class, 'edit'])->name('Profile.edit')->middleware('can:edit,App\Models\User');
+    Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password')->middleware('can:update_password,App\Models\User');
+    Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy')->middleware('can:destroy_foto,App\Models\User');
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Encomendas
 
 Route::middleware('auth')->group(function () {
-    Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client');
+    Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client')->middleware('can:viewOrderHistory, App\Models\Encomenda');
     Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Order.client.view')->middleware('can:view,encomenda');
 });
 
