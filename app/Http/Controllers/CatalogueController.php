@@ -18,8 +18,15 @@ class CatalogueController extends Controller
     {
         $listaCategorias = Categoria::pluck('nome', 'id');
         $categoria = $request->query('categoria_id', null);
-
-        $listaEstampas = Estampa::where('categoria_id', $categoria)->select('id', 'nome', 'imagem_url', 'cliente_id')->paginate(9);
+        if($request->has('Search'))
+        {
+            $listaEstampas = Estampa::where('nome','like', '%'.$request->input('Search').'%')
+            ->orWhere('descricao','like', '%'.$request->input('Search').'%')->select('id', 'nome', 'imagem_url', 'cliente_id')->paginate(9);
+        }
+        else{
+            $listaEstampas = Estampa::where('categoria_id', $categoria)->select('id', 'nome', 'imagem_url', 'cliente_id')->paginate(9);
+        }
+        
 
         return view('catalogue.Catalogue')
             ->withPageTitle('Catalogo')
