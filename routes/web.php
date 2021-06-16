@@ -53,7 +53,7 @@ Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps')
 Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private')->middleware('can:viewPersonalStamps,App\Models\Estampa');
 Route::get('admin/estampa/create', [StampsController::class, 'create'])->name('Stamps.create')->middleware('can:create,App\Models\Estampa');
 Route::get('admin/estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit')->middleware('can:update,estampa');
-Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class, 'view_image'])->name('Stamp.image')->middleware('can:viewPersonal,estampa');
+Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class, 'view_image'])->name('Stamp.image')->middleware('can:viewPrivate,estampa');
 Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store')->middleware('can:create, App\Models\Estampa');
 Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update')->middleware('can:update, estampa');
 Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete')->middleware('can:delete, App\Models\Estampa');
