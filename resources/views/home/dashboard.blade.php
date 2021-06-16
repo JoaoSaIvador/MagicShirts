@@ -89,19 +89,21 @@
                         </div>
                         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                             <ul class="navbar-nav ms-auto">
+                                @cannot ('accessDashboard')
                                 <li class="nav-item">
                                     <a class="dropdown-item text-light" href="{{route('Cart')}}">Carrinho</a>
                                 </li>
+                                @endcan
                                 @guest
                                     @if (Route::has('login'))
                                     <li class="nav-item">
                                         <a class="dropdown-item text-light" href="{{route('login')}}">Entrar/Registar</a>
                                     </li>
                                     @endif
-                                @else
+                                @else                   
                                     <li class="nav-item">
                                         <a class="dropdown-item text-light" href="{{route('Profile')}}">Perfil</a>
-                                    </li>
+                                    </li>                                    
                                     <li>
                                         <a class="dropdown-item text-light" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
