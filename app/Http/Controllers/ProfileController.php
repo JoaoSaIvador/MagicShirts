@@ -15,14 +15,11 @@ class ProfileController extends Controller
     public function index()
     {
         $metodos = ['VISA', 'MC', 'PAYPAL'];
-        $user = auth()->user();
-        $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'preco_total', 'data')->get();
 
         return view('users.Profile')
             ->withPageTitle('Perfil')
             ->with('user', auth()->user())
-            ->withMetodos($metodos)
-            ->withEncomendas($listaEncomendas);
+            ->withMetodos($metodos);
     }
 
     public function edit(ProfilePost $request) {
