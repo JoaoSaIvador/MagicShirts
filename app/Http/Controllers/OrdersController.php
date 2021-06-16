@@ -36,15 +36,23 @@ class OrdersController extends Controller
 
     public function view_details(Encomenda $encomenda)
     {
+
+        $user = auth()->user();
+        if($user->cliente->id != $encomenda->cliente_id) {
+            abort(401);
+        }
+
         $listaTshirts = $encomenda->tshirts;
-        $user = User::where('id', $encomenda->cliente_id)->value('name');
 
         if (is_null($encomenda->recibo_url)) {
             $encomenda->recibo_url = "Não possui recibo";
         }
 
         foreach ($listaTshirts as $tshirt) {
-            $listaEstampas[] = Estampa::where('id', $tshirt->estampa_id)->value('nome');
+            $listaEstampas[] = [
+                'nome' => Estampa::where('id', $tshirt->estampa_id)->value('nome'),
+                'imagem_url' => Estampa::where('id', $tshirt->estampa_id)->value('imagem_url')
+            ];
             $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->value('nome');
         }
         //dd($listaEstampas);
@@ -107,7 +115,7 @@ class OrdersController extends Controller
     
     public function client_history() {
         $user = auth()->user();
-        $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'preco_total', 'data')->get();
+        $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'cliente_id', 'preco_total', 'data')->get();
 
         return view('orders.clientHistory')
             ->withPageTitle('Histórico de Encomendas')

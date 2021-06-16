@@ -146,7 +146,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client');
-    Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Order.client.view')->middleware('can:view,App\Models\Encomenda');
+    Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Order.client.view');
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
