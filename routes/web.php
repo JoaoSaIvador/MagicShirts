@@ -83,10 +83,11 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard'
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Orders
 
-Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny,App\Models\Encomenda');
-Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:viewAny,App\Models\Encomenda');
-Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update,encomenda');
-Route::get('admin/encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny,App\Models\Encomenda');
+Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny, App\Models\Encomenda');
+Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:viewAny, App\Models\Encomenda');
+Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update, encomenda');
+Route::get('admin/encomendas/changefilter/{Filter}', [OrdersController::class, 'changefilter'])->name('Orders.changefilter')->middleware('can:viewAny, App\Models\Encomenda');
+Route::get('admin/encomendas/filter/{Filter}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny, App\Models\Encomenda');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
