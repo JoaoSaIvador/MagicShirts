@@ -143,6 +143,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Encomendas
+
 Route::middleware('auth')->group(function () {
     Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client');
     Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Order.client.view')->middleware('can:view,App\Models\Encomenda');
