@@ -10,6 +10,7 @@ use App\Models\Encomenda;
 use App\Models\Estampa;
 use App\Models\User;
 use App\Models\Cor;
+use App\Notifications\OrderShipped;
 
 use App\Http\Requests\OrderPost;
 
@@ -96,8 +97,10 @@ class OrdersController extends Controller
 
             $encomenda->recibo_url = $encomenda->id . '.pdf';
             $encomenda -> save();
+            $recibo = $encomenda->recibo_url;
 
-            $user->notify(new OrderShipped($encomenda->recibo_url));
+            $user = User::where('id', $encomenda->cliente_id)->get();
+            $user->each->notify(new OrderShipped($recibo));
         }
 
         return redirect()->route('Orders');
@@ -145,7 +148,7 @@ class OrdersController extends Controller
     public function client_history()
     {
         $user = auth()->user();
-        $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'cliente_id', 'preco_total', 'data')->get();
+        $listaEncomendas = Encomenda::whereNotNull('cliente_id', $user->cliente->id)->select('id', 'estado', 'cliente_id', 'preco_total', 'data')->get();
 
         return view('orders.clientHistory')
             ->withPageTitle('Histórico de Encomendas')

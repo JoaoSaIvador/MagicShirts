@@ -10,15 +10,17 @@ use Illuminate\Notifications\Notification;
 class OrderShipped extends Notification implements ShouldQueue
 {
     use Queueable;
+    protected $recibo;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $recibo)
     {
         //
+        $this->recibo = $recibo;
     }
 
     /**
@@ -38,9 +40,9 @@ class OrderShipped extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable, string $recibo)
+    public function toMail($notifiable)
     {
-        $path = storage_path('app/public/recibos/' . $recibo);
+        $path = storage_path('app/public/recibos/' . $this->recibo);
 
         return (new MailMessage)
                     ->greeting('Estimado(a) senhor(a),')
