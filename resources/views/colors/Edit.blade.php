@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Editar Cor')
 @section('content')
     <div class="container">
         <form method="POST" action="{{route('Colors.update', ['cor' => $cor])}}" class="form-group" enctype="multipart/form-data">

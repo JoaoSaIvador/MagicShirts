@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Detalhes da Estampa')
 @section('content')
 <div class="container-fluid">
     <section class="row">

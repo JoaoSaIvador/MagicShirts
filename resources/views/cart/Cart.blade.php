@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Carrinho')
 @section('content')
 <section class="h-100 gradient-custom">
   <div class="container py-5">

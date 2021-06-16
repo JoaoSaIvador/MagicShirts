@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Criar Cor')
 @section('content')
     <div class="container">
         <form method="POST" action="{{route('Colors.store')}}" class="form-group" enctype="multipart/form-data">

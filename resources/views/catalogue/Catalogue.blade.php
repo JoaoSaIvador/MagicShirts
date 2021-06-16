@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Catálogo')
 @section('content')
 <div class="mb-3 cat-top py-5 sel-stamps">
     <div class="col-5 ">

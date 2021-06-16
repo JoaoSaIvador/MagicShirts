@@ -11,7 +11,7 @@
     <link href="{{asset('CSS/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('CSS/Stylesheet.css')}}" rel="stylesheet">
 
-    <title>@yield('title')</title>
+    <title>@yield('title', 'Dashboard')</title>
 
 </head>
 <body>
@@ -105,12 +105,7 @@
                                 @endguest
                             </ul>
                         </div>
-                        {{-- @if (session('alert-msg'))
-                            @include('partials.message')
-                        @endif
-                        @if ($errors->any())
-                            @include('partials.errors-message')
-                        @endif --}}
+
                     </div>
                 </nav>
                 <div class="row">

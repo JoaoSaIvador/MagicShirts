@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Estampas Pessoais do Cliente')
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-start mb-4">

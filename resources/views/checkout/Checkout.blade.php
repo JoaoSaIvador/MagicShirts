@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Checkout')
 @section('content')
 
 <div class="container">

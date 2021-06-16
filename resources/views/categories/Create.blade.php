@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Criar Categoria')
 @section('content')
     <div class="container">
         <form method="POST" action="{{route('Categories.store')}}" class="form-group" enctype="multipart/form-data">

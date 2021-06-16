@@ -1,4 +1,5 @@
 @extends('home.dashboard')
+@section('title', 'Estampas')
 @section('adminContent')
 <div class="container">
     <div class="d-flex justify-content-start mb-4">

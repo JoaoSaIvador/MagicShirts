@@ -1,4 +1,5 @@
 @extends('home.dashboard')
+@section('title', 'Preços')
 @section('adminContent')
     <div class="row ml-auto mr-auto">
         <div class="col-sm-3">

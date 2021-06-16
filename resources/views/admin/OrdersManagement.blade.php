@@ -1,4 +1,5 @@
 @extends('home.dashboard')
+@section('title', 'Encomendas')
 @section('adminContent')
 <div class="container">
     <div class="col-5 ">

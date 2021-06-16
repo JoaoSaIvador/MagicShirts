@@ -12,48 +12,49 @@
 <body>
     <div class="container bg-light w-50">
         <div>
-            <h2 class="display-5">Detalhes da Encomenda {{$id}}</h2>
+            <h2 class="display-5">Detalhes da Encomenda</h2>
         </div>
         <hr>
         <div>
-            <h4 class="display-8">{{$user}}</h4>
-            <p class="font-weight-bold mt-5">Informação da Encomenda</p>
+            <h3 style="font-size: 200%">{{$user}}</h4>
+            <hr>
+            <p class="font-weight-bold mt-5" style="font-weight: bold; font-size: 125%">Informação da Encomenda</p>
             <dl class="row">
-                <dt class="col-sm-3">NIF</dt>
-                <dd class="col-sm-9">{{$nif}}</dd>
+                <p class="col-sm-3" style="font-weight: bold">NIF:
+                <span style="font-weight: normal">{{$nif}}</span></p>
 
-                <dt class="col-sm-3">Endereço</dt>
-                <dd class="col-sm-9"><p>{{$endereco}}</p></dd>
+                <p class="col-sm-3" style="font-weight: bold">Endereço:
+                <span style="font-weight: normal">{{$endereco}}</span></p>
 
-                <dt class="col-sm-3">Tipo de pagamento</dt>
-                <dd class="col-sm-9">{{$tipo_pagamento}}</dd>
+                <p class="col-sm-3" style="font-weight: bold">Tipo de pagamento:
+                <span style="font-weight: normal">{{$tipo_pagamento}}</span></p>
 
-                <dt class="col-sm-3">Ref de pagamento</dt>
-                <dd class="col-sm-9">{{$ref_pagamento}}</dd>
+                <p class="col-sm-3" style="font-weight: bold">Ref de pagamento:
+                <span style="font-weight: normal">{{$ref_pagamento}}</dd></p>
 
             </dl>
         </div>
         <hr>
         <div class="container">
-            <p class="fs-2">Items</p>
+            <p style="font-size: 175%">Items</p>
             @foreach ($tshirts as $tshirt)
-                <p class="fs-6">{{$estampas[$loop->index]}} {{$cores[$loop->index]}}</p>
+                <p style="font-size: 20px">{{$estampas[$loop->index]}} {{$cores[$loop->index]}}</p>
                 <dl class="row">
-                    <dt class="col-sm-3">Tamanho</dt>
-                    <dd class="col-sm-9">{{$tshirt->tamanho}}</dd>
+                    <p class="col-sm-3" style="font-weight: bold">Tamanho:
+                    <span class="col-sm-9" style="font-weight: normal">{{$tshirt->tamanho}}</span></p>
 
-                    <dt class="col-sm-3">Quantidade</dt>
-                    <dd class="col-sm-9"><p>{{$tshirt->quantidade}}</p></dd>
+                    <p class="col-sm-3" style="font-weight: bold">Quantidade:
+                    <span class="col-sm-9" style="font-weight: normal">{{$tshirt->quantidade}}</span></p>
 
-                    <dt class="col-sm-3">Preço por unidade</dt>
-                    <dd class="col-sm-9">${{$tshirt->preco_un}}</dd>
+                    <p class="col-sm-3" style="font-weight: bold">Preço por unidade:
+                    <span class="col-sm-9" style="font-weight: normal">${{$tshirt->preco_un}}</span></p>
 
-                    <dt class="col-sm-3">Sub Total</dt>
-                    <dd class="col-sm-9">${{$tshirt->subtotal}}</dd>
+                    <p class="col-sm-3" style="font-weight: bold">Sub Total:
+                    <span class="col-sm-9" style="font-weight: normal">${{$tshirt->subtotal}}</span></p>
                 </dl>
             @endforeach
             <hr>
-            <p class="fs-2">Total: {{$preco_total}}</p>
+            <p style="font-weight: bold">Total: {{$preco_total}}</p>
         </div>
     </div>
 </body>

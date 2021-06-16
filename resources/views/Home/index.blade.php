@@ -6,9 +6,9 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
     <div class="view overlay">
-      
+
             <img class="card-img-top estampa-img" id="card-img-top" src="{{asset('img/Carrousel2.jpg')}}" alt="Imagem da Estampa">
-        
+
         <div class="mask rgba-white-slight"></div>
     </div>
     </div>
@@ -17,7 +17,7 @@
     <div class="carousel-item">
       <img class="card-img-top estampa-img" id="card-img-top" src="{{$estampa->getImagemFullUrl()}}" alt="Imagem da Estampa">
     </div>
-    
+
     @empty
         <p class="display-4 font-weight-bold">Não existem estampas</p>
     @endforelse

@@ -25,7 +25,6 @@ class PDFController extends Controller
         }
 
         $data = [
-            'id'             => $encomenda->id,
             'user'           => $user,
             'nif'            => $encomenda->nif,
             'endereco'       => $encomenda->endereco,

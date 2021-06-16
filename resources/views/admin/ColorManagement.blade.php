@@ -1,4 +1,5 @@
 @extends('home.dashboard')
+@section('title', 'Cores')
 @section('adminContent')
 <div class="container">
     <div class="d-flex justify-content-start mb-4">
@@ -21,7 +22,9 @@
                 <td>{{$cor->codigo}}</td>
                 <td>{{$cor->nome}}</td>
                 <td>
-                    <a href="{{route('Colors.edit', ['cor' => $cor])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
+                    @if (is_null($cor->deleted_at))
+                        <a href="{{route('Colors.edit', ['cor' => $cor])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
+                    @endif
                 </td>
                 <td>
                     @if (is_null($cor->deleted_at))

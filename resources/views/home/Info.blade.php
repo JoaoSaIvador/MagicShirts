@@ -1,4 +1,5 @@
 @extends('home.dashboard')
+@section('title', 'Estatísticas')
 @section('adminContent')
 <div class="container-fluid">
     <div class="row">

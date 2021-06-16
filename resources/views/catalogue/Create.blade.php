@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Criar Estampa')
 @section('content')
     <div class="container">
         <form method="POST" action="{{route('Stamps.store')}}" class="form-group" enctype="multipart/form-data">

@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Detalhes da Encomenda')
 @section('content')
 <div class="container bg-light w-50">
     <div>

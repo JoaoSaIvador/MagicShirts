@@ -1,4 +1,5 @@
 @extends('home.dashboard')
+@section('title', 'Utilizadores')
 @section('adminContent')
 <div class="container">
     <h3>Filtro</h3>

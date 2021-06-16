@@ -1,4 +1,5 @@
 @extends('template')
+@section('title', 'Editar Categoria')
 @section('content')
     <div class="container">
         <form method="POST" action="{{route('Categories.update', ['categoria' => $categoria])}}" class="form-group" enctype="multipart/form-data">
