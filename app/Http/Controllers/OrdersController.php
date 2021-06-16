@@ -50,7 +50,7 @@ class OrdersController extends Controller
 
         foreach ($listaTshirts as $tshirt) {
             $listaEstampas[] = [
-                'nome' => Estampa::where('id', $tshirt->estampa_id)->value('nome'),
+                'nome' => Estampa::where('id', $tshirt->estampa_id)->withTrashed()->value('nome'),
                 'imagem_url' => Estampa::find($tshirt->estampa_id)->getImagemFullUrl(),
             ];
             $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->value('nome');

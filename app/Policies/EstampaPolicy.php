@@ -20,6 +20,10 @@ class EstampaPolicy
         return $estampa->cliente_id === null ? true : $estampa->cliente_id === $user->cliente->id;// ||$user->tipo === 'A' || $user->tipo === 'F';
     }
 
+    public function viewPrivate(User $user){
+        return $user->tipo === 'C';
+    }
+
     public function viewPersonal(User $user, Estampa $estampa){
         return $user->tipo === 'A' || $user->tipo === 'F' || $estampa->cliente_id === $user->id;
     }

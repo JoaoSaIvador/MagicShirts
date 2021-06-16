@@ -21,7 +21,7 @@
         </form>
     </div>
     <div style="width: 250px">
-        @can ('viewPersonal',App\Models\Estampa::class)
+        @can ('viewPrivate',App\Models\Estampa::class)
             <a class="btn btn-dark text-light" href="{{route('Catalogue.personal')}}">Mostrar Estampas Pessoais</a>
         @endcan
     </div>
