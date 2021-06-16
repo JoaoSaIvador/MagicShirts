@@ -17,11 +17,11 @@ class EstampaPolicy
 
     public function view(?User $user, Estampa $estampa)
     {
-        return $estampa->cliente_id === null ? true : $estampa->cliente_id === $user->id;// ||$user->tipo === 'A' || $user->tipo === 'F';
+        return $estampa->cliente_id === null ? true : $estampa->cliente_id === $user->cliente->id;// ||$user->tipo === 'A' || $user->tipo === 'F';
     }
 
-    public function viewPersonal(User $user){
-        return $user->tipo === 'C';
+    public function viewPersonal(User $user, Estampa $estampa){
+        return $user->tipo === 'A' || $user->tipo === 'F' || $estampa->cliente_id === $user->id;
     }
 
     public function viewPersonalStamps(User $user)
@@ -29,7 +29,7 @@ class EstampaPolicy
         return $user->tipo != 'C';
     }
     public function viewCatalogue(?User $user){
-        return $user == null || optional($user)->tipo === 'C';
+        return true;
     }
 
     public function create(User $user)
@@ -39,7 +39,7 @@ class EstampaPolicy
 
     public function update(User $user, Estampa $estampa)
     {
-        return $user->tipo === 'A' && $estampa->cliente_id == null || $user->tipo === 'C' && $estampa->cliente_id === $user->id;
+        return $user->tipo === 'A' && $estampa->cliente_id == null || $user->tipo === 'C' && $estampa->cliente_id === $user->cliente->id;
     }
 
     public function delete(User $user)

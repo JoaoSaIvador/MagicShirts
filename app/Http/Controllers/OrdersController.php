@@ -38,7 +38,7 @@ class OrdersController extends Controller
     {
 
         $user = auth()->user();
-        if($user->cliente->id != $encomenda->cliente_id) {
+        if($user->tipo != 'A' && $user->id != $encomenda->cliente_id) {
             abort(401);
         }
 
@@ -51,7 +51,7 @@ class OrdersController extends Controller
         foreach ($listaTshirts as $tshirt) {
             $listaEstampas[] = [
                 'nome' => Estampa::where('id', $tshirt->estampa_id)->value('nome'),
-                'imagem_url' => Estampa::where('id', $tshirt->estampa_id)->value('imagem_url')
+                'imagem_url' => Estampa::find($tshirt->estampa_id)->getImagemFullUrl(),
             ];
             $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->value('nome');
         }
@@ -112,7 +112,7 @@ class OrdersController extends Controller
                 return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
         }
     }
-    
+
     public function client_history() {
         $user = auth()->user();
         $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'cliente_id', 'preco_total', 'data')->get();

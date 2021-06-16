@@ -29,7 +29,6 @@
         </dl>
     </div>
     <hr>
-
     <div class="container">
         <p class="fs-2">Items</p>
         @foreach ($tshirts as $tshirt)
@@ -42,7 +41,7 @@
                 </svg>
 
                 <img src="{{asset('storage/tshirt_base/default.jpg')}}" id="product-preview" />
-                <img src="{{asset('storage/estampas/' . $estampas[$loop->index]['imagem_url'])}}" class="preview-stamp" />
+                <img src="{{$estampas[$loop->index]['imagem_url']}}" class="preview-stamp" />
             </div>
             {{-- Image --}}
         </div>
@@ -66,7 +65,12 @@
         @endforeach
         <hr>
         <p class="fs-2">Total: {{$encomenda->preco_total}}</p>
-        <button class="btn btn-primary mb-4" onclick="window.location='{{ url("/encomendas") }}'">Voltar</button>
+        <button class="btn btn-primary mb-4" onclick="goBack()">Voltar</button>
     </div>
 </div>
+<script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
 @endsection
