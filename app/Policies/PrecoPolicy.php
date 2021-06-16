@@ -10,29 +10,34 @@ class PrecoPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user)
+     {
+        return $user->tipo === 'A';
+     }
+
     public function viewAny(User $user)
     {
-        return true;
+        return false;
     }
 
     public function view(User $user, Preco $preco)
     {
-       return true;
+        return false;
     }
 
     public function create(User $user)
     {
-        return $user->tipo ==='A';
+        return false;
     }
 
     public function update(User $user, Preco $preco)
     {
-        return $user->tipo ==='A';
+        return false;
     }
 
     public function delete(User $user, Preco $preco)
     {
-        return $user->tipo ==='A';
+        return false;
     }
 
     public function restore(User $user, Preco $preco)
