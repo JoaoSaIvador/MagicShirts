@@ -38,9 +38,7 @@ class OrdersController extends Controller
     {
 
         $user = auth()->user();
-        if($user->tipo != 'A' && $user->id != $encomenda->cliente_id) {
-            abort(401);
-        }
+        
 
         $listaTshirts = $encomenda->tshirts;
 
@@ -50,10 +48,11 @@ class OrdersController extends Controller
 
         foreach ($listaTshirts as $tshirt) {
             $listaEstampas[] = [
-                'nome' => Estampa::where('id', $tshirt->estampa_id)->value('nome'),
+                'nome' => Estampa::where('id', $tshirt->estampa_id)->withTrashed()->value('nome'),
+                'imagem_url' => Estampa::where('id', $tshirt->estampa_id)->withTrashed()->value('imagem_url')
                 'imagem_url' => Estampa::find($tshirt->estampa_id)->getImagemFullUrl(),
             ];
-            $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->value('nome');
+            $listaCores[] = Cor::where('codigo', $tshirt->cor_codigo)->withTrashed()->value('nome');
         }
         //dd($listaEstampas);
 
