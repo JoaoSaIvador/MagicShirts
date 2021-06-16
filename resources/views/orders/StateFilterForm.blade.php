@@ -14,7 +14,7 @@
                 <option value="anulada">Anulada</option>
                 <option value="fechada">Fechada</option>
                 <option value="pendente">Pendente</option>
-                <option value="aberta">Aberta</option>
+                <option value="paga">Paga</option>
             </select>
         <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="submit">Filtrar</button>

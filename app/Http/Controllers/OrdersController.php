@@ -16,18 +16,12 @@ use App\Http\Requests\OrderPost;
 
 class OrdersController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $filtro = $request->except('_token');;
-
-        if (!empty($filtro['filtro'])) {
-            $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->select('id', 'nome', 'estado', 'preco_total', 'data')->paginate(20);
+        if (auth()->user()->tipo == 'F') {
+            $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
         } else {
-            if (auth()->user()->tipo == 'F') {
-                $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
-            } else {
-                $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
-            }
+            $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
         }
 
         return view('orders.ClientFilterForm')
@@ -37,9 +31,7 @@ class OrdersController extends Controller
 
     public function view_details(Encomenda $encomenda)
     {
-
         $user = User::find($encomenda->cliente_id);
-
 
         $listaTshirts = $encomenda->tshirts;
 
@@ -112,26 +104,48 @@ class OrdersController extends Controller
         // dd($request->input('valor'));
         switch ($Filter) {
             case 'cliente':
-                $listaEncomendas = Encomenda::where('cliente_id', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                if (auth()->user()->tipo == 'F') {
+                    $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->where('cliente_id', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                } else {
+                    $listaEncomendas = Encomenda::where('cliente_id', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                }
                 return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
                 break;
             case 'estado':
-                $listaEncomendas = Encomenda::where('estado', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                if (auth()->user()->tipo == 'F') {
+                    $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->where('estado', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                } else {
+                    $listaEncomendas = Encomenda::where('estado', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                }
                 return view('orders.StateFilterForm')->withEncomendas($listaEncomendas)->withFiltro('estado');
                 break;
             case 'data':
-                $listaEncomendas = Encomenda::orderBy('data', $request->input('valor'))->paginate(20);
+                if (auth()->user()->tipo == 'F') {
+                    $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->orderBy('data', $request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                } else {
+                    $listaEncomendas = Encomenda::orderBy('data', $request->input('valor'))->paginate(20);
+                }
                 return view('orders.DateFilterForm')->withEncomendas($listaEncomendas)->withFiltro('data');
                 break;
             default:
-                $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+                if (auth()->user()->tipo == 'F') {
+                    $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                } else {
+                    $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+                }
+
                 return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
         }
     }
 
     public function changefilter($Filter)
     {
-        $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+
+        if (auth()->user()->tipo == 'F') {
+            $listaEncomendas = Encomenda::whereIn('estado', ['pendente', 'paga'])->orderBy('id', 'desc')->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+        } else {
+            $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+        }
         //dd($Filter);
         switch ($Filter) {
             case 'data':
