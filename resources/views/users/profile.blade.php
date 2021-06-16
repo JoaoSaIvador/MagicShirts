@@ -5,7 +5,7 @@
 <div class="container">
     <div class="py-5 ">
         <div class="row">
-            <div class="col-md-12 order-md-1">
+            <div class="col-md-12">
                 <h4 class="mb-3">Informação de Utilizador</h4>
 
                 <form method="POST" enctype="multipart/form-data">
@@ -113,7 +113,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary cart-update" form="form_password">Atualizar Password</button>
+                    <button type="submit" class="btn btn-primary cart-update" form="form_password" style="margin-bottom: 50px">Atualizar Password</button>
                 </form>
 
                 <form id="form_delete_photo" action="{{route('Profile.foto.destroy')}}" method="POST">

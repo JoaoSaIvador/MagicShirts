@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Auth;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Home
 
-Route::get('/',[HomeController::class,'index'])->name('Home');
+Route::get('/', [HomeController::class, 'index'])->name('Home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
@@ -53,7 +53,7 @@ Route::get('admin/estampas', [StampsController::class, 'index'])->name('Stamps')
 Route::get('admin/estampas/pessoais', [StampsController::class, 'index_private'])->name('Stamps.private')->middleware('can:viewPersonalStamps,App\Models\Estampa');
 Route::get('admin/estampa/create', [StampsController::class, 'create'])->name('Stamps.create')->middleware('can:create,App\Models\Estampa');
 Route::get('admin/estampa/{estampa}/edit', [StampsController::class, 'edit'])->name('Stamps.edit')->middleware('can:update,estampa');
-Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class , 'view_image'])->name('Stamp.image')->middleware('can:update,estampa');
+Route::get('estampa/pessoal/{estampa}/imagem', [StampsController::class, 'view_image'])->name('Stamp.image')->middleware('can:update,estampa');
 Route::post('estampa/store', [StampsController::class, 'store'])->name('Stamps.store')->middleware('can:create, App\Models\Estampa');
 Route::put('estampa/{estampa}', [StampsController::class, 'update'])->name('Stamps.update')->middleware('can:update, estampa');
 Route::delete('estampa/{estampa}', [StampsController::class, 'destroy'])->name('Stamps.delete')->middleware('can:delete, App\Models\Estampa');
@@ -68,7 +68,7 @@ Route::post('carrinho', [CartController::class, 'store_tshirt'])->name('Cart.sto
 Route::patch('carrinho/{index}', [CartController::class, 'update_tshirt'])->name('Cart.update')->middleware('can:create,App\Models\Encomenda');
 Route::delete('carrinho/{index}', [CartController::class, 'destroy_tshirt'])->name('Cart.destroy')->middleware('can:create,App\Models\Encomenda');
 
-Route::middleware('auth')->prefix('carrinho')->group(function() {
+Route::middleware('auth')->prefix('carrinho')->group(function () {
     Route::get('checkout',  [CheckoutController::class, 'index'])->name('Checkout');
     Route::post('checkout', [CheckoutController::class, 'finalize_order'])->name('Checkout.finalize');
 });
@@ -134,13 +134,20 @@ Route::post('admin/precos/{preco}', [PricesController::class, 'update'])->name('
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Profile
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
     Route::get('perfil', [ProfileController::class, 'index'])->name('Profile');
     Route::put('perfil', [ProfileController::class, 'edit'])->name('Profile.edit');
     Route::put('perfil/{user}', [ProfileController::class, 'password_update'])->name('Profile.password');
     Route::delete('perfil', [ProfileController::class, 'destroy_foto'])->name('Profile.foto.destroy');
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Encomendas
+
+Route::middleware('auth')->group(function () {
+    Route::get('encomendas', [OrdersController::class, 'client_history'])->name('Orders.client');
+    Route::get('encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Order.client.view')->middleware('can:view,App\Models\Encomenda');
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Register

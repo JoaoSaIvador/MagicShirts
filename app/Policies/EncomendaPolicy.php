@@ -17,7 +17,7 @@ class EncomendaPolicy
 
     public function view(User $user, Encomenda $encomenda)
     {
-        return $user->tipo === 'A' ||  $user->tipo === 'F' || $user->id === $encomenda->cliente_id;
+        return $user->tipo === 'A' ||  $user->tipo === 'F' || $user->cliente->id === $encomenda->cliente_id;
     }
 
     public function create(?User $user)

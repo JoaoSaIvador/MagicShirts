@@ -7,6 +7,7 @@ use App\Http\Requests\ProfilePost;
 use App\Http\Requests\PasswordPost;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Encomenda;
 use App\Models\User;
 
 class ProfileController extends Controller
