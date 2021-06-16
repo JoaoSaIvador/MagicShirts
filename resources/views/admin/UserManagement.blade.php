@@ -29,60 +29,64 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->created_at}}</td>
                 <td>{{$user->tipo}}</td>
-                <td>
-                    <button class="btn btn-success btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$user->id}}" aria-expanded="false" aria-controls="collapseOrder">
-                        Alterar Permissões
-                    </button>
-                    <div class="collapse mb-n3 mt-2" id="collapse{{$user->id}}">
-                        <form action="{{route('Users.permissions', ['user' => $user])}}" method="POST" class="form-group">
-                        @csrf
-                        @method('PATCH')
-                            <div class="row">
-                                <select name="tipo" class="custom-select col">
-                                    <option value="none" selected disabled hidden>Alterar permissões</option>
-                                    @if ($user->tipo != "A")
-                                        <option value="A">Admin</option>
-                                    @endif
-                                    @if ($user->tipo != "F")
-                                        <option value="F">Funcionario</option>
-                                    @endif
-                                    @if ($user->tipo != "C")
-                                        <option value="C">Cliente</option>
-                                    @endif
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm col ml-1">Salvar</button>
-                            </div>
+                @if (is_null($user->deleted_at))
+                    <td>
+                        <button class="btn btn-success btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$user->id}}" aria-expanded="false" aria-controls="collapseOrder">
+                            Alterar Permissões
+                        </button>
+                        <div class="collapse mb-n3 mt-2" id="collapse{{$user->id}}">
+                            <form action="{{route('Users.permissions', ['user' => $user])}}" method="POST" class="form-group">
+                            @csrf
+                            @method('PATCH')
+                                <div class="row">
+                                    <select name="tipo" class="custom-select col">
+                                        <option value="none" selected disabled hidden>Alterar permissões</option>
+                                        @if ($user->tipo != "A")
+                                            <option value="A">Administrador</option>
+                                        @endif
+                                        @if ($user->tipo != "F")
+                                            <option value="F">Funcionário</option>
+                                        @endif
+                                        @if ($user->tipo != "C")
+                                            <option value="C">Cliente</option>
+                                        @endif
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm col ml-1">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                    <td>
+                        <form action="{{route('Users.block', ['user' => $user])}}" method="post">
+                            @csrf
+                            @method('PATCH')
+                            @if ($user->bloqueado != "0")
+                                <button type="submit" class="btn btn-primary btn-sm launch">Desbloquear</button>
+                            @endif
+                            @if ($user->bloqueado != "1")
+                                <button type="submit" class="btn btn-primary btn-sm launch">Bloquear</button>
+                            @endif
                         </form>
-                    </div>
-                </td>
-                <td>
-                    <form action="{{route('Users.block', ['user' => $user])}}" method="post">
-                        @csrf
-                        @method('PATCH')
-                        @if ($user->bloqueado != "0")
-                            <button type="submit" class="btn btn-primary btn-sm launch">Desbloquear</button>
-                        @endif
-                        @if ($user->bloqueado != "1")
-                            <button type="submit" class="btn btn-primary btn-sm launch">Bloquear</button>
-                        @endif
-                    </form>
-                </td>
-                <td>
-                    @if (is_null($user->deleted_at))
+                    </td>
+                    <td>
                         <form action="{{route('Users.delete', ['user' => $user])}}" method="post">
                             @csrf
                             @method("DELETE")
                                 <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                         </form>
-                    @else
+                    </td>
+                @else
+                    <td></td>
+                    <td></td>
+                    <td>
                         <form action="{{route('Users.restore', $user)}}" method="POST">
                             @csrf
                             @method("PATCH")
                                 <input type="text" name="user" hidden value="{{$user->id}}">
                                 <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
                         </form>
-                    @endif
-                </td>
+                    </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

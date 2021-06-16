@@ -16,12 +16,6 @@ class PricesController extends Controller
             ->withPrecos($precos);
     }
 
-    public function edit(Preco $preco)
-    {
-        return view('prices.Edit')
-            ->withPreco($preco);
-    }
-
     public function update(Request $request, Preco $preco)
     {
         //dd($request);

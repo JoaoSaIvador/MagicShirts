@@ -15,7 +15,6 @@ class EncomendaPolicy
         return $user->tipo === 'A' ||  $user->tipo === 'F';
     }
 
-
     public function view(User $user, Encomenda $encomenda)
     {
         return $user->tipo === 'A' ||  $user->tipo === 'F' || $user->id === $encomenda->cliente_id;
@@ -26,9 +25,9 @@ class EncomendaPolicy
         return $user == null || optional($user)->tipo === 'C';
     }
 
-    public function update(User $user, Encomenda $encomenda)
+    public function update(User $user)
     {
-        return $user->tipo === 'A' || $user->id === $encomenda->cliente_id || $user->tipo === 'F';
+        return $user->tipo === 'A' || $user->tipo === 'F';
     }
 
     public function delete(User $user, Encomenda $encomenda)

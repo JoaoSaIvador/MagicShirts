@@ -16,10 +16,8 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         $filtro = $request->except('_token');;
-        //$key = array_keys($data);
 
         if (!empty($filtro['filtro'])) {
-            //dd($filtro['filtro']);
             $listaEncomendas = Encomenda::where('estado', $filtro['filtro'])->select('id', 'nome', 'estado', 'preco_total', 'data')->paginate(20);
         }
         else{
@@ -29,14 +27,11 @@ class OrdersController extends Controller
             else {
                 $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
             }
-            //dd($listaEncomendas);
         }
-        //$listaEncomendas = Encomenda::where('cliente_id', 511)->paginate(20);
 
-        //$listaEncomendas = Encomenda::where('data', "2019-12-03")->paginate(20);
-        //dd($listaEstampas);
-
-        return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
+        return view('orders.ClientFilterForm')
+            ->withEncomendas($listaEncomendas)
+            ->withFiltro('cliente');
     }
 
     public function view_details(Encomenda $encomenda)
@@ -71,7 +66,7 @@ class OrdersController extends Controller
 
     public function filter($Filter, Request $request)
     {
-       
+
        // dd($request->input('valor'));
         switch($Filter)
         {
@@ -89,7 +84,7 @@ class OrdersController extends Controller
                 break;
             default:
                 $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
-                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');  
+                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
         }
     }
 
@@ -106,8 +101,8 @@ class OrdersController extends Controller
                 return view('orders.StateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('estado');
                 break;
             default:
-                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');  
-        }   
+                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
+        }
     }
-    
+
 }

@@ -22,7 +22,7 @@
             <a class="navbar-brand" href="/">
                 <img src="{{asset('img/MagicShirtsLogo.png')}}" alt="MagicShirts LOGO">
             </a>
-            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <div class="navbar-collapse w-100 order-1 order-md-0 dual-collapse2">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="dropdown-item text-light" href="{{route('Catalogue')}}">Catálogo</a>

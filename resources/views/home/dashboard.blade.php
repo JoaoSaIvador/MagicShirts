@@ -47,27 +47,33 @@
                     </a>
                 </li>
             @endcan
-            <li class="nav-item ml-2 ">
-                <a class="nav-link" href="{{route('Stamps')}}">
-                    <span>Estampas</span>
-                </a>
-            </li>
-            <li class="nav-item ml-2 ">
-                <a class="nav-link" href="{{route('Colors')}}">
-                    <span>Cores</span>
-                </a>
-            </li>
-            <li class="nav-item ml-2 ">
-                <a class="nav-link" href="{{route('Prices')}}">
-                    <span>Preços</span>
-                </a>
-            </li>
+            @can('viewAny',App\Models\Estampa::class)
+                <li class="nav-item ml-2 ">
+                    <a class="nav-link" href="{{route('Stamps')}}">
+                        <span>Estampas</span>
+                    </a>
+                </li>
+            @endcan
+            @can('viewAny',App\Models\Cor::class)
+                <li class="nav-item ml-2 ">
+                    <a class="nav-link" href="{{route('Colors')}}">
+                        <span>Cores</span>
+                    </a>
+                </li>
+            @endcan
+            @can('viewAny',App\Models\Preco::class)
+                <li class="nav-item ml-2 ">
+                    <a class="nav-link" href="{{route('Prices')}}">
+                        <span>Preços</span>
+                    </a>
+                </li>
+            @endcan
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content" style="background-color: #212121">
                 <nav class="mainmenu navbar navbar-expand-lg mb-4 static-top shadow">
                     <div class="container-fluid">
-                        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                        <div class="navbar-collapse w-100 order-1 order-md-0 dual-collapse2">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
                                 <a class="dropdown-item text-light" href="{{route('Catalogue')}}">Catálogo</a>

@@ -17,7 +17,7 @@ class PrecoPolicy
 
     public function viewAny(User $user)
     {
-        return false;
+        return $user->tipo === 'A';
     }
 
     public function view(User $user, Preco $preco)
@@ -32,7 +32,7 @@ class PrecoPolicy
 
     public function update(User $user, Preco $preco)
     {
-        return false;
+        return $user->tipo === 'A';
     }
 
     public function delete(User $user, Preco $preco)

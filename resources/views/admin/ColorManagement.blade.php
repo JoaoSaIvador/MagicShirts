@@ -21,26 +21,27 @@
                 <th><span class="color"  style="background-color: #{{$cor->codigo}}"></span></th>
                 <td>{{$cor->codigo}}</td>
                 <td>{{$cor->nome}}</td>
-                <td>
-                    @if (is_null($cor->deleted_at))
+                @if (is_null($cor->deleted_at))
+                    <td>
                         <a href="{{route('Colors.edit', ['cor' => $cor])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
-                    @endif
-                </td>
-                <td>
-                    @if (is_null($cor->deleted_at))
+                    </td>
+                    <td>
                         <form action="{{route('Colors.delete', ['cor' => $cor])}}" method="post">
                             @csrf
                             @method("DELETE")
                                 <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                         </form>
-                    @else
-                        <form action="{{route('Colors.restore', $cor)}}" method="POST">
-                            @csrf
-                                <input type="text" name="cor" hidden value="{{$cor->codigo}}">
-                                <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
-                        </form>
-                    @endif
+                    </td>
+                @else
+                <td></td>
+                <td>
+                    <form action="{{route('Colors.restore', $cor)}}" method="POST">
+                        @csrf
+                            <input type="text" name="cor" hidden value="{{$cor->codigo}}">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
+                    </form>
                 </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

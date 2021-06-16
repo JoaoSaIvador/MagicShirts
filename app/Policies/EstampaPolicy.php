@@ -17,11 +17,7 @@ class EstampaPolicy
 
     public function view(?User $user, Estampa $estampa)
     {
-        return $estampa->cliente_id === null ? true : $estampa->client_id === $user->id;// ||$user->tipo === 'A' || $user->tipo === 'F';
-    }
-
-    public function viewImage(){
-
+        return $estampa->cliente_id === null ? true : $estampa->cliente_id === $user->id;// ||$user->tipo === 'A' || $user->tipo === 'F';
     }
 
     public function viewPersonal(User $user){
@@ -46,12 +42,12 @@ class EstampaPolicy
         return $user->tipo === 'A' && $estampa->cliente_id == null || $user->tipo === 'C' && $estampa->cliente_id === $user->id;
     }
 
-    public function delete(User $user, Estampa $estampa)
+    public function delete(User $user)
     {
         return $user->tipo === 'A' || $user->tipo === 'C';
     }
 
-    public function restore(User $user, Estampa $estampa)
+    public function restore(User $user)
     {
         return $user->tipo === 'A';
     }

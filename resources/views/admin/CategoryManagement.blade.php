@@ -19,24 +19,27 @@
             <tr>
                 <td>{{$categoria->id}}</td>
                 <td>{{$categoria->nome}}</td>
-                <td>
-                    <a href="{{route('Categories.edit', ['categoria' => $categoria])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
-                </td>
-                <td>
-                    @if (is_null($categoria->deleted_at))
+                @if (is_null($categoria->deleted_at))
+                    <td>
+                        <a href="{{route('Categories.edit', ['categoria' => $categoria])}}"><button type="button" class="btn btn-primary launch">Editar</button></a>
+                    </td>
+                    <td>
                         <form action="{{route('Categories.delete', ['categoria' => $categoria])}}" method="post">
                             @csrf
                             @method("DELETE")
                                 <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                         </form>
-                    @else
+                    </td>
+                @else
+                    <td></td>
+                    <td>
                         <form action="{{route('Categories.restore', $categoria)}}" method="POST">
-                        @csrf
+                            @csrf
                                 <input type="text" name="categoria" hidden value="{{$categoria->id}}">
                                 <input type="submit" class="btn btn-warning btn-sm" value="Restaurar">
                         </form>
-                    @endif
-                </td>
+                    </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

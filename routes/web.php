@@ -85,7 +85,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard'
 
 Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny, App\Models\Encomenda');
 Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:view,encomenda');
-Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update, encomenda');
+Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update, App\Models\Encomenda');
 Route::get('admin/encomendas/changefilter/{Filter}', [OrdersController::class, 'changefilter'])->name('Orders.changefilter')->middleware('can:viewAny, App\Models\Encomenda');
 Route::get('admin/encomendas/filter/{Filter}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny, App\Models\Encomenda');
 
@@ -130,8 +130,6 @@ Route::post('admin/cores/restore', [ColorsController::class, 'restore'])->name('
 
 Route::get('admin/precos', [PricesController::class, 'index'])->name('Prices')->middleware('can:viewAny,App\Models\Preco');
 Route::post('admin/precos/{preco}', [PricesController::class, 'update'])->name('Prices.update')->middleware('can:viewAny,App\Models\Preco');
-Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name('Prices.edit')->middleware('can:viewAny,App\Models\Preco');
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Profile

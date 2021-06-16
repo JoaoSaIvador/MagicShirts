@@ -21,7 +21,7 @@ class CorPolicy
         return false;
     }
 
-    public function view(User $user, Cor $cor)
+    public function view(User $user)
     {
         return false;
     }
@@ -29,8 +29,9 @@ class CorPolicy
     public function create(User $user)
     {
         return false;
+    }
 
-    public function update(User $user, Cor $cor)
+    public function update(User $user)
     {
         return false;
     }

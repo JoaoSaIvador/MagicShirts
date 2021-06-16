@@ -7,17 +7,18 @@
     <div class="carousel-item active">
     <div class="view overlay">
 
-            <img class="card-img-top estampa-img" id="card-img-top" src="{{asset('img/Carrousel2.jpg')}}" alt="Imagem da Estampa">
+            <img class="card-img-top estampa-img" id="card-img-top" src="{{$estampas[0]->getImagemFullUrl()}}" alt="Imagem da Estampa">
 
         <div class="mask rgba-white-slight"></div>
     </div>
     </div>
-    @forelse ($estampas as $estampa)
 
-    <div class="carousel-item">
-      <img class="card-img-top estampa-img" id="card-img-top" src="{{$estampa->getImagemFullUrl()}}" alt="Imagem da Estampa">
-    </div>
-
+    @forelse ($estampas as $key => $value)
+        @if ($key != 0)
+            <div class="carousel-item">
+                <img class="card-img-top estampa-img" id="card-img-top" src="{{$value->getImagemFullUrl()}}" alt="Imagem da Estampa">
+            </div>
+        @endif
     @empty
         <p class="display-4 font-weight-bold">Não existem estampas</p>
     @endforelse
