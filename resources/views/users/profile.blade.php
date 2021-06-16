@@ -52,7 +52,7 @@
                             <label>Tipo de Pagamento Predefinido</label>
                             <select class="custom-select " name="metodo_pagamento">
                                 @foreach ($metodos as $metodo)
-                                <option value="{{$metodo}}" {{$metodo == $user->cliente->tipo_pagamento ? 'selected' : ''}}>{{$metodo}}</option>
+                                <option value="{{$metodo}}" {{$metodo == ($user->cliente->tipo_pagamento ?? '') ? 'selected' : ''}}>{{$metodo}}</option>
                                 @endforeach
                             </select>
                         </div>
