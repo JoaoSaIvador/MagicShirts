@@ -83,10 +83,11 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('Dashboard'
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Orders
 
-Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny,App\Models\Encomenda');
-Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:viewAny,App\Models\Encomenda');
-Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update,encomenda');
-Route::get('admin/encomendas/filtro/{tipo}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny,App\Models\Encomenda');
+Route::get('admin/encomendas', [OrdersController::class, 'index'])->name('Orders')->middleware('can:viewAny, App\Models\Encomenda');
+Route::get('admin/encomendas/{encomenda}', [OrdersController::class, 'view_details'])->name('Orders.view')->middleware('can:view,encomenda');
+Route::patch('admin/encomendas/{encomenda}', [OrdersController::class, 'update'])->name('Orders.update')->middleware('can:update, encomenda');
+Route::get('admin/encomendas/changefilter/{Filter}', [OrdersController::class, 'changefilter'])->name('Orders.changefilter')->middleware('can:viewAny, App\Models\Encomenda');
+Route::get('admin/encomendas/filter/{Filter}', [OrdersController::class, 'filter'])->name('Orders.filter')->middleware('can:viewAny, App\Models\Encomenda');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,21 +116,21 @@ Route::post('admin/categorias/restore', [CategoryController::class, 'restore'])-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Colors
 
-Route::get('admin/cores', [ColorsController::class, 'index'])->name('Colors');
-Route::get('admin/cores/create', [ColorsController::class, 'create'])->name('Colors.create');
-Route::get('admin/cores/{cor}/edit', [ColorsController::class, 'edit'])->name('Colors.edit');
-Route::post('admin/cores/store', [ColorsController::class, 'store'])->name('Colors.store');
-Route::put('admin/cores/{cor}', [ColorsController::class, 'update'])->name('Colors.update');
-Route::delete('admin/cores/{cor}', [ColorsController::class, 'destroy'])->name('Colors.delete');
-Route::post('admin/cores/restore', [ColorsController::class, 'restore'])->name('Colors.restore');
+Route::get('admin/cores', [ColorsController::class, 'index'])->name('Colors')->middleware('can:viewAny,App\Models\Cor');
+Route::get('admin/cores/create', [ColorsController::class, 'create'])->name('Colors.create')->middleware('can:viewAny,App\Models\Cor');
+Route::get('admin/cores/{cor}/edit', [ColorsController::class, 'edit'])->name('Colors.edit')->middleware('can:viewAny,App\Models\Cor');
+Route::post('admin/cores/store', [ColorsController::class, 'store'])->name('Colors.store')->middleware('can:viewAny,App\Models\Cor');
+Route::put('admin/cores/{cor}', [ColorsController::class, 'update'])->name('Colors.update')->middleware('can:viewAny,App\Models\Cor');
+Route::delete('admin/cores/{cor}', [ColorsController::class, 'destroy'])->name('Colors.delete')->middleware('can:delete,App\Models\Cor');
+Route::post('admin/cores/restore', [ColorsController::class, 'restore'])->name('Colors.restore')->middleware('can:restore,App\Models\Cor');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Prices
 
-Route::get('admin/precos', [PricesController::class, 'index'])->name('Prices');
-Route::post('admin/precos/{preco}', [PricesController::class, 'update'])->name('Prices.update');
-Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name('Prices.edit');
+Route::get('admin/precos', [PricesController::class, 'index'])->name('Prices')->middleware('can:viewAny,App\Models\Preco');
+Route::post('admin/precos/{preco}', [PricesController::class, 'update'])->name('Prices.update')->middleware('can:viewAny,App\Models\Preco');
+Route::get('admin/precos/{preco}/edit', [PricesController::class, 'edit'])->name('Prices.edit')->middleware('can:viewAny,App\Models\Preco');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

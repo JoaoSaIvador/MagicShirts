@@ -36,9 +36,7 @@ class OrdersController extends Controller
         //$listaEncomendas = Encomenda::where('data', "2019-12-03")->paginate(20);
         //dd($listaEstampas);
 
-        return view('orders.ClientFilterForm')
-            ->withPageTitle('Encomendas')
-            ->withEncomendas($listaEncomendas);
+        return view('orders.ClientFilterForm')->withEncomendas($listaEncomendas)->withFiltro('cliente');
     }
 
     public function view_details(Encomenda $encomenda)
@@ -57,7 +55,6 @@ class OrdersController extends Controller
         //dd($listaEstampas);
 
         return view('orders.Details-order')
-            ->withPageTitle('Detalhes')
             ->withUser($user)
             ->withEncomenda($encomenda)
             ->withTshirts($listaTshirts)
@@ -69,23 +66,48 @@ class OrdersController extends Controller
     {
         $encomenda->fill($request->validated());
         $encomenda->save();
-        return redirect()->route('Orders')
-            ->withPageTitle('Encomendas');
+        return redirect()->route('Orders');
     }
 
-    public function filter($filtro)
+    public function filter($Filter, Request $request)
     {
-        $data;
-        switch($filtro)
+       
+       // dd($request->input('valor'));
+        switch($Filter)
         {
-            case 'nome':
-                //$data = select ordenado por nome
+            case 'cliente':
+                $listaEncomendas = Encomenda::where('cliente_id',$request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');
                 break;
-            case 'id':
-                // $data = select ordenado por id
-
+            case 'estado':
+                $listaEncomendas = Encomenda::where('estado',$request->input('valor'))->select('id', 'estado', 'preco_total', 'data')->paginate(20);
+                return view('orders.StateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('estado');
                 break;
+            case 'data':
+                $listaEncomendas = Encomenda::orderBy('data', $request->input('valor'))->paginate(20);
+                return view('orders.DateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('data');
+                break;
+            default:
+                $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');  
         }
     }
-    //return view('orders.Details-order')-> with($data);
+
+    public function changefilter($Filter)
+    {
+        $listaEncomendas = Encomenda::orderBy('id', 'desc')->paginate(20);
+        //dd($Filter);
+        switch($Filter)
+        {
+            case 'data':
+                return view('orders.DateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('data');
+                break;
+            case 'estado':
+                return view('orders.StateFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('estado');
+                break;
+            default:
+                return view('orders.ClientFilterForm')-> withEncomendas($listaEncomendas)->withFiltro('cliente');  
+        }   
+    }
+    
 }

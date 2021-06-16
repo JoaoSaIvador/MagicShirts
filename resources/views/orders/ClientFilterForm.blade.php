@@ -1,30 +1,18 @@
 @extends('admin.OrdersManagement')
 @section('orders')
-<div class="col-5 ">
-        <form method="GET" action="#" class="form-group">
-            <div class="input-group">
-                <select class="custom-select" id="idFiltro">
-                    <option value="none" selected disabled hidden>Filtrar por</option>
-                    <option value="" >Sem Filtro</option>
-                    <option value="cliente_id">Cliente Id
+<div>
+    <a href="{{route('Orders.changefilter', ['Filter' => 'estado'])}}"><button type="button" class="btn btn-primary launch">Estado</button></a>
+    <a href="{{route('Orders.changefilter', ['Filter' => 'data'])}}"><button type="button" class="btn btn-primary launch">Data</button></a>
+</div>
 
-                    </option>
-                    <option value="estado">Estado
-                        <select name="valor" id="PLACEHOLDER">
-                            <option value="anulada">Anulada</option>
-                            <option value="fechada">Fechada</option>
-                            <option value="pendente">Pendente</option>
-                            <option value="aberta">Aberta</option>
-                        </select>
-                    </option>
-                    <option value="data">Data
-
-                    </option>
-                </select>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
-                </div>
-            </div>
-        </form>
+<form action="{{route('Orders.filter', ['Filter' => $filtro])}}" method="GET" class="form-group">
+@csrf
+    <div class="input-group">
+        <label for="fname">Nº Cliente</label><br>
+        <input type="text" id="fname" name="valor"><br>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+        </div>
     </div>
+</form>
 @endsection
