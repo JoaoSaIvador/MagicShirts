@@ -38,7 +38,7 @@ class OrdersController extends Controller
     public function view_details(Encomenda $encomenda)
     {
 
-        $user = auth()->user();
+        $user = User::find($encomenda->cliente_id);
 
 
         $listaTshirts = $encomenda->tshirts;

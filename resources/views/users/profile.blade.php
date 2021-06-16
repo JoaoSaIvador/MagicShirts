@@ -36,14 +36,14 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>NIF</label>
-                            <input type="text" class="form-control" name="nif" value="{{ old('nif') ?? $user->cliente->nif }}">
+                            <input type="text" class="form-control" name="nif" value="{{ old('nif') ?? ($user->cliente->nif ?? '') }}">
                             @error('nif')
                             <div class="small text-danger">{{$message}}</div>
                             @enderror
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Morada</label>
-                            <input type="text" class="form-control" name="morada" value="{{ old('morada') ?? $user->cliente->endereco }}">
+                            <input type="text" class="form-control" name="morada" value="{{ old('morada') ?? ($user->cliente->endereco ?? '') }}">
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Referência de Pagamento Predefinida</label>
-                            <input type="text" class="form-control" name="ref_pagamento" value="{{ old('ref_pagamento') ?? $user->cliente->ref_pagamento }}">
+                            <input type="text" class="form-control" name="ref_pagamento" value="{{ old('ref_pagamento') ?? ($user->cliente->ref_pagamento ?? '') }}">
                         </div>
                     </div>
                     @endif
