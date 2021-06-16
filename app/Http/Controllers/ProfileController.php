@@ -7,6 +7,7 @@ use App\Http\Requests\ProfilePost;
 use App\Http\Requests\PasswordPost;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Encomenda;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -14,11 +15,14 @@ class ProfileController extends Controller
     public function index()
     {
         $metodos = ['VISA', 'MC', 'PAYPAL'];
+        $user = auth()->user();
+        $listaEncomendas = Encomenda::where('cliente_id', $user->cliente->id)->select('id', 'estado', 'preco_total', 'data')->get();
 
         return view('users.Profile')
             ->withPageTitle('Perfil')
             ->with('user', auth()->user())
-            ->withMetodos($metodos);
+            ->withMetodos($metodos)
+            ->withEncomendas($listaEncomendas);
     }
 
     public function edit(ProfilePost $request) {

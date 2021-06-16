@@ -66,15 +66,15 @@
 
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input name="metodo_pagamento" value="VISA" type="radio" class="form-check-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
+                            <input name="metodo_pagamento" value="VISA" type="radio" class="form-check-input" {{ "VISA" == old('metodoPagamento') ? 'checked' : ("VISA" == $user->cliente->tipo_pagamento ? 'checked' : '') }}>
                             <label class="form-check-label">Cartão Visa</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input name="metodo_pagamento" value="MC" type="radio" class="form-check-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
+                            <input name="metodo_pagamento" value="MC" type="radio" class="form-check-input" {{ "MC" == old('metodoPagamento') ? 'checked' : ("MC" == $user->cliente->tipo_pagamento ? 'checked' : '') }}>
                             <label class="form-check-label">Mastercard</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input name="metodo_pagamento" value="PAYPAL" type="radio" class="form-check-input" {{ old('metodoPagamento') ? 'checked' : ($user->cliente->tipo_pagamento ? 'checked' : '') }}>
+                            <input name="metodo_pagamento" value="PAYPAL" type="radio" class="form-check-input" {{ "PAYPAL" == old('metodoPagamento') ? 'checked' : ("PAYPAL" == $user->cliente->tipo_pagamento ? 'checked' : '') }}>
                             <label class="form-check-label">Paypal</label>
                         </div>
                         @error('metodo_pagamento')

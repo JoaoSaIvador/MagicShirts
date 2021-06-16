@@ -6,6 +6,7 @@ use App\Models\Encomenda;
 use Illuminate\Http\Request;
 use App\Http\Requests\CheckoutPost;
 use App\Models\Tshirt;
+use App\Notifications\OrderCreated;
 Use \Carbon\Carbon;
 
 class CheckoutController extends Controller
@@ -53,6 +54,9 @@ class CheckoutController extends Controller
             $tshirt->subtotal = $item['subtotal'];
             $tshirt->save();
         }
+
+        $user = auth()->user();
+        $user->notify(new OrderCreated());
 
         $request->session()->forget('carrinho');
         return redirect()->route('Home')
